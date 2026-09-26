@@ -2,6 +2,8 @@
 
 把智能体的长期记忆变成可复查的任务、运行证据和六维分数。它向同一款智能体连续发送跨会话任务，再核对回复、实际写出的文件和可观察的记忆文件；每个得分都有检查项与证据来源。
 
+**当前 12 例真实重复运行 `live/observed`（2026-09-26，v0.2.0）：**同一台 openKylin 3.0、相同数据与智能体配置，KylinBot 0.7.5 和 OpenClaw 2026.9.6 各跑三批，每批六维各两例、28 步。批前恢复并核验同一干净记忆状态，模型均为 `qwen-plus`。KylinBot 三批总分为 31.95、40.28、30.56，均值 34.26、样本标准差 5.26，完成 77/84 步，发生 3 次 `TimeoutError`；OpenClaw 为 31.94、34.72、34.72，均值 33.79、样本标准差 1.61，完成 82/84 步，发生 2 次 `TimeoutError`。这些是当前配置下的三批观察值，不证明任一智能体稳定领先。查看[重复摘要及逐步完成率](examples/live-openkylin-20260926-v020-repeat-summary.json)、[三批去敏逐项报告](examples/live-openkylin-20260926-v020-full-1-report.txt)、[第二批](examples/live-openkylin-20260926-v020-full-2-report.txt)、[第三批](examples/live-openkylin-20260926-v020-full-3-report.txt)、[第三批六维雷达图](examples/live-openkylin-20260926-v020-full-3-radar.svg)和[运行 ID、指纹、原始文件哈希及检查来源](examples/live-openkylin-20260926-v020-provenance.json)。原始回复、文件和记忆记录保留在私有证据中；公开文件不含未经去敏的内容。模型温度未显式固定，复跑时应记录实际设置。
+
 **历史六例真实全批 `live/observed`（2026-09-26，v0.1.0 数据）：**同一台 openKylin 3.0 VM 上，KylinBot 0.7.5 得 25.00/100，OpenClaw 2026.9.6 得 30.55/100。两者共用阿里云百炼 `qwen-plus`，各完成 14 个 live turns，均无适配器错误。查看[逐项报告](examples/live-openkylin-20260926-report.txt)、[六维雷达图](examples/live-openkylin-20260926-radar.svg)和[4 分 47 秒真实桌面录屏](examples/live-openkylin-20260926-demo.mp4)。每维仅一例；KylinBot 实际将记忆存于 SQLite，旧文件观察器把 `boundary-01` 的 `not-persisted` 判为 `MISSING`，这 5.55 分差不能当作稳定的系统排名。
 
 换用逐案例 SQLite 只读观察器重跑后，KylinBot 33.33、OpenClaw 30.55；KylinBot 的禁存项被真实数据库记录判为 `FAIL`，但它在另一个案例遇到一次超时，只完成 13/14 步。查看[第二批报告](examples/live-openkylin-20260926-sqlite-report.txt)、[雷达图](examples/live-openkylin-20260926-sqlite-radar.svg)与[来源及错误摘要](examples/live-openkylin-20260926-sqlite-summary.json)。两批同题的相对顺序已翻转，当前数字不支持稳定排名。
@@ -79,6 +81,6 @@ python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/r
 
 ## 构建与贡献
 
-当前版本为 v0.2.0。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.2.0_all.deb`；v0.1.0 曾在 openKylin 3.0 上通过 `apt install`、系统依赖和已安装入口 `--help`，当前包的安装结果以新增实测为准。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml) 在 Ubuntu 的干净 checkout 中运行单元测试、替身与打包；真实 openKylin 历史证据见上方两批报告。
+当前版本为 v0.2.0。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.2.0_all.deb`；该包已在 openKylin 3.0 上通过 `apt install` 安装，系统源解析了 `python3-websocket`，已安装入口及替身命令通过检查。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml) 在 Ubuntu 的干净 checkout 中运行单元测试、替身与打包；真实 openKylin 证据见上方报告与下方新增批次。
 
-接下来的重点是用当前 12 例重复测量 KylinBot 超时与跨批分数波动，检查不同版本记忆文件和 SQLite 的逐案例读取，并接收外部 openKylin 复跑的去敏证据。历史六例两批结果只显示当时发生了什么，不给稳定排名。源代码按 [MIT](LICENSE) 发布；用 [Issue 模板](https://github.com/logxio/kylin-memory-bench/issues/new/choose)提交可复现问题或案例，用 [贡献指南](CONTRIBUTING.md)准备 PR。
+接下来的重点是继续定位三批中出现的超时与零分案例，检查不同版本记忆文件和 SQLite 的逐案例读取，并接收外部 openKylin 复跑的去敏证据。三批仍只是同机、同模型的小样本，不能推断跨环境稳定性或显著差异。源代码按 [MIT](LICENSE) 发布；用 [Issue 模板](https://github.com/logxio/kylin-memory-bench/issues/new/choose)提交可复现问题或案例，用 [贡献指南](CONTRIBUTING.md)准备 PR。

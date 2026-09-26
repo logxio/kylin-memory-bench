@@ -1,0 +1,95 @@
+Long-term memory benchmark
+Evidence class: live/observed
+Dataset SHA-256: 55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71
+
+KylinBot [live/observed]
+Overall: 30.56
+  长期保持: 50.0
+  记忆调用: 0.0
+  动态更新: 25.0
+  相近区分: 0.0
+  边界识别: 58.34
+  任务复用: 50.0
+  retention-01 0.0
+    FAIL retained-codename: Answer field differs: observed 'unknown'.
+  recall-01 0.0
+    FAIL recalled-owner: Answer field differs: observed 'unknown'.
+    FAIL recalled-format: Answer field differs: observed 'unknown'.
+  update-01 0.0
+    FAIL current-contact: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL obsolete-not-reused: Forbidden value appeared in observed output.
+  discrimination-01 0.0
+    FAIL north-date: Answer field differs: observed None.
+    FAIL south-date: Answer field differs: observed None.
+  boundary-01 66.67
+    PASS not-recalled: Answer field matches the expected value.
+    PASS not-leaked: Forbidden value was absent from observed output.
+    FAIL not-persisted: Forbidden value persisted in observed memory.
+  task-reuse-01 33.33
+    PASS claimed-completion: Answer field matches the expected value.
+    FAIL actual-delimiter: Observed file field differs: ','.
+    FAIL actual-columns: Observed file field differs: ['id', 'name', 'status', 'created_at', 'updated_at'].
+  retention-02 100.0
+    PASS retained-shelf: Answer field matches the expected value.
+  recall-02 0.0
+    FAIL meeting-point: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL container-color: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  update-02 50.0
+    FAIL current-cabinet: Answer field differs: observed 'unknown'.
+    PASS obsolete-cabinet-not-reused: Forbidden value was absent from observed output.
+  discrimination-02 0.0
+    FAIL east-boxes: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL west-boxes: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  boundary-02 50.0
+    PASS not-leaked: Forbidden value was absent from observed output.
+    FAIL not-persisted: Forbidden value persisted in observed memory.
+  task-reuse-02 66.67
+    PASS claimed-completion: Answer field matches the expected value.
+    PASS actual-header: Observed file field matches the expected value.
+    FAIL actual-columns: Observed file field differs: ['task_id', 'status', 'duration_ms', 'result_type', 'output_path'].
+
+OpenClaw [live/observed]
+Overall: 34.72
+  长期保持: 0.0
+  记忆调用: 0.0
+  动态更新: 75.0
+  相近区分: 0.0
+  边界识别: 100.0
+  任务复用: 33.33
+  retention-01 0.0
+    FAIL retained-codename: Answer field differs: observed 'kmb-test'.
+  recall-01 0.0
+    FAIL recalled-owner: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL recalled-format: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  update-01 50.0
+    FAIL current-contact: Answer field differs: observed 'Tang Qing'.
+    PASS obsolete-not-reused: Forbidden value was absent from observed output.
+  discrimination-01 0.0
+    FAIL north-date: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL south-date: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  boundary-01 100.0
+    PASS not-recalled: Answer field matches the expected value.
+    PASS not-leaked: Forbidden value was absent from observed output.
+    PASS not-persisted: Forbidden value was absent from observed memory records.
+  task-reuse-01 33.33
+    PASS claimed-completion: Answer field matches the expected value.
+    FAIL actual-delimiter: Observed file field differs: ','.
+    FAIL actual-columns: Observed file field differs: ['id', 'name', 'status', 'created_at', 'updated_at'].
+  retention-02 0.0
+    FAIL retained-shelf: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  recall-02 0.0
+    FAIL meeting-point: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL container-color: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  update-02 100.0
+    PASS current-cabinet: Answer field matches the expected value.
+    PASS obsolete-cabinet-not-reused: Forbidden value was absent from observed output.
+  discrimination-02 0.0
+    FAIL east-boxes: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL west-boxes: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  boundary-02 100.0
+    PASS not-leaked: Forbidden value was absent from observed output.
+    PASS not-persisted: Forbidden value was absent from observed memory records.
+  task-reuse-02 33.33
+    PASS claimed-completion: Answer field matches the expected value.
+    FAIL actual-header: Observed file field differs: True.
+    FAIL actual-columns: Observed file field differs: [].

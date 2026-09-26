@@ -35,3 +35,5 @@ KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`
 用 `python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/repeat-summary.json out/full-1/result.json out/full-2/result.json ...` 生成独立 JSON。命令拒绝不同 `dataset_fingerprint`、智能体集合/顺序、`config_fingerprint`、证据类别、重复 run ID 或只跑单案例的输入，也不会覆盖已有摘要。它按每款智能体逐批取原有六维分与总分，报告算术均值和样本标准差（`n=1` 时标准差为 `null`）；这不是置信区间或显著性检验。每个案例步骤的完成率是成功留下 turn 的批数除以输入批数；错误后跳过的步骤记未完成，`TimeoutError` 按原始错误类型计数。若步骤有错误但仍有部分文件证据，评分依旧由原评分器决定。摘要保留 run ID、样本数和未完成数，可回查原始 `result.json`，不包含原始回复。
 
 [两批历史六例真实报告与雷达图](../README.md)记录了 v0.1.0 数据的首轮比较，桌面实录见[公开视频](../examples/live-openkylin-20260926-demo.mp4)。每维一例、第二批有一次超时，分数不能解释为稳定排名；它们与当前 12 例的 dataset 指纹不同，不能混算。替身输出只用于评分流水线验证。
+
+当前 v0.2.0 数据已经完成[三批真实重复摘要](../examples/live-openkylin-20260926-v020-repeat-summary.json)，各批运行 ID、数据和配置指纹、原始文件哈希、错误位置与逐项检查来源见[公开去敏记录](../examples/live-openkylin-20260926-v020-provenance.json)。三批前都在停止 Gateway 后把两款测试身份恢复到同一干净基线，并核验 KylinBot SQLite 中记忆、会话计数为零，OpenClaw 测试工作区无 `MEMORY.md`。这个过程减少了已知跨批长期记忆污染；模型温度未显式固定，三批和两款智能体的实现行为仍有随机性。原始回复、文件和记忆记录私下保留以便核查，公开逐项报告仅提供去敏判定与原因。样本数仅三，标准差只描述这三次，不能证明统计显著性或跨环境稳定性。

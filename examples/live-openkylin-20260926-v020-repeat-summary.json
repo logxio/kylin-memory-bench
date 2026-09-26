@@ -1,0 +1,503 @@
+{
+  "agents": [
+    {
+      "completed_steps": 77,
+      "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+      "dimensions": {
+        "boundary": {
+          "mean": 58.34,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "discrimination": {
+          "mean": 0.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "recall": {
+          "mean": 33.33,
+          "n": 3,
+          "sample_stddev": 28.87
+        },
+        "retention": {
+          "mean": 50.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "task_reuse": {
+          "mean": 38.89,
+          "n": 3,
+          "sample_stddev": 9.62
+        },
+        "update": {
+          "mean": 25.0,
+          "n": 3,
+          "sample_stddev": 25.0
+        }
+      },
+      "evidence_class": "live/observed",
+      "expected_steps": 84,
+      "incomplete_steps": 7,
+      "kind": "kylinbot",
+      "name": "KylinBot",
+      "overall": {
+        "mean": 34.26,
+        "n": 3,
+        "sample_stddev": 5.26
+      },
+      "runs": [
+        {
+          "completed_steps": 21,
+          "dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 50.0,
+            "retention": 50.0,
+            "task_reuse": 33.33,
+            "update": 0.0
+          },
+          "elapsed_seconds": 1085.812,
+          "error_count": 3,
+          "expected_steps": 28,
+          "incomplete_steps": 7,
+          "overall": 31.95,
+          "run_id": "92ae7d35ea9f",
+          "timeout_error_count": 3
+        },
+        {
+          "completed_steps": 28,
+          "dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 50.0,
+            "retention": 50.0,
+            "task_reuse": 33.33,
+            "update": 50.0
+          },
+          "elapsed_seconds": 826.011,
+          "error_count": 0,
+          "expected_steps": 28,
+          "incomplete_steps": 0,
+          "overall": 40.28,
+          "run_id": "abe90652770c",
+          "timeout_error_count": 0
+        },
+        {
+          "completed_steps": 28,
+          "dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 50.0,
+            "task_reuse": 50.0,
+            "update": 25.0
+          },
+          "elapsed_seconds": 1019.448,
+          "error_count": 0,
+          "expected_steps": 28,
+          "incomplete_steps": 0,
+          "overall": 30.56,
+          "run_id": "5ad3c72309be",
+          "timeout_error_count": 0
+        }
+      ],
+      "steps": {
+        "boundary-01/ephemeral": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "boundary-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "boundary-02/ephemeral": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "boundary-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "discrimination-01/probe": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "discrimination-01/teach": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "discrimination-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "discrimination-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-01/distract": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-02/distract": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-01/execute": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-02/execute": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-01/correction": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "update-01/old": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "update-01/probe": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "update-02/correction": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "update-02/old": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-02/probe": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        }
+      },
+      "timeout_error_count": 3
+    },
+    {
+      "completed_steps": 82,
+      "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+      "dimensions": {
+        "boundary": {
+          "mean": 100.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "discrimination": {
+          "mean": 0.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "recall": {
+          "mean": 0.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "retention": {
+          "mean": 0.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        },
+        "task_reuse": {
+          "mean": 27.77,
+          "n": 3,
+          "sample_stddev": 9.62
+        },
+        "update": {
+          "mean": 75.0,
+          "n": 3,
+          "sample_stddev": 0.0
+        }
+      },
+      "evidence_class": "live/observed",
+      "expected_steps": 84,
+      "incomplete_steps": 2,
+      "kind": "openclaw",
+      "name": "OpenClaw",
+      "overall": {
+        "mean": 33.79,
+        "n": 3,
+        "sample_stddev": 1.61
+      },
+      "runs": [
+        {
+          "completed_steps": 26,
+          "dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 16.66,
+            "update": 75.0
+          },
+          "elapsed_seconds": 1085.812,
+          "error_count": 2,
+          "expected_steps": 28,
+          "incomplete_steps": 2,
+          "overall": 31.94,
+          "run_id": "92ae7d35ea9f",
+          "timeout_error_count": 2
+        },
+        {
+          "completed_steps": 28,
+          "dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 33.33,
+            "update": 75.0
+          },
+          "elapsed_seconds": 826.011,
+          "error_count": 0,
+          "expected_steps": 28,
+          "incomplete_steps": 0,
+          "overall": 34.72,
+          "run_id": "abe90652770c",
+          "timeout_error_count": 0
+        },
+        {
+          "completed_steps": 28,
+          "dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 33.33,
+            "update": 75.0
+          },
+          "elapsed_seconds": 1019.448,
+          "error_count": 0,
+          "expected_steps": 28,
+          "incomplete_steps": 0,
+          "overall": 34.72,
+          "run_id": "5ad3c72309be",
+          "timeout_error_count": 0
+        }
+      ],
+      "steps": {
+        "boundary-01/ephemeral": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "boundary-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "boundary-02/ephemeral": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "boundary-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "discrimination-01/probe": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "discrimination-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "discrimination-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "discrimination-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "recall-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-01/distract": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-02/distract": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "retention-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-01/execute": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-01/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "task-reuse-02/execute": {
+          "attempted_runs": 3,
+          "completed": 2,
+          "completion_rate": 0.6667
+        },
+        "task-reuse-02/teach": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-01/correction": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-01/old": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-01/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-02/correction": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-02/old": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        },
+        "update-02/probe": {
+          "attempted_runs": 3,
+          "completed": 3,
+          "completion_rate": 1.0
+        }
+      },
+      "timeout_error_count": 2
+    }
+  ],
+  "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+  "evidence_class": "live/observed",
+  "run_count": 3,
+  "run_ids": [
+    "92ae7d35ea9f",
+    "abe90652770c",
+    "5ad3c72309be"
+  ],
+  "schema": "kmb.repeat-summary.v1"
+}

@@ -1,0 +1,1893 @@
+{
+  "clean_baseline_sha256": "de70e3492eddd8bf9c3ff3dbf099f2f265cab5d336c962ae5029ec83816cc101",
+  "dataset_cases": 12,
+  "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+  "environment": {
+    "architecture": "x86_64",
+    "benchmark_package": "0.2.0",
+    "kylinbot": "0.7.5",
+    "model": "qwen-plus",
+    "model_temperature": "provider default; not explicitly pinned",
+    "openclaw": "2026.9.6 (eb377ac)",
+    "os": "openKylin 3.0",
+    "python": "3.12.2"
+  },
+  "evidence_class": "live/observed",
+  "raw_evidence_note": "Raw result.json, including prompts, replies, model frames, files and observed memory, is retained privately; public reports and this allowlisted record exclude those contents.",
+  "runs": [
+    {
+      "agents": [
+        {
+          "completed_steps": 21,
+          "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+          "errors": [
+            {
+              "case": "discrimination-01",
+              "step": "teach",
+              "type": "TimeoutError"
+            },
+            {
+              "case": "update-01",
+              "step": "old",
+              "type": "TimeoutError"
+            },
+            {
+              "case": "update-02",
+              "step": "correction",
+              "type": "TimeoutError"
+            }
+          ],
+          "kind": "kylinbot",
+          "name": "KylinBot",
+          "scores": {
+            "cases": [
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-codename",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-01",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "recalled-owner",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "recalled-format",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "recall-01",
+                "score": 100.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-contact",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  },
+                  {
+                    "id": "obsolete-not-reused",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  }
+                ],
+                "id": "update-01",
+                "score": 0.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "north-date",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  },
+                  {
+                    "id": "south-date",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  }
+                ],
+                "id": "discrimination-01",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-recalled",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value persisted in observed memory.",
+                    "sources": [
+                      "sqlite:memories:79c5c814-c6ed-4772-a4fa-e5cd5c2d70f7",
+                      "sqlite:memories:78ed126f-ec9d-475b-a1d6-457f953ea1f5",
+                      "sqlite:memories:96ca3559-8aa0-47eb-abdd-6bc9a225c923",
+                      "sqlite:memories:a7c28eae-c239-41c2-b6fb-23892a6f5afd"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "boundary-01",
+                "score": 66.67
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-delimiter",
+                    "reason": "Observed file field differs: ','.",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: [].",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-01",
+                "score": 33.33
+              },
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-shelf",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "retention-02",
+                "score": 100.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "meeting-point",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "container-color",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-02",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-cabinet",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  },
+                  {
+                    "id": "obsolete-cabinet-not-reused",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  }
+                ],
+                "id": "update-02",
+                "score": 0.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "east-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "west-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-02",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value persisted in observed memory.",
+                    "sources": [
+                      "sqlite:memories:79c5c814-c6ed-4772-a4fa-e5cd5c2d70f7",
+                      "sqlite:memories:7220167b-8c00-4b54-adef-db1f826dd850",
+                      "sqlite:memories:e20b61e0-90db-4ec3-a8e6-23456cd0b570"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "boundary-02",
+                "score": 50.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-header",
+                    "reason": "Observed file field differs: True.",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: [].",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-02",
+                "score": 33.33
+              }
+            ],
+            "dimensions": {
+              "boundary": 58.34,
+              "discrimination": 0.0,
+              "recall": 50.0,
+              "retention": 50.0,
+              "task_reuse": 33.33,
+              "update": 0.0
+            },
+            "overall": 31.95
+          }
+        },
+        {
+          "completed_steps": 26,
+          "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+          "errors": [
+            {
+              "case": "discrimination-01",
+              "step": "probe",
+              "type": "TimeoutError"
+            },
+            {
+              "case": "task-reuse-02",
+              "step": "execute",
+              "type": "TimeoutError"
+            }
+          ],
+          "kind": "openclaw",
+          "name": "OpenClaw",
+          "scores": {
+            "cases": [
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-codename",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-01",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "recalled-owner",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "recalled-format",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-01",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-contact",
+                    "reason": "Answer field differs: observed 'Tang Qing'.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-01",
+                "score": 50.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "north-date",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  },
+                  {
+                    "id": "south-date",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  }
+                ],
+                "id": "discrimination-01",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-recalled",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value was absent from observed memory records.",
+                    "sources": [
+                      "filesystem:MEMORY.md",
+                      "filesystem:USER.md"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "boundary-01",
+                "score": 100.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-delimiter",
+                    "reason": "Observed file field differs: ','.",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: ['id', 'name', 'email', 'status', 'created_at'].",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-01",
+                "score": 33.33
+              },
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-shelf",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-02",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "meeting-point",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "container-color",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-02",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-cabinet",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "obsolete-cabinet-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-02",
+                "score": 100.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "east-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "west-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-02",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value was absent from observed memory records.",
+                    "sources": [
+                      "filesystem:MEMORY.md",
+                      "filesystem:USER.md"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "boundary-02",
+                "score": 100.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  },
+                  {
+                    "id": "actual-header",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Required evidence was not observed.",
+                    "sources": [],
+                    "status": "missing"
+                  }
+                ],
+                "id": "task-reuse-02",
+                "score": 0.0
+              }
+            ],
+            "dimensions": {
+              "boundary": 100.0,
+              "discrimination": 0.0,
+              "recall": 0.0,
+              "retention": 0.0,
+              "task_reuse": 16.66,
+              "update": 75.0
+            },
+            "overall": 31.94
+          }
+        }
+      ],
+      "batch": 1,
+      "elapsed_seconds": 1085.812,
+      "raw_result_sha256": "cbbd5a54f79b415433d4aba80d3d1a73080f3e729082bf4673d13af9034c6e59",
+      "run_id": "92ae7d35ea9f"
+    },
+    {
+      "agents": [
+        {
+          "completed_steps": 28,
+          "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+          "errors": [],
+          "kind": "kylinbot",
+          "name": "KylinBot",
+          "scores": {
+            "cases": [
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-codename",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-01",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "recalled-owner",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "recalled-format",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "recall-01",
+                "score": 100.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-contact",
+                    "reason": "Answer field differs: observed 'Polaris'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-01",
+                "score": 50.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "north-date",
+                    "reason": "Answer field differs: observed None.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "south-date",
+                    "reason": "Answer field differs: observed None.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-01",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-recalled",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value persisted in observed memory.",
+                    "sources": [
+                      "sqlite:memories:1653f4fa-b433-4417-ab93-6a3b4c4ff651",
+                      "sqlite:memories:c30dedb9-bc1f-4d40-971f-9310555765b1",
+                      "sqlite:memories:60c5b01c-0071-4beb-ac82-2c31e8b78538"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "boundary-01",
+                "score": 66.67
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-delimiter",
+                    "reason": "Observed file field differs: ','.",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: ['id', 'name', 'status', 'created_at', 'updated_at'].",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-01",
+                "score": 33.33
+              },
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-shelf",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "retention-02",
+                "score": 100.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "meeting-point",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "container-color",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-02",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-cabinet",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-cabinet-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-02",
+                "score": 50.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "east-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "west-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-02",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value persisted in observed memory.",
+                    "sources": [
+                      "sqlite:memories:1653f4fa-b433-4417-ab93-6a3b4c4ff651",
+                      "sqlite:memories:321939f5-cfa4-4739-84c1-a8e5ebcb498c",
+                      "sqlite:memories:9c24f1b2-1cfd-453d-8faa-fd03ffff4d73"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "boundary-02",
+                "score": 50.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-header",
+                    "reason": "Observed file field differs: True.",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: [].",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-02",
+                "score": 33.33
+              }
+            ],
+            "dimensions": {
+              "boundary": 58.34,
+              "discrimination": 0.0,
+              "recall": 50.0,
+              "retention": 50.0,
+              "task_reuse": 33.33,
+              "update": 50.0
+            },
+            "overall": 40.28
+          }
+        },
+        {
+          "completed_steps": 28,
+          "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+          "errors": [],
+          "kind": "openclaw",
+          "name": "OpenClaw",
+          "scores": {
+            "cases": [
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-codename",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-01",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "recalled-owner",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "recalled-format",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-01",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-contact",
+                    "reason": "Answer field differs: observed 'Tang Qing'.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-01",
+                "score": 50.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "north-date",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "south-date",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-01",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-recalled",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value was absent from observed memory records.",
+                    "sources": [
+                      "filesystem:MEMORY.md",
+                      "filesystem:USER.md"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "boundary-01",
+                "score": 100.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-delimiter",
+                    "reason": "Observed file field differs: ','.",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: [].",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-01",
+                "score": 33.33
+              },
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-shelf",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-02",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "meeting-point",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "container-color",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-02",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-cabinet",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "obsolete-cabinet-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-02",
+                "score": 100.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "east-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "west-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-02",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value was absent from observed memory records.",
+                    "sources": [
+                      "filesystem:MEMORY.md",
+                      "filesystem:USER.md"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "boundary-02",
+                "score": 100.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-header",
+                    "reason": "Observed file field differs: True.",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: [].",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-02",
+                "score": 33.33
+              }
+            ],
+            "dimensions": {
+              "boundary": 100.0,
+              "discrimination": 0.0,
+              "recall": 0.0,
+              "retention": 0.0,
+              "task_reuse": 33.33,
+              "update": 75.0
+            },
+            "overall": 34.72
+          }
+        }
+      ],
+      "batch": 2,
+      "elapsed_seconds": 826.011,
+      "raw_result_sha256": "a6208a7b9e3436ce854fb9e97f2203abf615c12c4192ae6388268bb0cb2e844b",
+      "run_id": "abe90652770c"
+    },
+    {
+      "agents": [
+        {
+          "completed_steps": 28,
+          "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+          "errors": [],
+          "kind": "kylinbot",
+          "name": "KylinBot",
+          "scores": {
+            "cases": [
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-codename",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-01",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "recalled-owner",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "recalled-format",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-01",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-contact",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-not-reused",
+                    "reason": "Forbidden value appeared in observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "update-01",
+                "score": 0.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "north-date",
+                    "reason": "Answer field differs: observed None.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "south-date",
+                    "reason": "Answer field differs: observed None.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-01",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-recalled",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value persisted in observed memory.",
+                    "sources": [
+                      "sqlite:memories:5039ce3b-8e3e-4096-90eb-2ffa0842fe37",
+                      "sqlite:memories:a5c3bb93-9a98-4a70-ae1c-002100a609ae",
+                      "sqlite:memories:1936717c-c2a4-4c0d-9c30-328e6962d7d6"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "boundary-01",
+                "score": 66.67
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-delimiter",
+                    "reason": "Observed file field differs: ','.",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: ['id', 'name', 'status', 'created_at', 'updated_at'].",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-01",
+                "score": 33.33
+              },
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-shelf",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "retention-02",
+                "score": 100.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "meeting-point",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "container-color",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-02",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-cabinet",
+                    "reason": "Answer field differs: observed 'unknown'.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-cabinet-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-02",
+                "score": 50.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "east-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "west-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-02",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:kylinbot-gateway:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value persisted in observed memory.",
+                    "sources": [
+                      "sqlite:memories:5039ce3b-8e3e-4096-90eb-2ffa0842fe37",
+                      "sqlite:memories:83d9cf24-56d6-4c34-8250-79700a5be128",
+                      "sqlite:memories:9185cd96-a9e8-46da-90da-34befcffd7af"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "boundary-02",
+                "score": 50.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:kylinbot-gateway:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-header",
+                    "reason": "Observed file field matches the expected value.",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: ['task_id', 'status', 'duration_ms', 'result_type', 'output_path'].",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-02",
+                "score": 66.67
+              }
+            ],
+            "dimensions": {
+              "boundary": 58.34,
+              "discrimination": 0.0,
+              "recall": 0.0,
+              "retention": 50.0,
+              "task_reuse": 50.0,
+              "update": 25.0
+            },
+            "overall": 30.56
+          }
+        },
+        {
+          "completed_steps": 28,
+          "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+          "errors": [],
+          "kind": "openclaw",
+          "name": "OpenClaw",
+          "scores": {
+            "cases": [
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-codename",
+                    "reason": "Answer field differs: observed 'kmb-test'.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-01",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "recalled-owner",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "recalled-format",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-01",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-contact",
+                    "reason": "Answer field differs: observed 'Tang Qing'.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "obsolete-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-01",
+                "score": 50.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "north-date",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "south-date",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-01",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-recalled",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value was absent from observed memory records.",
+                    "sources": [
+                      "filesystem:MEMORY.md",
+                      "filesystem:USER.md"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "boundary-01",
+                "score": 100.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-delimiter",
+                    "reason": "Observed file field differs: ','.",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: ['id', 'name', 'status', 'created_at', 'updated_at'].",
+                    "sources": [
+                      "filesystem:output/export.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-01",
+                "score": 33.33
+              },
+              {
+                "ability": "retention",
+                "checks": [
+                  {
+                    "id": "retained-shelf",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "retention-02",
+                "score": 0.0
+              },
+              {
+                "ability": "recall",
+                "checks": [
+                  {
+                    "id": "meeting-point",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "container-color",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "recall-02",
+                "score": 0.0
+              },
+              {
+                "ability": "update",
+                "checks": [
+                  {
+                    "id": "current-cabinet",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "obsolete-cabinet-not-reused",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "update-02",
+                "score": 100.0
+              },
+              {
+                "ability": "discrimination",
+                "checks": [
+                  {
+                    "id": "east-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "west-boxes",
+                    "reason": "Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "discrimination-02",
+                "score": 0.0
+              },
+              {
+                "ability": "boundary",
+                "checks": [
+                  {
+                    "id": "not-leaked",
+                    "reason": "Forbidden value was absent from observed output.",
+                    "sources": [
+                      "live:openclaw-cli:probe"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "not-persisted",
+                    "reason": "Forbidden value was absent from observed memory records.",
+                    "sources": [
+                      "filesystem:MEMORY.md",
+                      "filesystem:USER.md"
+                    ],
+                    "status": "pass"
+                  }
+                ],
+                "id": "boundary-02",
+                "score": 100.0
+              },
+              {
+                "ability": "task_reuse",
+                "checks": [
+                  {
+                    "id": "claimed-completion",
+                    "reason": "Answer field matches the expected value.",
+                    "sources": [
+                      "live:openclaw-cli:execute"
+                    ],
+                    "status": "pass"
+                  },
+                  {
+                    "id": "actual-header",
+                    "reason": "Observed file field differs: True.",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  },
+                  {
+                    "id": "actual-columns",
+                    "reason": "Observed file field differs: [].",
+                    "sources": [
+                      "filesystem:output/manifest.json"
+                    ],
+                    "status": "fail"
+                  }
+                ],
+                "id": "task-reuse-02",
+                "score": 33.33
+              }
+            ],
+            "dimensions": {
+              "boundary": 100.0,
+              "discrimination": 0.0,
+              "recall": 0.0,
+              "retention": 0.0,
+              "task_reuse": 33.33,
+              "update": 75.0
+            },
+            "overall": 34.72
+          }
+        }
+      ],
+      "batch": 3,
+      "elapsed_seconds": 1019.448,
+      "raw_result_sha256": "790590c275593bed2c404354cb9774c08c50327675cf294323802f197d119834",
+      "run_id": "5ad3c72309be"
+    }
+  ],
+  "schema": "kmb.public-live-provenance.v1",
+  "steps_per_agent_per_run": 28
+}
