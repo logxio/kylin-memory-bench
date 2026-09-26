@@ -31,7 +31,7 @@
 
 ## 接真实智能体
 
-在 openKylin 上准备 Python 3.10+，并安装网关客户端依赖：
+完整的双智能体、`.deb` 和桌面录屏操作顺序见 [openKylin 3.0 实跑指南](docs/live-openkylin.md)；其中标出的 VM 待验项仍要以实际运行输出为准。在 openKylin 上准备 Python 3.10+，并安装网关客户端依赖：
 
 ```bash
 python3 -m pip install -r requirements.txt
