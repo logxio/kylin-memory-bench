@@ -26,6 +26,6 @@ KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`
 
 ## 复现与交付
 
-本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据和口头完成但文件错误这四条关键合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 需在装有 `dpkg-deb` 的 openKylin 上构建；安装、运行和依赖可用性要在云机上实测。
+本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误及两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可在本机生成 `.deb`；安装、运行和依赖可用性要在 openKylin 上实测。
 
 正式参赛材料还需：两款真实智能体在 openKylin 的完整批量结果、六维比较雷达图、3–5 分钟桌面实录、以及多样本或多次独立运行的稳定性分析。这些不能用替身输出替代。

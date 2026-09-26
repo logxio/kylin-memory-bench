@@ -37,9 +37,9 @@
 python3 -m pip install -r requirements.txt
 ```
 
-按 [KylinBot Gateway 自动测试脚本](https://gitee.com/openkylin/kylin-botshell/tree/develop-for-skill-autotest)配置 KylinBot；它的 `kylinbot.v1` WebSocket 协议在 `ws://127.0.0.1:42617/ws/chat` 连接后发送 `connect`、`message`，并以 `done.full_response` 作为最终回复。测试脚本的 token 获取说明也在该分支。将令牌放入环境变量 `KYLINBOT_WS_TOKEN`，不写入 JSON 文件。适配器使用 Authorization header，不主动把令牌写进结果。`configs/kylinbot.example.json` 可改网关地址和超时。
+按 [KylinBot Gateway 自动测试脚本](https://gitee.com/openkylin/kylin-botshell/tree/develop-for-skill-autotest)配置 KylinBot；它的 `kylinbot.v1` WebSocket 协议在 `ws://127.0.0.1:42617/ws/chat` 连接后发送 `connect`、`message`，并以 `done.full_response` 作为最终回复。适配器可按上游的 `/admin/paircode/new`、`/pair` 接口自动与本机网关配对；远端网关则须把令牌放入环境变量 `KYLINBOT_WS_TOKEN`。适配器使用 Authorization header，不主动把令牌写进结果。`configs/kylinbot.example.json` 可改网关地址和超时。
 
-按 [OpenClaw 官方 agent CLI](https://docs.openclaw.ai/cli/agent)安装并启动 Gateway，建立专门的测试 agent。`configs/openclaw.example.json` 的 `agent_id` 对应该 agent。适配器调用 `openclaw agent --agent ... --session-key ... --message-file ... --json`；每个任务的不同会话有不同 key，同一批次自动加唯一运行 ID。[官方记忆说明](https://docs.openclaw.ai/concepts/memory)介绍 `MEMORY.md`、`USER.md` 和 `memory/*.md`。不要用默认临时状态的 `agent exec` 测跨会话记忆。
+按 [OpenClaw 官方 agent CLI](https://docs.openclaw.ai/cli/agent)安装并启动 Gateway。用[官方 agents 命令](https://docs.openclaw.ai/cli/agents)建立专门的测试身份，例如 `openclaw agents add kmb-test --workspace ~/.openclaw/workspace-kmb-test --non-interactive`；`configs/openclaw.example.json` 的 `agent_id` 默认就是 `kmb-test`。适配器调用 `openclaw agent --agent ... --session-key ... --message-file ... --json`；每个任务的不同会话有不同 key，同一批次自动加唯一运行 ID。[官方记忆说明](https://docs.openclaw.ai/concepts/memory)介绍 `MEMORY.md`、`USER.md` 和 `memory/*.md`。不要用默认临时状态的 `agent exec` 测跨会话记忆。
 
 运行前给两款智能体各自准备**干净、专用的**测试身份与工作区；把 `KMB_OPENCLAW_WORKSPACE` 指向 OpenClaw 的 agent 工作区，把 `KMB_KYLINBOT_MEMORY_ROOT` 指向 KylinBot 可观察的记忆文件根目录。若后者实际版本不以文件暴露记忆，留空即可，报告会把持久化检查记为缺证据。两款 agent 应使用可比的模型与设置；把版本、模型和环境写入评测记录。完成配置后在云端 openKylin 运行：
 
@@ -64,4 +64,4 @@ CLI 也支持任意配置的批量对比，例如 `python3 -m kylin_memory_bench
 
 ## 构建与贡献
 
-`./packaging/build-deb.sh` 在带 `dpkg-deb` 的 openKylin 上生成 `dist/kylin-memory-bench_0.1.0_all.deb`；本机未验证该包的安装运行。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。源代码按 [MIT](LICENSE) 发布；问题报告和 PR 说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+`./packaging/build-deb.sh` 使用 Python 标准库在本机生成 `dist/kylin-memory-bench_0.1.0_all.deb`；归档结构已检查，安装与依赖可用性仍需在 openKylin 验证。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。源代码按 [MIT](LICENSE) 发布；问题报告和 PR 说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。

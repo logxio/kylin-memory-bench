@@ -7,6 +7,8 @@ import subprocess
 import time
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 
 from .model import safe_relative
 
@@ -72,19 +74,40 @@ class OpenClawAgent(Agent):
 class KylinBotAgent(Agent):
     """KylinBot Gateway's documented kylinbot.v1 WebSocket chat protocol."""
 
+    def _pair_local_gateway(self, url, deadline):
+        parsed = urlparse(url)
+        if parsed.hostname not in ("127.0.0.1", "localhost", "::1"):
+            raise RuntimeError("KylinBot remote Gateway needs a token environment variable")
+        origin = ("https" if parsed.scheme == "wss" else "http") + "://" + parsed.netloc
+        timeout = max(1, min(float(deadline), 15.0))
+
+        def post(path, headers=None):
+            req = Request(origin + path, data=b"", headers=headers or {}, method="POST")
+            with urlopen(req, timeout=timeout) as response:
+                return json.load(response)
+
+        try:
+            code = str(post("/admin/paircode/new")["pairing_code"])
+            token = str(post("/pair", {"X-Pairing-Code": code})["token"])
+        except (OSError, KeyError, ValueError) as exc:
+            raise RuntimeError("KylinBot Gateway local pairing failed; check Gateway status or set the token environment variable") from exc
+        if not token.startswith("zc"):
+            raise RuntimeError("KylinBot Gateway returned an unexpected token format")
+        return token
+
     def turn(self, case, step, prompt, workspace, deadline):
         try:
             import websocket
         except ImportError as exc:
             raise RuntimeError("KylinBot adapter needs websocket-client; install requirements.txt") from exc
-        token = os.environ.get(self.config.get("token_env", "KYLINBOT_WS_TOKEN"))
-        if not token:
-            raise RuntimeError("KylinBot Gateway token environment variable is missing")
-        from urllib.parse import urlparse
         url = self.config.get("url", "ws://127.0.0.1:42617/ws/chat")
         parsed = urlparse(url)
         if parsed.scheme not in ("ws", "wss") or not parsed.netloc:
             raise ValueError("KylinBot url must be ws:// or wss:// with a host")
+        token = os.environ.get(self.config.get("token_env", "KYLINBOT_WS_TOKEN")) or getattr(self, "_token", None)
+        if not token:
+            token = self._pair_local_gateway(url, deadline)
+            self._token = token
         session_id = ":".join((self.config.get("session_prefix", "kmb"), case["id"], step["session"]))
         frames = []
         ws = websocket.create_connection(url, timeout=deadline,

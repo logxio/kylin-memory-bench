@@ -2,7 +2,7 @@
   "name": "OpenClaw",
   "kind": "openclaw",
   "executable": "openclaw",
-  "agent_id": "main",
+  "agent_id": "kmb-test",
   "session_prefix": "kmb-live-unique-run-id",
   "turn_timeout_seconds": 60,
   "memory_root_env": "KMB_OPENCLAW_WORKSPACE",
