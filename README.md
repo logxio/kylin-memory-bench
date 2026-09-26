@@ -12,9 +12,11 @@
 
 ## 一条命令看结果
 
-需要 Python 3.10+。替身不需要网络或额外依赖：
+需要 Python 3.10+。从公开仓库取代码后，替身不需要网络或额外依赖：
 
 ```bash
+git clone https://github.com/logxio/kylin-memory-bench.git
+cd kylin-memory-bench
 ./run-fixture.sh
 ```
 
@@ -35,11 +37,11 @@
 
 ## 接真实智能体
 
-双智能体、`.deb` 和桌面录屏的操作顺序见 [openKylin 3.0 实跑指南](docs/live-openkylin.md)。在仓库根目录构建并安装包，`apt` 会从系统源解析 `python3-websocket`：
+双智能体、`.deb` 和桌面录屏的操作顺序见 [openKylin 3.0 实跑指南](docs/live-openkylin.md)。在 openKylin 3.0 上可下载 [v0.1.0 发行包](https://github.com/logxio/kylin-memory-bench/releases/download/v0.1.0/kylin-memory-bench_0.1.0_all.deb) 安装；`apt` 会从系统源解析 `python3-websocket`：
 
 ```bash
-./packaging/build-deb.sh
-sudo apt install ./dist/kylin-memory-bench_0.1.0_all.deb
+curl -fL -o kylin-memory-bench_0.1.0_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.1.0/kylin-memory-bench_0.1.0_all.deb
+sudo apt install ./kylin-memory-bench_0.1.0_all.deb
 ```
 
 openKylin 3.0 预装 KylinBot 0.7.5；先执行 `kylin-bot config set gateway.listen-tcp true` 和 `kylin-bot gateway start`。[KylinBot Gateway 自动测试脚本](https://gitee.com/openkylin/kylin-botshell/tree/develop-for-skill-autotest)给出 `kylinbot.v1` WebSocket 协议：在 `ws://127.0.0.1:42617/ws/chat` 连接后发送 `connect`、`message`，并以 `done.full_response` 作为最终回复。适配器可按上游的 `/admin/paircode/new`、`/pair` 接口自动与本机网关配对；远端网关则须把令牌放入环境变量 `KYLINBOT_WS_TOKEN`。适配器使用 Authorization header，不主动把令牌写进结果。`configs/kylinbot.example.json` 可改网关地址和超时。
@@ -59,7 +61,7 @@ CLI 也支持任意配置的批量对比，例如 `python3 -m kylin_memory_bench
 | 评审项 | 权重 | 现在可检查的产物 |
 |---|---:|---|
 | 任务定义与通用性 | 15% | [六项跨会话任务](data/tasks.json)、统一 agent 接口 |
-| 数据设计质量 | 25% | 六项虚构样本、答案与禁用值、回复及文件验证项；下一轮需扩充每维多样本 |
+| 数据设计质量 | 25% | 六项虚构样本、答案与禁用值、回复及文件验证项 |
 | 自动评分能力 | 25% | [评分器](kylin_memory_bench/scoring.py)、逐项原因与证据来源；缺证据不给分 |
 | 稳定性与可复现性 | 15% | 数据及配置指纹、隔离输出目录、运行 ID、[合同测试](tests/test_scoring.py) |
 | 指标完整性 | 10% | 六维与总分、[结构化样例](examples/fixture-result.json)、[雷达图](examples/fixture-radar.svg) |
@@ -69,4 +71,6 @@ CLI 也支持任意配置的批量对比，例如 `python3 -m kylin_memory_bench
 
 ## 构建与贡献
 
-`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.1.0_all.deb`；openKylin 3.0 上的 `apt install`、系统依赖和已安装入口 `--help` 已通过。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。源代码按 [MIT](LICENSE) 发布；问题报告和 PR 说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+当前版本为 v0.1.0。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.1.0_all.deb`；openKylin 3.0 上的 `apt install`、系统依赖和已安装入口 `--help` 已通过。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml) 在 Ubuntu 的干净 checkout 中运行单元测试、替身与打包；真实 openKylin 证据见上方两批报告。
+
+接下来的改动围绕已经看到的误差：给六维各加虚构变体并重复运行，量出分数波动；复测 KylinBot 的超时；让不同版本的记忆文件和 SQLite 记录都能逐案例读取；接收外部 openKylin 复跑的去敏证据。每维一例的两批结果只显示当前案例发生了什么，不给稳定排名。源代码按 [MIT](LICENSE) 发布；用 [Issue 模板](https://github.com/logxio/kylin-memory-bench/issues/new/choose)提交可复现问题或案例，用 [贡献指南](CONTRIBUTING.md)准备 PR。

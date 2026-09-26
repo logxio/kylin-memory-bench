@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.4.0
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Fixture pipeline
+        run: ./run-fixture.sh "$RUNNER_TEMP/kmb-fixture"
+      - name: Build Debian package
+        run: ./packaging/build-deb.sh
+      - name: Inspect Debian package
+        run: |
+          test "$(dpkg-deb --field dist/kylin-memory-bench_0.1.0_all.deb Version)" = "0.1.0"
+          dpkg-deb --contents dist/kylin-memory-bench_0.1.0_all.deb

@@ -2,16 +2,18 @@
 
 这份操作顺序从已安装的 openKylin 3.0 桌面开始：接好 KylinBot 和 OpenClaw，安装本项目的 `.deb`，用一个案例确认两条链路，再跑六项比较并录下桌面结果。运行会留下逐项原因、原始回复和雷达图。请在云端桌面完成操作，不要把本仓的替身分数当成真实成绩。
 
-命令以当前登录的普通用户执行；只有安装系统包时用 `sudo`。先从本仓公开页面把源码取到 VM，终端进入仓库根目录。以下以 `~/kylin-memory-bench` 为仓库目录，若放在别处，把第一条 `cd` 改成实际位置。每次运行选一个新输出目录，结果不会覆盖旧证据。
+命令以当前登录的普通用户执行；只有安装系统包时用 `sudo`。准备一台可联网的 openKylin 3.0 x86_64 桌面、`git`、`curl` 和 Python 3.10+，从公开仓库取代码。每次运行选一个新输出目录，结果不会覆盖旧证据。
 
 ```bash
-cd ~/kylin-memory-bench
+git clone https://github.com/logxio/kylin-memory-bench.git
+cd kylin-memory-bench
 cat /etc/os-release
 uname -m
 python3 --version
+./run-fixture.sh
 ```
 
-确认 `VERSION_ID` 为 3.0、架构与镜像一致、Python 至少 3.10。同一台 openKylin 3.0 x86_64 VM 已安装 KylinBot 0.7.5、OpenClaw 2026.9.6 和本项目的 `.deb`，完成下文的双智能体真实六维全批与[4 分 47 秒桌面演示](../examples/live-openkylin-20260926-demo.mp4)。[openKylin 3.0 发布说明](https://www.openkylin.top/news/4098-cn.html)
+确认 `VERSION_ID` 为 3.0、架构与镜像一致、Python 至少 3.10。替身输出标为 `synthetic/fixture`，只检验运行流水线。同一台 openKylin 3.0 x86_64 VM 已安装 KylinBot 0.7.5、OpenClaw 2026.9.6 和本项目的 `.deb`，完成下文的双智能体真实六维全批与[4 分 47 秒桌面演示](../examples/live-openkylin-20260926-demo.mp4)。[openKylin 3.0 发布说明](https://www.openkylin.top/news/4098-cn.html)
 
 ## 两款智能体先用同一模型
 
@@ -90,14 +92,13 @@ openclaw gateway status
 
 ## 安装并检验 `.deb`
 
-从源码在 openKylin 上构建并安装。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`；系统源的 `python3-websocket 1.9.0-ok1` 已由 `apt` 成功解析。
+从 [v0.1.0 Release](https://github.com/logxio/kylin-memory-bench/releases/tag/v0.1.0) 下载发行包。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`；系统源的 `python3-websocket 1.9.0-ok1` 已由 `apt` 成功解析。想从当前 checkout 自行打包时，先执行 `./packaging/build-deb.sh`，再把下方包路径改成 `dist/kylin-memory-bench_0.1.0_all.deb`。
 
 ```bash
-cd ~/kylin-memory-bench
-./packaging/build-deb.sh
-dpkg-deb --info dist/kylin-memory-bench_0.1.0_all.deb
-dpkg-deb --contents dist/kylin-memory-bench_0.1.0_all.deb
-sudo apt install ./dist/kylin-memory-bench_0.1.0_all.deb
+curl -fL -o kylin-memory-bench_0.1.0_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.1.0/kylin-memory-bench_0.1.0_all.deb
+dpkg-deb --info kylin-memory-bench_0.1.0_all.deb
+dpkg-deb --contents kylin-memory-bench_0.1.0_all.deb
+sudo apt install ./kylin-memory-bench_0.1.0_all.deb
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' kylin-memory-bench
 command -v kylin-memory-bench
 kylin-memory-bench --help

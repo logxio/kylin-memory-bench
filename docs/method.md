@@ -16,7 +16,7 @@
 
 `python3 -m kylin_memory_bench` 读同一任务集与一个或多个 agent 配置，每个 agent、案例分别建新目录。`Agent.turn` 返回最终回复、原始响应帧或 CLI JSON、来源标签。编排器随后读取声明的产物文件和可选记忆记录：Markdown 文件直接读，KylinBot 0.7.5 的 SQLite `memories` 表按案例开始与结束两次只读快照取新增或改写记录，不把旧案例记忆充作本例证据。它计算数据与配置指纹，把原始 prompt、回复、文件内容、错误和来源写入 `result.json`。生成 `report.txt` 和 `radar.svg` 时只读这份同一结果。运行 ID 加到真实适配器的会话键，防止不同批次复用短期会话。真实适配失败直接记错误、缺证据，不接入替身分。
 
-KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`message`、`chunk`、`tool_call`、`done` 等帧；OpenClaw 使用 Gateway 的 `agent --session-key --json`。两种接口都必须在 openKylin 实机验证；目前只核对了上游接口说明和代码，未声称完成真实评测。行动或文件检查从工作区读取最终文件，不能只相信智能体的成功宣称。若想核查记忆持久化，还需把 agent 工作区或记忆根目录通过环境变量显式接给配置；没有实际可读取记录就记 `missing`。
+KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`message`、`chunk`、`tool_call`、`done` 等帧；OpenClaw 使用 Gateway 的 `agent --session-key --json`。两种接口已在同一台 openKylin 3.0 VM 完成[两批真实运行](live-openkylin.md#2026-09-26-真实全批读数)。行动或文件检查从工作区读取最终文件，不能只相信智能体的成功宣称。若想核查记忆持久化，还需把 agent 工作区或记忆根目录通过环境变量显式接给配置；没有实际可读取记录就记 `missing`。
 
 ## 自动评分
 
@@ -26,6 +26,6 @@ KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`
 
 ## 复现与交付
 
-本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误及两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可在本机生成 `.deb`；安装、运行和依赖可用性要在 openKylin 上实测。
+本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误及两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；安装、依赖和已安装入口已在 openKylin 3.0 上实测，操作与结果见[实跑指南](live-openkylin.md)。
 
-正式参赛材料还需：两款真实智能体在 openKylin 的完整批量结果、六维比较雷达图、3–5 分钟桌面实录、以及多样本或多次独立运行的稳定性分析。这些不能用替身输出替代。
+[两批真实报告与雷达图](../README.md)记录了首轮六维比较，桌面实录见[公开视频](../examples/live-openkylin-20260926-demo.mp4)。每维一例、第二批有一次超时，分数不能解释为稳定排名；替身输出只用于评分流水线验证。
