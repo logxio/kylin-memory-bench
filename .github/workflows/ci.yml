@@ -21,5 +21,5 @@ jobs:
         run: ./packaging/build-deb.sh
       - name: Inspect Debian package
         run: |
-          test "$(dpkg-deb --field dist/kylin-memory-bench_0.1.0_all.deb Version)" = "0.1.0"
-          dpkg-deb --contents dist/kylin-memory-bench_0.1.0_all.deb
+          test "$(dpkg-deb --field dist/kylin-memory-bench_0.2.0_all.deb Version)" = "0.2.0"
+          dpkg-deb --contents dist/kylin-memory-bench_0.2.0_all.deb

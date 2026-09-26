@@ -1,6 +1,6 @@
 # 在 openKylin 3.0 上跑两款真实智能体
 
-这份操作顺序从已安装的 openKylin 3.0 桌面开始：接好 KylinBot 和 OpenClaw，安装本项目的 `.deb`，用一个案例确认两条链路，再跑六项比较并录下桌面结果。运行会留下逐项原因、原始回复和雷达图。请在云端桌面完成操作，不要把本仓的替身分数当成真实成绩。
+这份操作顺序从已安装的 openKylin 3.0 桌面开始：接好 KylinBot 和 OpenClaw，安装本项目的 `.deb`，用一个案例确认两条链路，再跑六维各两例并录下桌面结果。运行会留下逐项原因、原始回复和雷达图。请在云端桌面完成操作，不要把本仓的替身分数当成真实成绩。
 
 命令以当前登录的普通用户执行；只有安装系统包时用 `sudo`。准备一台可联网的 openKylin 3.0 x86_64 桌面、`git`、`curl` 和 Python 3.10+，从公开仓库取代码。每次运行选一个新输出目录，结果不会覆盖旧证据。
 
@@ -92,21 +92,21 @@ openclaw gateway status
 
 ## 安装并检验 `.deb`
 
-从 [v0.1.0 Release](https://github.com/logxio/kylin-memory-bench/releases/tag/v0.1.0) 下载发行包。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`；系统源的 `python3-websocket 1.9.0-ok1` 已由 `apt` 成功解析。想从当前 checkout 自行打包时，先执行 `./packaging/build-deb.sh`，再把下方包路径改成 `dist/kylin-memory-bench_0.1.0_all.deb`。
+从 [v0.2.0 Release](https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.0) 下载当前 12 例发行包。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`；v0.1.0 在 openKylin 3.0 上曾由系统源成功解析 `python3-websocket 1.9.0-ok1`。想从当前 checkout 自行打包时，先执行 `./packaging/build-deb.sh`，再把下方包路径改成 `dist/kylin-memory-bench_0.2.0_all.deb`。
 
 ```bash
-curl -fL -o kylin-memory-bench_0.1.0_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.1.0/kylin-memory-bench_0.1.0_all.deb
-dpkg-deb --info kylin-memory-bench_0.1.0_all.deb
-dpkg-deb --contents kylin-memory-bench_0.1.0_all.deb
-sudo apt install ./kylin-memory-bench_0.1.0_all.deb
+curl -fL -o kylin-memory-bench_0.2.0_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.0/kylin-memory-bench_0.2.0_all.deb
+dpkg-deb --info kylin-memory-bench_0.2.0_all.deb
+dpkg-deb --contents kylin-memory-bench_0.2.0_all.deb
+sudo apt install ./kylin-memory-bench_0.2.0_all.deb
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' kylin-memory-bench
 command -v kylin-memory-bench
 kylin-memory-bench --help
 ```
 
-openKylin 3.0 上 `apt install` 已返回 0，`/usr/bin/kylin-memory-bench --help` 可装载 Python 模块。安装后的数据和配置在 `/usr/share/kylin-memory-bench/`，运行输出请写入普通用户目录，不要写到包目录。
+v0.1.0 在 openKylin 3.0 上 `apt install` 曾返回 0，`/usr/bin/kylin-memory-bench --help` 可装载 Python 模块；当前 v0.2.0 仍需按上方命令现场确认。安装后的数据和配置在 `/usr/share/kylin-memory-bench/`，运行输出请写入普通用户目录，不要写到包目录。
 
-## 先跑一个案例，再跑六项
+## 先跑一个案例，再跑 12 例
 
 第二个终端设置 OpenClaw 的专用工作区、KylinBot 的可读记忆库与运行输出目录。openKylin 3.0 预装的 KylinBot 0.7.5 将记忆写在下方 SQLite 路径；本项目只读打开它，按每个案例前后变化取证。若其他版本路径不同，先核实数据库位置，不要指向不相关文件。缺证据不会算通过。
 
@@ -122,7 +122,7 @@ kylin-memory-bench --dataset data/tasks.json --agent configs/kylinbot.example.js
 
 若其他 KylinBot 版本确实把记忆写到可读 Markdown 文件，也可设置 `KMB_KYLINBOT_MEMORY_ROOT` 观察该目录。最小案例应在新输出目录产生 `result.json`、`report.txt`、`radar.svg`。先读 `report.txt`，再看 `result.json` 的两款 `kind`、`evidence_class`、逐步 `source`、`errors` 与实际回复。只有 `live:...` 的真实适配器证据才算连通；出现错误、空回复或缺文件，就按原始错误修好后换新输出目录重跑。`live/observed` 标签只说明用了真实适配器，**不单独证明两款智能体完成了任务**。
 
-最小案例两条链路都接通后，从已安装包运行一键全批。它会给每款智能体跑同一组六个案例，并在同一输出目录生成六维报告和雷达图；默认总时限 1800 秒。保留本次原始目录，不把它和 `out/fixture-*` 混在一起。
+最小案例两条链路都接通后，从已安装包运行一键全批。v0.2.0 会给每款智能体跑同一组 12 个案例、28 个步骤，并在同一输出目录生成六维报告和雷达图；默认总时限 1800 秒。保留本次原始目录，不把它和 `out/fixture-*` 混在一起。
 
 ```bash
 /usr/share/kylin-memory-bench/run-live.sh "$HOME/kmb-results/full-$(date +%Y%m%d-%H%M%S)"
@@ -130,7 +130,9 @@ kylin-memory-bench --dataset data/tasks.json --agent configs/kylinbot.example.js
 
 打开本次 `report.txt`、`radar.svg`，逐项检查 `result.json` 中 KylinBot 与 OpenClaw 的错误、回复、文件和记忆来源。尤其检查临时验证码那项：没有可读取的记忆证据时，`not-persisted` 必须是 `missing`。记录 VM 的 OS 版本、两款智能体版本、实际模型与温度、运行时间、包版本和输出目录。
 
-## 2026-09-26 真实全批读数
+要重复运行，先让两款智能体回到同一个可核验的干净状态，包括长期记忆、专用工作区和会话记录；单靠新输出目录或运行 ID 不够。保留每次的原始 `result.json`，用[重复摘要命令](method.md#重复运行统计)计算逐维均值、样本标准差、步骤完成率与超时。无法验证状态一致时，应把重复批次注明为可能受前批记忆影响，不能当作独立波动。
+
+## 2026-09-26 历史六例真实全批读数
 
 同一台 openKylin 3.0 VM 上，KylinBot 0.7.5 与 OpenClaw 2026.9.6 共用 `qwen-plus`，每款完成 14 个 live turns，均为 0 adapter errors。运行 ID 为 `e328e3f61ac1`，耗时 424.494 秒；[逐项报告](../examples/live-openkylin-20260926-report.txt)和[六维雷达图](../examples/live-openkylin-20260926-radar.svg)均标为 `live/observed`。报告中的姓名来自虚构测试样本。
 

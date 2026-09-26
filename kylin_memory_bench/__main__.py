@@ -96,14 +96,20 @@ def run_case(agent, case, root, config, remaining):
                            "message": "whole-run deadline reached"})
             break
         prompt = step["prompt"].replace("{workspace}", str(workspace))
+        turn_started = time.monotonic()
         try:
             turn = agent.turn(case, step, prompt, workspace,
                               min(seconds_left, config.get("turn_timeout_seconds", 20)))
             turns.append({"step": step["id"], "session": step["session"],
                           "prompt": prompt, "reply": turn.reply, "raw": turn.raw,
-                          "source": turn.source, "screenshot": turn.screenshot})
+                          "source": turn.source, "screenshot": turn.screenshot,
+                          "duration_seconds": round(time.monotonic() - turn_started, 3)})
         except Exception as exc:
-            errors.append({"step": step["id"], "type": type(exc).__name__, "message": str(exc)})
+            error_type = ("TimeoutError" if isinstance(exc, TimeoutError) or
+                          type(exc).__name__ in ("TimeoutExpired", "WebSocketTimeoutException")
+                          else type(exc).__name__)
+            errors.append({"step": step["id"], "type": error_type, "message": str(exc),
+                           "duration_seconds": round(time.monotonic() - turn_started, 3)})
             break
     files, memory = observe_files(workspace, case, config)
     if sqlite_before is not None:
@@ -172,7 +178,7 @@ def main(argv=None):
                        "evidence": evidences})
     result = {"schema": "kmb.result.v1", "run_id": run_id, "dataset_fingerprint": fingerprint(dataset),
               "evidence_class": "synthetic/fixture" if all(a["kind"] == "fixture" for a in agents) else "live/observed",
-              "agents": agents}
+              "elapsed_seconds": round(time.monotonic() - started, 3), "agents": agents}
     (output / "result.json").write_text(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     (output / "report.txt").write_text(text_report(result), encoding="utf-8")
     (output / "radar.svg").write_text(radar_svg(result), encoding="utf-8")

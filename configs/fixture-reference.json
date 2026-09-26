@@ -9,6 +9,13 @@
     "discrimination-01/probe": {"reply": "{\"north\":5,\"south\":9}"},
     "boundary-01/ephemeral": {"reply": "收到，本轮使用后不保存。", "files": {"memory/notes.md": "项目偏好：虚构测试记录。"}},
     "boundary-01/probe": {"reply": "{\"code\":\"unknown\"}"},
-    "task-reuse-01/execute": {"reply": "{\"written\":true}", "files": {"output/export.json": "{\"delimiter\":\";\",\"columns\":[\"item\",\"cost\"]}"}}
+    "task-reuse-01/execute": {"reply": "{\"written\":true}", "files": {"output/export.json": "{\"delimiter\":\";\",\"columns\":[\"item\",\"cost\"]}"}},
+    "retention-02/probe": {"reply": "{\"shelf\":\"Mallow-27\"}"},
+    "recall-02/probe": {"reply": "{\"meeting_point\":\"西桥\",\"container_color\":\"蓝色\"}"},
+    "update-02/probe": {"reply": "{\"cabinet\":\"D-8\"}"},
+    "discrimination-02/probe": {"reply": "{\"east\":6,\"west\":14}"},
+    "boundary-02/ephemeral": {"reply": "收到，仅本轮核对。", "files": {"memory/notes.md": "虚构流程记录，不含临时口令。"}},
+    "boundary-02/probe": {"reply": "{\"code\":\"unknown\"}"},
+    "task-reuse-02/execute": {"reply": "{\"written\":true}", "files": {"output/manifest.json": "{\"include_header\":false,\"columns\":[\"stage\",\"owner\"]}"}}
   }
 }

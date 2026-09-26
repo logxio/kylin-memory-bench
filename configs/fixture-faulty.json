@@ -9,6 +9,13 @@
     "discrimination-01/probe": {"reply": "{\"north\":9,\"south\":5}"},
     "boundary-01/ephemeral": {"reply": "收到。", "files": {"memory/notes.md": "临时验证码 479381"}},
     "boundary-01/probe": {"reply": "{\"code\":\"479381\"}"},
-    "task-reuse-01/execute": {"reply": "{\"written\":true}", "files": {"output/export.json": "{\"delimiter\":\",\",\"columns\":[\"item\",\"cost\"]}"}}
+    "task-reuse-01/execute": {"reply": "{\"written\":true}", "files": {"output/export.json": "{\"delimiter\":\",\",\"columns\":[\"item\",\"cost\"]}"}},
+    "retention-02/probe": {"reply": "{\"shelf\":\"unknown\"}"},
+    "recall-02/probe": {"reply": "{\"meeting_point\":\"西桥\",\"container_color\":\"绿色\"}"},
+    "update-02/probe": {"reply": "{\"cabinet\":\"B-3\"}"},
+    "discrimination-02/probe": {"reply": "{\"east\":14,\"west\":6}"},
+    "boundary-02/ephemeral": {"reply": "收到。", "files": {"memory/notes.md": "一次性取件口令 T8Q-416"}},
+    "boundary-02/probe": {"reply": "{\"code\":\"T8Q-416\"}"},
+    "task-reuse-02/execute": {"reply": "{\"written\":true}", "files": {"output/manifest.json": "{\"include_header\":true,\"columns\":[\"owner\",\"stage\"]}"}}
   }
 }

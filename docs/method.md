@@ -2,7 +2,7 @@
 
 ## 目的与运行前提
 
-评测对象是能在 openKylin 上运行、能跨会话保留用户信息的智能体。目标是判断：信息有没有被记住、何时该被更新或遗忘、是否误用到行动中。当前任务集是首轮连通和错误类型演示，六项能力各一条，不把它当作总体能力估计。
+评测对象是能在 openKylin 上运行、能跨会话保留用户信息的智能体。目标是判断：信息有没有被记住、何时该被更新或遗忘、是否误用到行动中。v0.2.0 任务集是六项能力各两条，共 12 例；它仍不构成智能体总体能力的代表性样本。
 
 真实比较时，两款智能体须使用独立、干净的测试身份；记录操作系统版本、智能体版本、模型、温度、记忆设置、测试时间和资源。一个测试案例内的不同 `session` 必须进入该智能体不同会话，但共享该身份的长期记忆。同一案例只用虚构信息；不同案例名称互不重合，避免串题。若版本不支持跨会话记忆、工具写文件或暴露可读记忆记录，应在结果中保留失败与缺证据，而非人工补答案。
 
@@ -10,13 +10,13 @@
 
 [`data/tasks.json`](../data/tasks.json) 是 `kmb.tasks.v1` 数据合同。每个案例有唯一 `id`、六种能力之一的 `ability`、按顺序执行的 `steps`、以及独立 `checks`。每个 step 指定会话标签与原始 prompt，`{workspace}` 在执行时替换为该案例的新目录。任务用虚构代号、姓名、项目和验证码；参考答案只出现在检查项和替身配置里，不直接放进查询 prompt。任务 ID、能力和路径在装载时校验，输出只收集新案例目录内声明的文件。
 
-首发包含六种错误诱因：时间间隔与干扰、字段组合召回、旧值更正、相似实体混淆、临时信息的记忆边界、从记忆驱动的文件行动。替身 A 与 B 只用于验证评分合同：B 故意遗忘代号、把格式记错、复用旧联系人、交换相似任务日期、保存临时验证码，以及在声称完成的同时写错文件。扩充任务集时应从这些错误类型派生更多虚构实体和措辞，预先锁定答案，再用新身份实跑；不要根据某款智能体的输出改标准答案。
+首组六例包含时间间隔与干扰、字段组合召回、旧值更正、相似实体混淆、临时信息的记忆边界、从记忆驱动的文件行动。第二组保留六种能力但换了任务形态和值：样本架代号、采样安排的两个属性、搬迁后的柜位、东西向路线箱数、一次性取件口令、无表头清单配置。第二组探针只给输出格式，不给应答值；正确值锁定在检查项中。`Synthetic reference` 和 `Synthetic faulty` 仅验证评分合同：后者故意遗忘、错配、复用旧值、保存临时口令或写错文件。新增变体不依据任一真实智能体的回复改标准答案。
 
 ## 执行与证据
 
-`python3 -m kylin_memory_bench` 读同一任务集与一个或多个 agent 配置，每个 agent、案例分别建新目录。`Agent.turn` 返回最终回复、原始响应帧或 CLI JSON、来源标签。编排器随后读取声明的产物文件和可选记忆记录：Markdown 文件直接读，KylinBot 0.7.5 的 SQLite `memories` 表按案例开始与结束两次只读快照取新增或改写记录，不把旧案例记忆充作本例证据。它计算数据与配置指纹，把原始 prompt、回复、文件内容、错误和来源写入 `result.json`。生成 `report.txt` 和 `radar.svg` 时只读这份同一结果。运行 ID 加到真实适配器的会话键，防止不同批次复用短期会话。真实适配失败直接记错误、缺证据，不接入替身分。
+`python3 -m kylin_memory_bench` 读同一任务集与一个或多个 agent 配置，每个 agent、案例分别建新目录。`Agent.turn` 返回最终回复、原始响应帧或 CLI JSON、来源标签。编排器随后读取声明的产物文件和可选记忆记录：Markdown 文件直接读，KylinBot 0.7.5 的 SQLite `memories` 表按案例开始与结束两次只读快照取新增或改写记录，不把旧案例记忆充作本例证据。它计算数据与配置指纹，把原始 prompt、回复、文件内容、错误、每步耗时和来源写入 `result.json`。旧结果没有每步耗时，仍可读取。生成 `report.txt` 和 `radar.svg` 时只读这份同一结果。运行 ID 加到真实适配器的会话键，只隔离不同批次的短期会话。真实适配失败直接记错误、缺证据，不接入替身分。
 
-KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`message`、`chunk`、`tool_call`、`done` 等帧；OpenClaw 使用 Gateway 的 `agent --session-key --json`。两种接口已在同一台 openKylin 3.0 VM 完成[两批真实运行](live-openkylin.md#2026-09-26-真实全批读数)。行动或文件检查从工作区读取最终文件，不能只相信智能体的成功宣称。若想核查记忆持久化，还需把 agent 工作区或记忆根目录通过环境变量显式接给配置；没有实际可读取记录就记 `missing`。
+KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`message`、`chunk`、`tool_call`、`done` 等帧；OpenClaw 使用 Gateway 的 `agent --session-key --json`。两种接口已在同一台 openKylin 3.0 VM 完成[两批历史六例真实运行](live-openkylin.md#2026-09-26-历史六例真实全批读数)。行动或文件检查从工作区读取最终文件，不能只相信智能体的成功宣称。若想核查记忆持久化，还需把 agent 工作区或记忆根目录通过环境变量显式接给配置；没有实际可读取记录就记 `missing`。
 
 ## 自动评分
 
@@ -26,6 +26,12 @@ KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`
 
 ## 复现与交付
 
-本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误及两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；安装、依赖和已安装入口已在 openKylin 3.0 上实测，操作与结果见[实跑指南](live-openkylin.md)。
+本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误、12 例变体、重复汇总和两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；v0.1.0 的安装、依赖和已安装入口曾在 openKylin 3.0 上实测，操作与结果见[实跑指南](live-openkylin.md)。
 
-[两批真实报告与雷达图](../README.md)记录了首轮六维比较，桌面实录见[公开视频](../examples/live-openkylin-20260926-demo.mp4)。每维一例、第二批有一次超时，分数不能解释为稳定排名；替身输出只用于评分流水线验证。
+## 重复运行统计
+
+一批是同一份完整数据集、同一套智能体配置各跑一次的 `result.json`。每次运行用独立目录保留原始回复、文件和错误。批前恢复两款智能体经验证的相同干净记忆与会话状态；换运行 ID 只隔离短会话，不清除长期记忆。若无法验证隔离，保留各批观察值，但不要把它们的标准差解释成独立重复的稳定性。
+
+用 `python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/repeat-summary.json out/full-1/result.json out/full-2/result.json ...` 生成独立 JSON。命令拒绝不同 `dataset_fingerprint`、智能体集合/顺序、`config_fingerprint`、证据类别、重复 run ID 或只跑单案例的输入，也不会覆盖已有摘要。它按每款智能体逐批取原有六维分与总分，报告算术均值和样本标准差（`n=1` 时标准差为 `null`）；这不是置信区间或显著性检验。每个案例步骤的完成率是成功留下 turn 的批数除以输入批数；错误后跳过的步骤记未完成，`TimeoutError` 按原始错误类型计数。若步骤有错误但仍有部分文件证据，评分依旧由原评分器决定。摘要保留 run ID、样本数和未完成数，可回查原始 `result.json`，不包含原始回复。
+
+[两批历史六例真实报告与雷达图](../README.md)记录了 v0.1.0 数据的首轮比较，桌面实录见[公开视频](../examples/live-openkylin-20260926-demo.mp4)。每维一例、第二批有一次超时，分数不能解释为稳定排名；它们与当前 12 例的 dataset 指纹不同，不能混算。替身输出只用于评分流水线验证。
