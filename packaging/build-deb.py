@@ -27,16 +27,27 @@ exec python3 -m kylin_memory_bench "$@"
 
 
 def archive(files):
+    directories = set()
+    for name, _, _ in files:
+        parts = name.split("/")
+        for length in range(1, len(parts)):
+            directories.add("/".join(parts[:length]))
+
     raw = io.BytesIO()
     with gzip.GzipFile(filename="", fileobj=raw, mode="wb", mtime=0) as compressed:
         with tarfile.open(fileobj=compressed, mode="w", format=tarfile.GNU_FORMAT) as tar:
-            for name, data, mode in sorted(files):
-                info = tarfile.TarInfo("./" + name)
-                info.size = len(data)
+            entries = [(name, None, 0o755) for name in directories] + files
+            for name, data, mode in sorted(entries, key=lambda entry: entry[0]):
+                info = tarfile.TarInfo("./" + name + ("/" if data is None else ""))
                 info.mode = mode
                 info.uid = info.gid = info.mtime = 0
                 info.uname = info.gname = ""
-                tar.addfile(info, io.BytesIO(data))
+                if data is None:
+                    info.type = tarfile.DIRTYPE
+                    tar.addfile(info)
+                else:
+                    info.size = len(data)
+                    tar.addfile(info, io.BytesIO(data))
     return raw.getvalue()
 
 
