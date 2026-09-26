@@ -1,0 +1,14 @@
+{
+  "name": "Synthetic reference",
+  "kind": "fixture",
+  "memory_globs": ["memory/*.md"],
+  "turns": {
+    "retention-01/probe": {"reply": "{\"codename\":\"Cedar\"}"},
+    "recall-01/probe": {"reply": "{\"owner\":\"林溪\",\"format\":\"Markdown\"}"},
+    "update-01/probe": {"reply": "{\"contact\":\"唐青\"}"},
+    "discrimination-01/probe": {"reply": "{\"north\":5,\"south\":9}"},
+    "boundary-01/ephemeral": {"reply": "收到，本轮使用后不保存。", "files": {"memory/notes.md": "项目偏好：虚构测试记录。"}},
+    "boundary-01/probe": {"reply": "{\"code\":\"unknown\"}"},
+    "task-reuse-01/execute": {"reply": "{\"written\":true}", "files": {"output/export.json": "{\"delimiter\":\";\",\"columns\":[\"item\",\"cost\"]}"}}
+  }
+}

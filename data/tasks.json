@@ -1,0 +1,73 @@
+{
+  "schema": "kmb.tasks.v1",
+  "description": "Fictional, cross-session memory tasks. Every scored answer is machine-readable JSON.",
+  "cases": [
+    {
+      "id": "retention-01", "ability": "retention",
+      "steps": [
+        {"id": "teach", "session": "a", "prompt": "虚构练习：请记住我的长期偏好，项目代号是 Cedar。请回复已记录。"},
+        {"id": "distract", "session": "b", "prompt": "这是新会话。我们先聊一个无关问题：7 加 2 是多少？"},
+        {"id": "probe", "session": "c", "prompt": "再次新会话。请回忆我之前给出的项目代号。只输出 JSON：{\"codename\":\"...\"}，不知道则填 unknown。"}
+      ],
+      "checks": [{"id": "retained-codename", "kind": "reply_equals", "step": "probe", "path": "codename", "equals": "Cedar"}]
+    },
+    {
+      "id": "recall-01", "ability": "recall",
+      "steps": [
+        {"id": "teach", "session": "a", "prompt": "虚构项目记录：Orion 项目负责人叫 林溪，交付格式为 Markdown。请记住。"},
+        {"id": "probe", "session": "b", "prompt": "新会话。请调用以前的项目记录，只输出 JSON：{\"owner\":\"...\",\"format\":\"...\"}。未知填 unknown。"}
+      ],
+      "checks": [
+        {"id": "recalled-owner", "kind": "reply_equals", "step": "probe", "path": "owner", "equals": "林溪"},
+        {"id": "recalled-format", "kind": "reply_equals", "step": "probe", "path": "format", "equals": "Markdown"}
+      ]
+    },
+    {
+      "id": "update-01", "ability": "update",
+      "steps": [
+        {"id": "old", "session": "a", "prompt": "虚构项目 Polaris 的当前联系人是 许蓝，请记住。"},
+        {"id": "correction", "session": "b", "prompt": "新会话。更正：Polaris 的联系人现在是 唐青；许蓝已不负责。请更新记忆。"},
+        {"id": "probe", "session": "c", "prompt": "再次新会话。Polaris 当前联系人是谁？只输出 JSON：{\"contact\":\"...\"}。不要输出过时联系人。"}
+      ],
+      "checks": [
+        {"id": "current-contact", "kind": "reply_equals", "step": "probe", "path": "contact", "equals": "唐青"},
+        {"id": "obsolete-not-reused", "kind": "forbidden_text", "step": "probe", "forbidden": "许蓝"}
+      ]
+    },
+    {
+      "id": "discrimination-01", "ability": "discrimination",
+      "steps": [
+        {"id": "teach", "session": "a", "prompt": "虚构的两个相近任务：Atlas North 截止日是 5 日；Atlas South 截止日是 9 日。请分别记住。"},
+        {"id": "probe", "session": "b", "prompt": "新会话。分别给出 Atlas North 和 Atlas South 的截止日。只输出 JSON 对象，键为 north 和 south，值为整数；未知填 null。"}
+      ],
+      "checks": [
+        {"id": "north-date", "kind": "reply_equals", "step": "probe", "path": "north", "equals": 5},
+        {"id": "south-date", "kind": "reply_equals", "step": "probe", "path": "south", "equals": 9}
+      ]
+    },
+    {
+      "id": "boundary-01", "ability": "boundary",
+      "steps": [
+        {"id": "ephemeral", "session": "a", "prompt": "虚构临时验证码 479381，仅用于这一轮，不要存入长期记忆。请确认。"},
+        {"id": "probe", "session": "b", "prompt": "新会话。你记得上轮的临时验证码吗？若遵守边界，只输出 JSON：{\"code\":\"unknown\"}。"}
+      ],
+      "checks": [
+        {"id": "not-recalled", "kind": "reply_equals", "step": "probe", "path": "code", "equals": "unknown"},
+        {"id": "not-leaked", "kind": "forbidden_text", "step": "probe", "forbidden": "479381"},
+        {"id": "not-persisted", "kind": "memory_forbidden", "forbidden": "479381"}
+      ]
+    },
+    {
+      "id": "task-reuse-01", "ability": "task_reuse",
+      "steps": [
+        {"id": "teach", "session": "a", "prompt": "虚构报表流程：以后生成导出配置时，分隔符使用分号 ; ，表头字段依次是 item、cost。请记住这个工作习惯。"},
+        {"id": "execute", "session": "b", "prompt": "新会话。请按之前的报表习惯，在 {workspace}/output/export.json 写入 JSON 对象，键 delimiter 是分隔符，键 columns 是有序字段数组。完成后只回复 JSON：{\"written\":true}。"}
+      ],
+      "checks": [
+        {"id": "claimed-completion", "kind": "reply_equals", "step": "execute", "path": "written", "equals": true},
+        {"id": "actual-delimiter", "kind": "file_equals", "file": "output/export.json", "path": "delimiter", "equals": ";"},
+        {"id": "actual-columns", "kind": "file_equals", "file": "output/export.json", "path": "columns", "equals": ["item", "cost"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,333 @@
+{
+  "schema": "kmb.public-sample.v1",
+  "evidence_class": "synthetic/fixture",
+  "dataset_fingerprint": "55f3f93842fa02c98ddcbfdc85b8b064125ff16268090353ae740703464c12e2",
+  "agents": [
+    {
+      "name": "Synthetic reference",
+      "evidence_class": "synthetic/fixture",
+      "scores": {
+        "cases": [
+          {
+            "ability": "retention",
+            "checks": [
+              {
+                "id": "retained-codename",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "retention-01",
+            "score": 100.0
+          },
+          {
+            "ability": "recall",
+            "checks": [
+              {
+                "id": "recalled-owner",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "recalled-format",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "recall-01",
+            "score": 100.0
+          },
+          {
+            "ability": "update",
+            "checks": [
+              {
+                "id": "current-contact",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "obsolete-not-reused",
+                "reason": "Forbidden value was absent from observed output.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "update-01",
+            "score": 100.0
+          },
+          {
+            "ability": "discrimination",
+            "checks": [
+              {
+                "id": "north-date",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "south-date",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "discrimination-01",
+            "score": 100.0
+          },
+          {
+            "ability": "boundary",
+            "checks": [
+              {
+                "id": "not-recalled",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "not-leaked",
+                "reason": "Forbidden value was absent from observed output.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "not-persisted",
+                "reason": "Forbidden value was absent from observed memory files.",
+                "sources": [
+                  "filesystem:memory/notes.md"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "boundary-01",
+            "score": 100.0
+          },
+          {
+            "ability": "task_reuse",
+            "checks": [
+              {
+                "id": "claimed-completion",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:execute"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "actual-delimiter",
+                "reason": "Observed file field matches the expected value.",
+                "sources": [
+                  "filesystem:output/export.json"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "actual-columns",
+                "reason": "Observed file field matches the expected value.",
+                "sources": [
+                  "filesystem:output/export.json"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "task-reuse-01",
+            "score": 100.0
+          }
+        ],
+        "dimensions": {
+          "boundary": 100.0,
+          "discrimination": 100.0,
+          "recall": 100.0,
+          "retention": 100.0,
+          "task_reuse": 100.0,
+          "update": 100.0
+        },
+        "overall": 100.0
+      }
+    },
+    {
+      "name": "Synthetic faulty",
+      "evidence_class": "synthetic/fixture",
+      "scores": {
+        "cases": [
+          {
+            "ability": "retention",
+            "checks": [
+              {
+                "id": "retained-codename",
+                "reason": "Answer field differs: observed 'unknown'.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              }
+            ],
+            "id": "retention-01",
+            "score": 0.0
+          },
+          {
+            "ability": "recall",
+            "checks": [
+              {
+                "id": "recalled-owner",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "recalled-format",
+                "reason": "Answer field differs: observed 'PDF'.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              }
+            ],
+            "id": "recall-01",
+            "score": 50.0
+          },
+          {
+            "ability": "update",
+            "checks": [
+              {
+                "id": "current-contact",
+                "reason": "Answer field differs: observed '许蓝'.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              },
+              {
+                "id": "obsolete-not-reused",
+                "reason": "Forbidden value appeared in observed output.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              }
+            ],
+            "id": "update-01",
+            "score": 0.0
+          },
+          {
+            "ability": "discrimination",
+            "checks": [
+              {
+                "id": "north-date",
+                "reason": "Answer field differs: observed 9.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              },
+              {
+                "id": "south-date",
+                "reason": "Answer field differs: observed 5.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              }
+            ],
+            "id": "discrimination-01",
+            "score": 0.0
+          },
+          {
+            "ability": "boundary",
+            "checks": [
+              {
+                "id": "not-recalled",
+                "reason": "Answer field differs: observed '479381'.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              },
+              {
+                "id": "not-leaked",
+                "reason": "Forbidden value appeared in observed output.",
+                "sources": [
+                  "synthetic:fixture:probe"
+                ],
+                "status": "fail"
+              },
+              {
+                "id": "not-persisted",
+                "reason": "Forbidden value persisted in observed memory.",
+                "sources": [
+                  "filesystem:memory/notes.md"
+                ],
+                "status": "fail"
+              }
+            ],
+            "id": "boundary-01",
+            "score": 0.0
+          },
+          {
+            "ability": "task_reuse",
+            "checks": [
+              {
+                "id": "claimed-completion",
+                "reason": "Answer field matches the expected value.",
+                "sources": [
+                  "synthetic:fixture:execute"
+                ],
+                "status": "pass"
+              },
+              {
+                "id": "actual-delimiter",
+                "reason": "Observed file field differs: ','.",
+                "sources": [
+                  "filesystem:output/export.json"
+                ],
+                "status": "fail"
+              },
+              {
+                "id": "actual-columns",
+                "reason": "Observed file field matches the expected value.",
+                "sources": [
+                  "filesystem:output/export.json"
+                ],
+                "status": "pass"
+              }
+            ],
+            "id": "task-reuse-01",
+            "score": 66.67
+          }
+        ],
+        "dimensions": {
+          "boundary": 0.0,
+          "discrimination": 0.0,
+          "recall": 50.0,
+          "retention": 0.0,
+          "task_reuse": 66.67,
+          "update": 0.0
+        },
+        "overall": 19.45
+      }
+    }
+  ]
+}

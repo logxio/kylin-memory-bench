@@ -1,0 +1,9 @@
+out/
+.ai/
+AGENTS.md
+__pycache__/
+*.pyc
+.venv/
+*.deb
+.env
+*.token

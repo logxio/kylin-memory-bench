@@ -1,0 +1,14 @@
+{
+  "name": "Synthetic faulty",
+  "kind": "fixture",
+  "memory_globs": ["memory/*.md"],
+  "turns": {
+    "retention-01/probe": {"reply": "{\"codename\":\"unknown\"}"},
+    "recall-01/probe": {"reply": "{\"owner\":\"林溪\",\"format\":\"PDF\"}"},
+    "update-01/probe": {"reply": "{\"contact\":\"许蓝\"}"},
+    "discrimination-01/probe": {"reply": "{\"north\":9,\"south\":5}"},
+    "boundary-01/ephemeral": {"reply": "收到。", "files": {"memory/notes.md": "临时验证码 479381"}},
+    "boundary-01/probe": {"reply": "{\"code\":\"479381\"}"},
+    "task-reuse-01/execute": {"reply": "{\"written\":true}", "files": {"output/export.json": "{\"delimiter\":\",\",\"columns\":[\"item\",\"cost\"]}"}}
+  }
+}

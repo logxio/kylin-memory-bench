@@ -1,0 +1,11 @@
+{
+  "name": "KylinBot",
+  "kind": "kylinbot",
+  "url": "ws://127.0.0.1:42617/ws/chat",
+  "token_env": "KYLINBOT_WS_TOKEN",
+  "session_prefix": "kmb-live-unique-run-id",
+  "mode": "agentic",
+  "turn_timeout_seconds": 60,
+  "memory_root_env": "KMB_KYLINBOT_MEMORY_ROOT",
+  "memory_globs": ["memory/*.md"]
+}
