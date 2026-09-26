@@ -4,6 +4,8 @@
 
 **当前状态：框架已在本机用虚构替身跑通；KylinBot、OpenClaw 的真实成绩尚未产生。** [样例分数](examples/fixture-result.json)与[雷达图](examples/fixture-radar.svg)明确标为 `synthetic/fixture`，只证明流水线能识别故意制造的错误。真实评测须在 openKylin 上安装两款智能体、配置专用测试身份后运行。
 
+[两页项目介绍 PDF](docs/intro.pdf)可供快速评审；完整测试方法见[方案文档](docs/method.md)。
+
 ## 一条命令看结果
 
 需要 Python 3.10+。替身不需要网络或额外依赖：
@@ -58,8 +60,8 @@ CLI 也支持任意配置的批量对比，例如 `python3 -m kylin_memory_bench
 | 指标完整性 | 10% | 六维与总分、[结构化样例](examples/fixture-result.json)、[雷达图](examples/fixture-radar.svg) |
 | 创新与工程落地 | 10% | 回复、记忆和实际文件共同裁决；两个真实适配器、[一键脚本](run-live.sh)、[.deb 构建脚本](packaging/build-deb.sh) |
 
-任务书的交付还包括 openKylin 桌面上两款智能体的真实比较与 3–5 分钟完整录屏。当前仓库没有这些证据，也没有官方评委分数。六维各只有一条样本，适合作为首轮连通和评审演示，不足以声称统计显著差异。
+完整的测试前提、数据生成、结果收集和评分流程见[评测方案](docs/method.md)。任务书的交付还包括 openKylin 桌面上两款智能体的真实比较与 3–5 分钟完整录屏。当前仓库没有这些证据，也没有官方评委分数。六维各只有一条样本，适合作为首轮连通和评审演示，不足以声称统计显著差异。
 
 ## 构建与贡献
 
-`./packaging/build-deb.sh` 在带 `dpkg-deb` 的 openKylin 上生成 `dist/kylin-memory-bench_0.1.0_all.deb`；本机未验证该包的安装运行。测试命令：`python3 -m unittest discover -s tests`。源代码按 [MIT](LICENSE) 发布；问题报告和 PR 说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+`./packaging/build-deb.sh` 在带 `dpkg-deb` 的 openKylin 上生成 `dist/kylin-memory-bench_0.1.0_all.deb`；本机未验证该包的安装运行。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。源代码按 [MIT](LICENSE) 发布；问题报告和 PR 说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。
