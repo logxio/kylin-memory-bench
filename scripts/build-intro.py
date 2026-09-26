@@ -44,7 +44,7 @@ def rule(c, y):
 
 def footer(c, number):
     rule(c, 46)
-    label(c, "kylin-memory-bench · 开源长期记忆评测", LEFT, 30, 8)
+    label(c, "kylin-memory-bench / 开源长期记忆评测", LEFT, 30, 8)
     label(c, str(number) + " / 2", RIGHT - 26, 30, 8)
 
 
@@ -57,7 +57,7 @@ def first_page(c):
     y -= 48
     label(c, "问题", LEFT, y, 13, colors.HexColor("#111111"))
     y = para(c, "只问智能体“还记得吗”，不足以发现它把旧值继续用于任务、混淆相似实体，或把临时信息错误地写进长期记忆。评测必须跨会话，并对真实行动留证。", LEFT, y - 17, RIGHT - LEFT)
-    y -= 31
+    y -= 26
     label(c, "六项能力", LEFT, y, 13, colors.HexColor("#111111"))
     y -= 28
     abilities = [
@@ -72,17 +72,38 @@ def first_page(c):
         col = index % 2
         row = index // 2
         x = LEFT + col * 252
-        yy = y - row * 48
+        yy = y - row * 43
         label(c, name, x, yy, 11, colors.HexColor("#111111"))
         label(c, detail, x, yy - 18, 9)
-    y -= 3 * 48 + 12
+    y -= 3 * 43 + 8
     rule(c, y)
-    y -= 32
+    y -= 28
     label(c, "运行链", LEFT, y, 13, colors.HexColor("#111111"))
     y = para(c, "任务 JSON → 两款智能体适配器 → 原始回复 / 帧 / 文件 → 确定性检查项 → 六维分数、逐项原因和 SVG 雷达图。缺证据不得分；口头称已写文件，仍须核对文件内容。", LEFT, y - 16, RIGHT - LEFT)
-    y -= 25
-    label(c, "openKylin 3.0 真实运行", LEFT, y, 13, colors.HexColor("#111111"))
-    y = para(c, "<b>.deb 已在系统安装</b>，KylinBot 0.7.5 与 OpenClaw 2026.9.6 均完成真实模型对话。首批六维全跑：KylinBot <b>25.00/100</b>、OpenClaw <b>30.55/100</b>，双方各 14 步、无适配错误。<b>4 分 47 秒</b>真实桌面视频展示安装环境、运行与报告；分数是智能体评测结果，非大赛评委分。", LEFT, y - 16, RIGHT - LEFT)
+    y -= 22
+    label(c, "openKylin 3.0 / 12 例真实重复运行", LEFT, y, 13, colors.HexColor("#111111"))
+    y = para(c, "KylinBot 0.7.5 与 OpenClaw 2026.9.6 双实装；v0.2.0 发行包已在 openKylin 经 apt 安装。相同数据与配置、批前恢复干净记忆状态；每批每款智能体运行 12 例、28 步。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
+    y -= 17
+    label(c, "批次 / run ID", LEFT, y, 8.5)
+    label(c, "KylinBot: 分数 / 完成 / 超时", LEFT + 151, y, 8.5)
+    label(c, "OpenClaw: 分数 / 完成 / 超时", LEFT + 327, y, 8.5)
+    y -= 9
+    runs = [
+        ("1 / 92ae7d35ea9f", "31.95 / 21/28 / 3", "31.94 / 26/28 / 2"),
+        ("2 / abe90652770c", "40.28 / 28/28 / 0", "34.72 / 28/28 / 0"),
+        ("3 / 5ad3c72309be", "30.56 / 28/28 / 0", "34.72 / 28/28 / 0"),
+    ]
+    for batch, bot, claw in runs:
+        rule(c, y)
+        label(c, batch, LEFT, y - 17, 8.5, colors.HexColor("#111111"))
+        label(c, bot, LEFT + 151, y - 17, 8.5, colors.HexColor("#111111"))
+        label(c, claw, LEFT + 327, y - 17, 8.5, colors.HexColor("#111111"))
+        y -= 25
+    rule(c, y)
+    y = para(c, "三批总分均值 / 样本标准差：<b>KylinBot 34.26 / 5.26</b>，完成 77/84 步、3 次 TimeoutError；<b>OpenClaw 33.79 / 1.61</b>，完成 82/84 步、2 次 TimeoutError。均为智能体分数，非评委分。", LEFT, y - 15, RIGHT - LEFT, 9.2, 14)
+    y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260926-demo.mp4'>4 分 47 秒 openKylin 桌面视频</link>展示真实双智能体环境与历史六例运行；上表 12 例复跑有独立的去敏报告与摘要。", LEFT, y - 10, RIGHT - LEFT, 9, 14)
+    if y < 62:
+        raise ValueError(f"First page overlaps footer: y={y:.1f}")
     footer(c, 1)
     c.showPage()
 
@@ -90,15 +111,15 @@ def first_page(c):
 def second_page(c):
     label(c, "HOW IT IS SCORED", LEFT, HEIGHT - 53, 9)
     label(c, "从证据到可解释分数", LEFT, HEIGHT - 91, 19, colors.HexColor("#111111"))
-    y = para(c, "四类检查：回复 JSON 字段、产物 JSON 字段、禁用值是否出现在回复，以及禁用值是否进入可观察的记忆文件或 SQLite 记录。每项报告 pass / fail / missing 与来源。六维各自归一，再取均值。", LEFT, HEIGHT - 110, RIGHT - LEFT)
-    y -= 26
+    y = para(c, "四类检查：回复 JSON 字段、产物 JSON 字段、禁用值是否出现在回复或文件，以及禁用值是否进入可观察的记忆文件或 SQLite 记录。每项报告 pass / fail / missing 与来源。六维各自归一，再取均值。", LEFT, HEIGHT - 110, RIGHT - LEFT)
+    y -= 23
     label(c, "任务书评分项", LEFT, y, 12, colors.HexColor("#111111"))
     y -= 24
     rows = [
         ("任务定义与通用性", "15%", "六项跨会话任务与统一接口"),
-        ("数据设计质量", "25%", "虚构样本、旧值与禁用值、行动核验"),
+        ("数据设计质量", "25%", "六维各两例、虚构变体、行动核验"),
         ("自动评分能力", "25%", "原始证据、结构化判断与原因"),
-        ("稳定性与可复现性", "15%", "指纹、隔离输出、运行 ID、合同测试"),
+        ("稳定性与可复现性", "15%", "三批同指纹复跑、隔离、错误与完成率"),
         ("指标完整性", "10%", "六维分、总分、JSON、雷达图"),
         ("创新与工程落地", "10%", "回复 + 记忆 + 文件联合裁决"),
     ]
@@ -107,16 +128,17 @@ def second_page(c):
         label(c, name, LEFT, y - 7, 10, colors.HexColor("#111111"))
         label(c, weight, LEFT + 150, y - 7, 10, colors.HexColor("#111111"))
         label(c, detail, LEFT + 205, y - 7, 9)
-        y -= 37
+        y -= 35
     rule(c, y + 10)
-    y -= 26
-    label(c, "真实运行入口", LEFT, y, 12, colors.HexColor("#111111"))
-    y = para(c, "KylinBot 通过 Gateway 的 kylinbot.v1 WebSocket 对话；OpenClaw 通过固定 session key 的 agent CLI。run-live.sh 用同一任务集跑双智能体；公开仓提供 .deb 构建脚本、两批报告、雷达图与桌面视频。", LEFT, y - 17, RIGHT - LEFT)
-    y -= 23
-    label(c, "当前边界与下一发", LEFT, y, 12, colors.HexColor("#111111"))
-    y = para(c, "第二批加入 SQLite 只读观察，KylinBot / OpenClaw 为 33.33 / 30.55；KylinBot 有一步超时，只完成 13/14 步。两批顺序翻转，六维每维仅一例，不能据此判定稳定排名。下一发扩样本并量超时率与分数波动。", LEFT, y - 17, RIGHT - LEFT)
-    y -= 18
-    para(c, "代码、两批报告、雷达图与视频：<link href='https://github.com/logxio/kylin-memory-bench'>github.com/logxio/kylin-memory-bench</link>", LEFT, y, RIGHT - LEFT, 9, 14)
+    y -= 20
+    label(c, "重复口径与边界", LEFT, y, 12, colors.HexColor("#111111"))
+    y = para(c, "n=3 批；每批每维 2 例，两个智能体各 28 步。仅把同一数据和各智能体相同配置指纹的完整运行按批汇总，逐维与总分报告均值、样本标准差；逐步统计完成率与 TimeoutError。不同数据集、历史六例和替身结果不混算。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
+    y = para(c, "三批前均恢复并核验专用身份的干净记忆状态。仍只有同一台 VM、每维两例、三批观察；模型温度未显式固定，不能据此认定稳定排名、统计显著性或跨环境表现。原始证据私下保留，公开报告已去敏。", LEFT, y - 9, RIGHT - LEFT, 9.5, 15)
+    y -= 19
+    label(c, "版本与参与", LEFT, y, 12, colors.HexColor("#111111"))
+    y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.0'>v0.2.0 Release 与 .deb</link>、<link href='https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml'>Ubuntu CI</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260926-v020-repeat-summary.json'>三批去敏摘要</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/CONTRIBUTING.md'>贡献指南</link>与 <link href='https://github.com/logxio/kylin-memory-bench/issues/new/choose'>Issue 入口</link>。公开仓提供复跑命令与方法；CI 验证干净构建和替身，真实 openKylin 结果见报告。", LEFT, y - 17, RIGHT - LEFT, 9.2, 15)
+    if y < 62:
+        raise ValueError(f"Second page overlaps footer: y={y:.1f}")
     footer(c, 2)
     c.showPage()
 

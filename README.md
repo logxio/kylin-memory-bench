@@ -77,7 +77,7 @@ python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/r
 | 指标完整性 | 10% | 六维与总分、[历史六例结构化样例](examples/fixture-result.json)、[雷达图](examples/fixture-radar.svg)；当前 12 例由一键命令生成 |
 | 创新与工程落地 | 10% | 回复、记忆和实际文件共同裁决；两个真实适配器、[一键脚本](run-live.sh)、[.deb 构建脚本](packaging/build-deb.sh) |
 
-完整的测试前提、数据生成、结果收集和评分流程见[评测方案](docs/method.md)。真实六维比较已有上方的报告、雷达图与桌面视频；官方评委分数尚无。每批每维只有一条样本，不能据此声称统计显著差异。
+完整的测试前提、数据生成、结果收集和评分流程见[评测方案](docs/method.md)。真实六维比较已有上方的报告、雷达图与桌面视频；官方评委分数尚无。历史六例每维一条，当前 12 例每维两条且仅复跑三批，不能据此声称统计显著差异。
 
 ## 构建与贡献
 
