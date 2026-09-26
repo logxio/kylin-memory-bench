@@ -8,7 +8,7 @@ from unittest.mock import patch
 from kylin_memory_bench.__main__ import run_case
 from kylin_memory_bench.adapters import Turn
 from kylin_memory_bench.model import read_json, validate_dataset
-from kylin_memory_bench.scoring import score_case
+from kylin_memory_bench.scoring import LEGACY_SCORING_VERSION, score_case
 
 
 class ScoringContractTest(unittest.TestCase):
@@ -54,6 +54,41 @@ class ScoringContractTest(unittest.TestCase):
         evidence = {"workspace": ".", "turns": [{"step": "probe", "reply": '{"owner":"林溪","format":"PDF"}',
                                                      "source": "test:observed"}], "files": {}, "memory": {}}
         self.assertEqual(score_case(case, evidence), score_case(case, evidence))
+
+    def test_reply_equals_accepts_only_complete_standalone_json_fence(self):
+        case = {"id": "synthetic-json", "ability": "recall", "checks": [
+            {"id": "value", "kind": "reply_equals", "step": "probe", "path": "value", "equals": 7}]}
+        def status(reply, version=None):
+            evidence = {"workspace": ".", "turns": [{"step": "probe", "reply": reply,
+                                                       "source": "synthetic:test"}],
+                        "files": {}, "memory": {}}
+            kwargs = {} if version is None else {"scoring_version": version}
+            return score_case(case, evidence, **kwargs)["checks"][0]["status"]
+
+        for reply in (' {"value":7}\n', '```json\n{"value":7}\n```',
+                      '\n``` JSON \r\n {"value":7} \r\n``` \n'):
+            with self.subTest(reply=reply):
+                self.assertEqual(status(reply), "pass")
+        self.assertEqual(status('```json\n{"value":7}\n```', LEGACY_SCORING_VERSION), "fail")
+        for reply in ('Here: ```json\n{"value":7}\n```',
+                      '```json\n{"value":7}\n``` after',
+                      '```json\n{"value":7}\n```\n```json\n{"value":7}\n```',
+                      '```json\n{"value":7} {"value":7}\n```',
+                      '```json\n{"value":7\n```',
+                      '```json\n{"value":7}',
+                      '```text\n{"value":7}\n```'):
+            with self.subTest(reply=reply):
+                self.assertEqual(status(reply), "fail")
+
+    def test_file_equals_keeps_strict_file_parsing(self):
+        case = {"id": "synthetic-file", "ability": "task_reuse", "checks": [
+            {"id": "actual", "kind": "file_equals", "file": "output.json",
+             "path": "value", "equals": 7}]}
+        evidence = {"workspace": ".", "turns": [],
+                    "files": {"output.json": {"source": "synthetic:file",
+                                              "content": '```json\n{"value":7}\n```'}},
+                    "memory": {}}
+        self.assertEqual(score_case(case, evidence)["checks"][0]["status"], "fail")
 
 
 class SqliteMemoryObservationTest(unittest.TestCase):

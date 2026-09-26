@@ -82,14 +82,14 @@ def first_page(c):
     y = para(c, "任务 JSON → 两款智能体适配器 → 原始回复 / 帧 / 文件 → 确定性检查项 → 六维分数、逐项原因和 SVG 雷达图。缺证据不得分；口头称已写文件，仍须核对文件内容。", LEFT, y - 16, RIGHT - LEFT)
     y -= 22
     label(c, "openKylin 3.0 / 12 例真实重复运行", LEFT, y, 13, colors.HexColor("#111111"))
-    y = para(c, "KylinBot 0.7.5 与 OpenClaw 2026.9.6 双实装；v0.2.0 发行包已在 openKylin 经 apt 安装。相同数据与配置、批前恢复干净记忆状态；每批每款智能体运行 12 例、28 步。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
+    y = para(c, "KylinBot 0.7.5 与 OpenClaw 2026.9.6 双实装；v0.2.0 包已在 openKylin 经 apt 安装。下表用同一三批原始证据按 v0.2.1 代码离线重算，未重跑智能体。相同数据与配置，批前恢复干净记忆状态；每批每款 12 例、28 步。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
     y -= 17
     label(c, "批次 / run ID", LEFT, y, 8.5)
     label(c, "KylinBot: 分数 / 完成 / 超时", LEFT + 151, y, 8.5)
     label(c, "OpenClaw: 分数 / 完成 / 超时", LEFT + 327, y, 8.5)
     y -= 9
     runs = [
-        ("1 / 92ae7d35ea9f", "31.95 / 21/28 / 3", "31.94 / 26/28 / 2"),
+        ("1 / 92ae7d35ea9f", "31.95 / 21/28 / 3", "40.28 / 26/28 / 2"),
         ("2 / abe90652770c", "40.28 / 28/28 / 0", "34.72 / 28/28 / 0"),
         ("3 / 5ad3c72309be", "30.56 / 28/28 / 0", "34.72 / 28/28 / 0"),
     ]
@@ -100,7 +100,7 @@ def first_page(c):
         label(c, claw, LEFT + 327, y - 17, 8.5, colors.HexColor("#111111"))
         y -= 25
     rule(c, y)
-    y = para(c, "三批总分均值 / 样本标准差：<b>KylinBot 34.26 / 5.26</b>，完成 77/84 步、3 次 TimeoutError；<b>OpenClaw 33.79 / 1.61</b>，完成 82/84 步、2 次 TimeoutError。均为智能体分数，非评委分。", LEFT, y - 15, RIGHT - LEFT, 9.2, 14)
+    y = para(c, "三批总分均值 / 样本标准差：<b>KylinBot 34.26 / 5.26</b>，完成 77/84 步、3 次 TimeoutError；<b>OpenClaw 36.57 / 3.21</b>，完成 82/84 步、2 次 TimeoutError。旧严格口径 OpenClaw 首批 31.94、均值 33.79 / 1.61。均为智能体分数，非评委分。", LEFT, y - 15, RIGHT - LEFT, 9.2, 14)
     y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260926-demo.mp4'>4 分 47 秒 openKylin 桌面视频</link>展示真实双智能体环境与历史六例运行；上表 12 例复跑有独立的去敏报告与摘要。", LEFT, y - 10, RIGHT - LEFT, 9, 14)
     if y < 62:
         raise ValueError(f"First page overlaps footer: y={y:.1f}")
@@ -132,11 +132,11 @@ def second_page(c):
     rule(c, y + 10)
     y -= 20
     label(c, "重复口径与边界", LEFT, y, 12, colors.HexColor("#111111"))
-    y = para(c, "n=3 批；每批每维 2 例，两个智能体各 28 步。仅把同一数据和各智能体相同配置指纹的完整运行按批汇总，逐维与总分报告均值、样本标准差；逐步统计完成率与 TimeoutError。不同数据集、历史六例和替身结果不混算。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
-    y = para(c, "三批前均恢复并核验专用身份的干净记忆状态。仍只有同一台 VM、每维两例、三批观察；模型温度未显式固定，不能据此认定稳定排名、统计显著性或跨环境表现。原始证据私下保留，公开报告已去敏。", LEFT, y - 9, RIGHT - LEFT, 9.5, 15)
+    y = para(c, "n=3 批；每批每维 2 例，两个智能体各 28 步。仅汇总同一数据、各智能体相同配置指纹及相同评分器版本的完整运行；逐维与总分报告均值、样本标准差，逐步统计完成率与 TimeoutError。历史六例和替身结果不混算。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
+    y = para(c, "新规则仅接受纯 JSON 或无外围正文的唯一完整 json 围栏；首批 OpenClaw 两项 fail→pass，其余 148 项不变。三批前均恢复并核验干净记忆状态；同一台 VM、每维两例、模型温度未显式固定，不能认定稳定排名或统计显著性。原始证据私下保留。", LEFT, y - 9, RIGHT - LEFT, 9.5, 15)
     y -= 19
     label(c, "版本与参与", LEFT, y, 12, colors.HexColor("#111111"))
-    y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.0'>v0.2.0 Release 与 .deb</link>、<link href='https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml'>Ubuntu CI</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260926-v020-repeat-summary.json'>三批去敏摘要</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/CONTRIBUTING.md'>贡献指南</link>与 <link href='https://github.com/logxio/kylin-memory-bench/issues/new/choose'>Issue 入口</link>。公开仓提供复跑命令与方法；CI 验证干净构建和替身，真实 openKylin 结果见报告。", LEFT, y - 17, RIGHT - LEFT, 9.2, 15)
+    y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.1'>v0.2.1 Release 与 .deb</link>、<link href='https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml'>Ubuntu CI</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260926-v021-offline-repeat-summary.json'>离线摘要</link>与<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260926-v021-offline-audit.json'>逐项审计</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/CONTRIBUTING.md'>贡献指南</link>与 <link href='https://github.com/logxio/kylin-memory-bench/issues/new/choose'>Issue 入口</link>。v0.2.1 仅通过 Ubuntu 构建检验，尚未在 openKylin 安装；真机运行发生于 v0.2.0。", LEFT, y - 17, RIGHT - LEFT, 9.2, 15)
     if y < 62:
         raise ValueError(f"Second page overlaps footer: y={y:.1f}")
     footer(c, 2)

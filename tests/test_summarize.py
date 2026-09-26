@@ -2,6 +2,7 @@ import unittest
 
 from kylin_memory_bench.model import ABILITIES, fingerprint, read_json, validate_dataset
 from kylin_memory_bench.scoring import score_case
+from kylin_memory_bench.scoring import LEGACY_SCORING_VERSION, SCORING_VERSION
 from kylin_memory_bench.summarize import summarize
 
 
@@ -49,6 +50,14 @@ class VariantAndRepeatTest(unittest.TestCase):
         self.assertEqual(agent["incomplete_steps"], 1)
         self.assertEqual(agent["timeout_error_count"], 1)
         self.assertEqual(agent["overall"]["sample_stddev"], 0.0)
+        self.assertEqual(summary["scoring_version"], LEGACY_SCORING_VERSION)
+
+    def test_repeat_summary_rejects_mixed_scoring_versions(self):
+        first = self.make_result("a")
+        second = self.make_result("b")
+        second["scoring_version"] = SCORING_VERSION
+        with self.assertRaisesRegex(ValueError, "scoring version differs"):
+            summarize(self.dataset, [("first", first), ("second", second)])
 
     def test_repeat_summary_rejects_changed_dataset_or_config(self):
         first = self.make_result("a")

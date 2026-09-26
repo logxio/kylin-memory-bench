@@ -1,12 +1,32 @@
 """Score only observed replies and files. Missing evidence never earns points."""
 
 import json
+import re
 from pathlib import Path
 
 from .model import ABILITIES, json_at, safe_relative
 
 
-def score_case(case, evidence):
+LEGACY_SCORING_VERSION = "kmb.scoring.v0.2.0-strict"
+SCORING_VERSION = "kmb.scoring.v0.2.1-json-fence"
+JSON_FENCE = re.compile(r"\s*```[ \t]*json[ \t]*\r?\n(.*?)\r?\n```[ \t]*\s*", re.IGNORECASE | re.DOTALL)
+
+
+def parse_reply_json(reply, scoring_version):
+    if scoring_version == LEGACY_SCORING_VERSION:
+        return json.loads(reply), False
+    try:
+        return json.loads(reply), False
+    except json.JSONDecodeError:
+        fence = JSON_FENCE.fullmatch(reply)
+        if fence is None:
+            raise
+        return json.loads(fence.group(1)), True
+
+
+def score_case(case, evidence, scoring_version=SCORING_VERSION):
+    if scoring_version not in (LEGACY_SCORING_VERSION, SCORING_VERSION):
+        raise ValueError("unknown scoring version: " + str(scoring_version))
     checks = []
     workspace = Path(evidence["workspace"])
     turns = {turn["step"]: turn for turn in evidence["turns"]}
@@ -21,9 +41,11 @@ def score_case(case, evidence):
             if turn is not None:
                 sources = [turn["source"] + ":" + check["step"]]
                 try:
-                    value = json_at(json.loads(turn["reply"]), check["path"])
+                    reply_json, fenced = parse_reply_json(turn["reply"], scoring_version)
+                    value = json_at(reply_json, check["path"])
                     status = "pass" if value == check["equals"] else "fail"
-                    reason = ("Answer field matches the expected value." if status == "pass" else
+                    reason = (("Answer field matches the expected value in a standalone JSON code fence."
+                               if fenced else "Answer field matches the expected value.") if status == "pass" else
                               "Answer field differs: observed " + repr(value) + ".")
                 except (ValueError, KeyError, TypeError) as exc:
                     status = "fail"
@@ -70,8 +92,8 @@ def score_case(case, evidence):
     return {"id": case["id"], "ability": case["ability"], "score": score, "checks": checks}
 
 
-def score_run(cases, evidences):
-    results = [score_case(case, evidences[case["id"]]) for case in cases]
+def score_run(cases, evidences, scoring_version=SCORING_VERSION):
+    results = [score_case(case, evidences[case["id"]], scoring_version) for case in cases]
     dimensions = {}
     for ability in ABILITIES:
         subset = [result["score"] for result in results if result["ability"] == ability]

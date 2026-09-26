@@ -14,7 +14,7 @@ from pathlib import Path
 from .adapters import make_agent
 from .model import fingerprint, read_json, safe_relative, validate_dataset
 from .report import radar_svg, text_report
-from .scoring import score_run
+from .scoring import SCORING_VERSION, score_run
 
 
 def observe_memory_files(workspace, config):
@@ -176,7 +176,8 @@ def main(argv=None):
         agents.append({"name": name, "kind": config["kind"], "evidence_class": evidence_class,
                        "config_fingerprint": fingerprint(config), "scores": scores,
                        "evidence": evidences})
-    result = {"schema": "kmb.result.v1", "run_id": run_id, "dataset_fingerprint": fingerprint(dataset),
+    result = {"schema": "kmb.result.v1", "scoring_version": SCORING_VERSION,
+              "run_id": run_id, "dataset_fingerprint": fingerprint(dataset),
               "evidence_class": "synthetic/fixture" if all(a["kind"] == "fixture" for a in agents) else "live/observed",
               "elapsed_seconds": round(time.monotonic() - started, 3), "agents": agents}
     (output / "result.json").write_text(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")

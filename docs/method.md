@@ -2,7 +2,7 @@
 
 ## 目的与运行前提
 
-评测对象是能在 openKylin 上运行、能跨会话保留用户信息的智能体。目标是判断：信息有没有被记住、何时该被更新或遗忘、是否误用到行动中。v0.2.0 任务集是六项能力各两条，共 12 例；它仍不构成智能体总体能力的代表性样本。
+评测对象是能在 openKylin 上运行、能跨会话保留用户信息的智能体。目标是判断：信息有没有被记住、何时该被更新或遗忘、是否误用到行动中。当前任务集是六项能力各两条，共 12 例；它仍不构成智能体总体能力的代表性样本。
 
 真实比较时，两款智能体须使用独立、干净的测试身份；记录操作系统版本、智能体版本、模型、温度、记忆设置、测试时间和资源。一个测试案例内的不同 `session` 必须进入该智能体不同会话，但共享该身份的长期记忆。同一案例只用虚构信息；不同案例名称互不重合，避免串题。若版本不支持跨会话记忆、工具写文件或暴露可读记忆记录，应在结果中保留失败与缺证据，而非人工补答案。
 
@@ -24,16 +24,24 @@ KylinBot 使用其 Gateway `kylinbot.v1` WebSocket 接口，保留 `connect`、`
 
 评分不判断自然语言等义回答；测试 prompt 因此要求明确 JSON 格式。此做法牺牲部分表达自由，换取首轮可复核的自动评分。`memory_forbidden` 只检查配置暴露的文件或 SQLite 记录范围，不等同于证明其他隐藏存储、向量库、远端服务均未持久化。数据库不可读或表结构不符时明确报观察错误，不能判通过。文件检查只看最终状态，不能证明过程中从未短暂写错。真实结果须附完整原始证据和运行环境才可比较。
 
+v0.2.1 的 `reply_equals` 接受完整纯 JSON，或整段回复仅有一个带 `json` 标签的完整围栏、其内部是完整 JSON；标签大小写和边缘空白可变。外围正文、多段围栏、不完整围栏、局部 JSON 或多个对象仍判 `fail`。`file_equals`、`forbidden_text`、`memory_forbidden`、缺证据零分和权重不变。每份新结果记录 `kmb.scoring.v0.2.1-json-fence`；没有标识的旧结果按 `kmb.scoring.v0.2.0-strict` 解释。两个版本不能合并计算重复摘要。
+
 ## 复现与交付
 
-本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误、12 例变体、重复汇总和两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；v0.2.0 的发行包已在 openKylin 3.0 上经 `apt install` 安装，依赖和已安装入口通过检查，操作与结果见[实跑指南](live-openkylin.md)。
+本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误、12 例变体、重复汇总和两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；v0.2.0 的发行包已在 openKylin 3.0 上经 `apt install` 安装，依赖和已安装入口通过检查。v0.2.1 包目前只经 Ubuntu CI 构建检验，尚未在 openKylin 安装，操作与结果见[实跑指南](live-openkylin.md)。
 
 ## 重复运行统计
 
 一批是同一份完整数据集、同一套智能体配置各跑一次的 `result.json`。每次运行用独立目录保留原始回复、文件和错误。批前恢复两款智能体经验证的相同干净记忆与会话状态；换运行 ID 只隔离短会话，不清除长期记忆。若无法验证隔离，保留各批观察值，但不要把它们的标准差解释成独立重复的稳定性。
 
-用 `python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/repeat-summary.json out/full-1/result.json out/full-2/result.json ...` 生成独立 JSON。命令拒绝不同 `dataset_fingerprint`、智能体集合/顺序、`config_fingerprint`、证据类别、重复 run ID 或只跑单案例的输入，也不会覆盖已有摘要。它按每款智能体逐批取原有六维分与总分，报告算术均值和样本标准差（`n=1` 时标准差为 `null`）；这不是置信区间或显著性检验。每个案例步骤的完成率是成功留下 turn 的批数除以输入批数；错误后跳过的步骤记未完成，`TimeoutError` 按原始错误类型计数。若步骤有错误但仍有部分文件证据，评分依旧由原评分器决定。摘要保留 run ID、样本数和未完成数，可回查原始 `result.json`，不包含原始回复。
+用 `python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/repeat-summary.json out/full-1/result.json out/full-2/result.json ...` 生成独立 JSON。命令拒绝不同 `dataset_fingerprint`、智能体集合/顺序、`config_fingerprint`、评分器版本、证据类别、重复 run ID 或只跑单案例的输入，也不会覆盖已有摘要。它按每款智能体逐批取原有六维分与总分，报告算术均值和样本标准差（`n=1` 时标准差为 `null`）；这不是置信区间或显著性检验。每个案例步骤的完成率是成功留下 turn 的批数除以输入批数；错误后跳过的步骤记未完成，`TimeoutError` 按原始错误类型计数。若步骤有错误但仍有部分文件证据，评分依旧由原评分器决定。摘要保留 run ID、样本数和未完成数，可回查原始 `result.json`，不包含原始回复。
 
 [两批历史六例真实报告与雷达图](../README.md)记录了 v0.1.0 数据的首轮比较，桌面实录见[公开视频](../examples/live-openkylin-20260926-demo.mp4)。每维一例、第二批有一次超时，分数不能解释为稳定排名；它们与当前 12 例的 dataset 指纹不同，不能混算。替身输出只用于评分流水线验证。
 
-当前 v0.2.0 数据已经完成[三批真实重复摘要](../examples/live-openkylin-20260926-v020-repeat-summary.json)，各批运行 ID、数据和配置指纹、原始文件哈希、错误位置与逐项检查来源见[公开去敏记录](../examples/live-openkylin-20260926-v020-provenance.json)。三批前都在停止 Gateway 后把两款测试身份恢复到同一干净基线，并核验 KylinBot SQLite 中记忆、会话计数为零，OpenClaw 测试工作区无 `MEMORY.md`。这个过程减少了已知跨批长期记忆污染；模型温度未显式固定，三批和两款智能体的实现行为仍有随机性。原始回复、文件和记忆记录私下保留以便核查，公开逐项报告仅提供去敏判定与原因。样本数仅三，标准差只描述这三次，不能证明统计显著性或跨环境稳定性。
+v0.2.0 包曾在 openKylin 3.0 运行三批，旧[严格口径摘要](https://github.com/logxio/kylin-memory-bench/blob/bb8fdda83db52919bff7be352f69856008dd291a/examples/live-openkylin-20260926-v020-repeat-summary.json)和[逐项报告](https://github.com/logxio/kylin-memory-bench/tree/bb8fdda83db52919bff7be352f69856008dd291a/examples)保持原样。旧评分器把首批 OpenClaw `discrimination-02/probe` 的唯一完整 `json` 围栏整体交给 `json.loads`，两个正确字段均判 `fail`。v0.2.1 用保存的三份原始 `result.json` 离线重评分，没有启动智能体：
+
+```bash
+python3 -m kylin_memory_bench.rescore --dataset data/tasks.json --output out/offline-rescore source-1/result.json source-2/result.json source-3/result.json
+```
+
+命令先以旧严格规则重算并核对原分，再为每批创建独立的新 `result.json`，同时写出三批去敏 `audit.json` 和独立重复摘要；原文件不覆盖。原始文件的 SHA-256、运行 ID、数据/配置指纹、每项旧新判定和分数见[公开离线审计](../examples/live-openkylin-20260926-v021-offline-audit.json)与[新重复摘要](../examples/live-openkylin-20260926-v021-offline-repeat-summary.json)。只改变上述两项 OpenClaw 判定；KylinBot 三批虽各有完整围栏，内部值仍错误，分数不变。三批前都在停止 Gateway 后把两款测试身份恢复到同一干净基线，并核验 KylinBot SQLite 中记忆、会话计数为零，OpenClaw 测试工作区无 `MEMORY.md`。这个过程减少了已知跨批长期记忆污染；模型温度未显式固定，三批和两款智能体的实现行为仍有随机性。原始回复、文件和记忆记录私下保留以便核查，公开审计只给去敏判定与来源哈希。样本数仅三，标准差只描述这三次，不能证明统计显著性或跨环境稳定性。

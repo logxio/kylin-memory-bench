@@ -2,13 +2,15 @@
 
 把智能体的长期记忆变成可复查的任务、运行证据和六维分数。它向同一款智能体连续发送跨会话任务，再核对回复、实际写出的文件和可观察的记忆文件；每个得分都有检查项与证据来源。
 
-**当前 12 例真实重复运行 `live/observed`（2026-09-26，v0.2.0）：**同一台 openKylin 3.0、相同数据与智能体配置，KylinBot 0.7.5 和 OpenClaw 2026.9.6 各跑三批，每批六维各两例、28 步。批前恢复并核验同一干净记忆状态，模型均为 `qwen-plus`。KylinBot 三批总分为 31.95、40.28、30.56，均值 34.26、样本标准差 5.26，完成 77/84 步，发生 3 次 `TimeoutError`；OpenClaw 为 31.94、34.72、34.72，均值 33.79、样本标准差 1.61，完成 82/84 步，发生 2 次 `TimeoutError`。这些是当前配置下的三批观察值，不证明任一智能体稳定领先。查看[重复摘要及逐步完成率](examples/live-openkylin-20260926-v020-repeat-summary.json)、[三批去敏逐项报告](examples/live-openkylin-20260926-v020-full-1-report.txt)、[第二批](examples/live-openkylin-20260926-v020-full-2-report.txt)、[第三批](examples/live-openkylin-20260926-v020-full-3-report.txt)、[第三批六维雷达图](examples/live-openkylin-20260926-v020-full-3-radar.svg)和[运行 ID、指纹、原始文件哈希及检查来源](examples/live-openkylin-20260926-v020-provenance.json)。原始回复、文件和记忆记录保留在私有证据中；公开文件不含未经去敏的内容。模型温度未显式固定，复跑时应记录实际设置。
+**同一批 12 例真实证据，v0.2.1 离线重评分：**KylinBot 0.7.5 和 OpenClaw 2026.9.6 在 openKylin 3.0 上用 v0.2.0 包各跑三批，每批六维各两例、28 步。批前恢复并核验干净记忆状态，数据与每款智能体的配置指纹在三批内一致。v0.2.1 评分器从保存的原始回复重算，没有重新调用智能体。KylinBot 三批仍为 31.95、40.28、30.56，均值 34.26、样本标准差 5.26，完成 77/84 步、3 次 `TimeoutError`；OpenClaw 为 40.28、34.72、34.72，均值 36.57、样本标准差 3.21，完成 82/84 步、2 次 `TimeoutError`。查看[新摘要及逐步完成率](examples/live-openkylin-20260926-v021-offline-repeat-summary.json)和[150 项去敏判定、变化原因及原始 SHA-256](examples/live-openkylin-20260926-v021-offline-audit.json)。同机、每维两例、三批的观察值不证明任一智能体稳定领先；模型温度未显式固定。
+
+v0.2.0 严格 JSON 解析曾将首批 OpenClaw `discrimination-02/probe` 的唯一完整 `json` 围栏当成无效回复，两个正确字段均判 `fail`，首批总分记为 31.94，三批均值 33.79、样本标准差 1.61。新规则只接受纯 JSON 或整段唯一、无外围正文的 `json` 围栏，这两项改为 `pass`；KylinBot 三批也各有一条完整围栏，但字段值不符，分数不变。旧[严格口径摘要](https://github.com/logxio/kylin-memory-bench/blob/bb8fdda83db52919bff7be352f69856008dd291a/examples/live-openkylin-20260926-v020-repeat-summary.json)、[逐项报告](https://github.com/logxio/kylin-memory-bench/blob/bb8fdda83db52919bff7be352f69856008dd291a/examples/live-openkylin-20260926-v020-full-1-report.txt)及[原始哈希与来源](examples/live-openkylin-20260926-v020-provenance.json)保留；原始回复、文件和记忆记录仍私下保存。其他两批的[去敏报告](examples/live-openkylin-20260926-v020-full-2-report.txt)、[第三批](examples/live-openkylin-20260926-v020-full-3-report.txt)与[雷达图](examples/live-openkylin-20260926-v020-full-3-radar.svg)均属旧严格口径。
 
 **历史六例真实全批 `live/observed`（2026-09-26，v0.1.0 数据）：**同一台 openKylin 3.0 VM 上，KylinBot 0.7.5 得 25.00/100，OpenClaw 2026.9.6 得 30.55/100。两者共用阿里云百炼 `qwen-plus`，各完成 14 个 live turns，均无适配器错误。查看[逐项报告](examples/live-openkylin-20260926-report.txt)、[六维雷达图](examples/live-openkylin-20260926-radar.svg)和[4 分 47 秒真实桌面录屏](examples/live-openkylin-20260926-demo.mp4)。每维仅一例；KylinBot 实际将记忆存于 SQLite，旧文件观察器把 `boundary-01` 的 `not-persisted` 判为 `MISSING`，这 5.55 分差不能当作稳定的系统排名。
 
 换用逐案例 SQLite 只读观察器重跑后，KylinBot 33.33、OpenClaw 30.55；KylinBot 的禁存项被真实数据库记录判为 `FAIL`，但它在另一个案例遇到一次超时，只完成 13/14 步。查看[第二批报告](examples/live-openkylin-20260926-sqlite-report.txt)、[雷达图](examples/live-openkylin-20260926-sqlite-radar.svg)与[来源及错误摘要](examples/live-openkylin-20260926-sqlite-summary.json)。两批同题的相对顺序已翻转，当前数字不支持稳定排名。
 
-[v0.1.0 六例替身结果](examples/fixture-result.json)与[替身雷达图](examples/fixture-radar.svg)标为 `synthetic/fixture`，只证明当时的流水线能识别故意制造的错误，不是两款真实智能体的成绩。当前 v0.2.0 数据保留原六例，另加六个变体；上方历史真实分数也不与新数据混算。
+[v0.1.0 六例替身结果](examples/fixture-result.json)与[替身雷达图](examples/fixture-radar.svg)标为 `synthetic/fixture`，只证明当时的流水线能识别故意制造的错误，不是两款真实智能体的成绩。当前 12 例数据保留原六例，另加六个变体；上方历史真实分数也不与新数据混算。
 
 [两页项目介绍 PDF](docs/intro.pdf)可供快速评审；完整测试方法见[方案文档](docs/method.md)。
 
@@ -22,7 +24,7 @@ cd kylin-memory-bench
 ./run-fixture.sh
 ```
 
-脚本打印新建的 `out/fixture-...` 目录，其中 `result.json` 保存原始回复、文件快照、逐项判定和六维分；`report.txt` 给人读原因；`radar.svg` 可直接在浏览器打开。同样的任务与证据产生同样的分数。默认整批 12 例、28 步，两种虚构替身各跑一轮。本机 v0.2.0 结果为 `Synthetic reference` 100、`Synthetic faulty` 16.67；**它们不是 KylinBot 或 OpenClaw 的表现**。
+脚本打印新建的 `out/fixture-...` 目录，其中 `result.json` 保存原始回复、文件快照、逐项判定和六维分；`report.txt` 给人读原因；`radar.svg` 可直接在浏览器打开。同样的任务与证据产生同样的分数。默认整批 12 例、28 步，两种虚构替身各跑一轮。本机 v0.2.1 结果为 `Synthetic reference` 100、`Synthetic faulty` 16.67；**它们不是 KylinBot 或 OpenClaw 的表现**。
 
 ## 测什么
 
@@ -39,11 +41,11 @@ cd kylin-memory-bench
 
 ## 接真实智能体
 
-双智能体、`.deb` 和桌面录屏的操作顺序见 [openKylin 3.0 实跑指南](docs/live-openkylin.md)。在 openKylin 3.0 上可下载 [v0.2.0 发行包](https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.0/kylin-memory-bench_0.2.0_all.deb) 安装；`apt` 会从系统源解析 `python3-websocket`：
+双智能体、`.deb` 和桌面录屏的操作顺序见 [openKylin 3.0 实跑指南](docs/live-openkylin.md)。[v0.2.1 发行包](https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.1/kylin-memory-bench_0.2.1_all.deb)包含修正后的评分器；它通过 Ubuntu 干净构建，尚未在 openKylin 3.0 安装。v0.2.0 包曾在该系统经 `apt install` 验收。
 
 ```bash
-curl -fL -o kylin-memory-bench_0.2.0_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.0/kylin-memory-bench_0.2.0_all.deb
-sudo apt install ./kylin-memory-bench_0.2.0_all.deb
+curl -fL -o kylin-memory-bench_0.2.1_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.1/kylin-memory-bench_0.2.1_all.deb
+sudo apt install ./kylin-memory-bench_0.2.1_all.deb
 ```
 
 openKylin 3.0 预装 KylinBot 0.7.5；先执行 `kylin-bot config set gateway.listen-tcp true` 和 `kylin-bot gateway start`。[KylinBot Gateway 自动测试脚本](https://gitee.com/openkylin/kylin-botshell/tree/develop-for-skill-autotest)给出 `kylinbot.v1` WebSocket 协议：在 `ws://127.0.0.1:42617/ws/chat` 连接后发送 `connect`、`message`，并以 `done.full_response` 作为最终回复。适配器可按上游的 `/admin/paircode/new`、`/pair` 接口自动与本机网关配对；远端网关则须把令牌放入环境变量 `KYLINBOT_WS_TOKEN`。适配器使用 Authorization header，不主动把令牌写进结果。`configs/kylinbot.example.json` 可改网关地址和超时。
@@ -64,7 +66,7 @@ CLI 也支持任意配置的批量对比，例如 `python3 -m kylin_memory_bench
 python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/repeat-summary.json out/full-1/result.json out/full-2/result.json out/full-3/result.json
 ```
 
-摘要是独立 JSON：每款智能体的各维与总分均值、样本标准差、逐步完成率、未完成数和 `TimeoutError` 数。单批标准差为 `null`。输入必须是同一数据与相同智能体配置指纹的完整运行；旧六例报告和当前 12 例无法混算。摘要不代替原始证据。[方法与隔离要求](docs/method.md)列出统计口径。
+摘要是独立 JSON：每款智能体的各维与总分均值、样本标准差、逐步完成率、未完成数和 `TimeoutError` 数。单批标准差为 `null`。输入必须是同一数据、相同智能体配置指纹和相同评分器版本的完整运行；缺少版本标识的历史结果按 v0.2.0 严格口径处理，不能与 v0.2.1 重评分混算。摘要不代替原始证据。[方法与隔离要求](docs/method.md)列出统计口径。
 
 ## 任务书逐项对应
 
@@ -81,6 +83,6 @@ python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/r
 
 ## 构建与贡献
 
-当前版本为 v0.2.0。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.2.0_all.deb`；该包已在 openKylin 3.0 上通过 `apt install` 安装，系统源解析了 `python3-websocket`，已安装入口及替身命令通过检查。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml) 在 Ubuntu 的干净 checkout 中运行单元测试、替身与打包；真实 openKylin 证据见上方报告与下方新增批次。
+当前版本为 v0.2.1。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.2.1_all.deb`；v0.2.0 包已在 openKylin 3.0 上通过 `apt install`，v0.2.1 包的安装验收仍须在该系统执行。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml) 在 Ubuntu 的干净 checkout 中运行单元测试、替身与打包；真实 openKylin 运行证据由 v0.2.0 原始三批提供。
 
 接下来的重点是继续定位三批中出现的超时与零分案例，检查不同版本记忆文件和 SQLite 的逐案例读取，并接收外部 openKylin 复跑的去敏证据。三批仍只是同机、同模型的小样本，不能推断跨环境稳定性或显著差异。源代码按 [MIT](LICENSE) 发布；用 [Issue 模板](https://github.com/logxio/kylin-memory-bench/issues/new/choose)提交可复现问题或案例，用 [贡献指南](CONTRIBUTING.md)准备 PR。

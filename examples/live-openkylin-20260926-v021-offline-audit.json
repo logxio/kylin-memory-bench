@@ -1,0 +1,1721 @@
+{
+  "runs": [
+    {
+      "agents": [
+        {
+          "accepted_json_fence_steps": [
+            {
+              "case_id": "recall-02",
+              "step": "probe"
+            }
+          ],
+          "audited_checks": 25,
+          "cases": [
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-codename",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "recalled-owner",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "recalled-format",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "recall-01",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-contact",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                },
+                {
+                  "id": "obsolete-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                }
+              ],
+              "id": "update-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "north-date",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                },
+                {
+                  "id": "south-date",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                }
+              ],
+              "id": "discrimination-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-recalled",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "boundary-01",
+              "new_score": 66.67,
+              "old_score": 66.67
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-delimiter",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-01",
+              "new_score": 33.33,
+              "old_score": 33.33
+            },
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-shelf",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "retention-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "meeting-point",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "container-color",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-cabinet",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                },
+                {
+                  "id": "obsolete-cabinet-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                }
+              ],
+              "id": "update-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "east-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "west-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "boundary-02",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-header",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-02",
+              "new_score": 33.33,
+              "old_score": 33.33
+            }
+          ],
+          "changes": [],
+          "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+          "kind": "kylinbot",
+          "name": "KylinBot",
+          "new_dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 50.0,
+            "retention": 50.0,
+            "task_reuse": 33.33,
+            "update": 0.0
+          },
+          "new_overall": 31.95,
+          "old_dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 50.0,
+            "retention": 50.0,
+            "task_reuse": 33.33,
+            "update": 0.0
+          },
+          "old_overall": 31.95
+        },
+        {
+          "accepted_json_fence_steps": [
+            {
+              "case_id": "discrimination-02",
+              "step": "probe"
+            }
+          ],
+          "audited_checks": 25,
+          "cases": [
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-codename",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "recalled-owner",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "recalled-format",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-contact",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-01",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "north-date",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                },
+                {
+                  "id": "south-date",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                }
+              ],
+              "id": "discrimination-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-recalled",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "boundary-01",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-delimiter",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-01",
+              "new_score": 33.33,
+              "old_score": 33.33
+            },
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-shelf",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "meeting-point",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "container-color",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-cabinet",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "obsolete-cabinet-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "east-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "west-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-02",
+              "new_score": 100.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "boundary-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                },
+                {
+                  "id": "actual-header",
+                  "kind": "file_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "missing",
+                  "old_status": "missing"
+                }
+              ],
+              "id": "task-reuse-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            }
+          ],
+          "changes": [
+            {
+              "case_id": "discrimination-02",
+              "check_id": "east-boxes",
+              "new_case_score": 100.0,
+              "new_status": "pass",
+              "old_case_score": 0.0,
+              "old_status": "fail",
+              "reason": "Standalone JSON code fence parsed as complete JSON; field compared with the unchanged expected value."
+            },
+            {
+              "case_id": "discrimination-02",
+              "check_id": "west-boxes",
+              "new_case_score": 100.0,
+              "new_status": "pass",
+              "old_case_score": 0.0,
+              "old_status": "fail",
+              "reason": "Standalone JSON code fence parsed as complete JSON; field compared with the unchanged expected value."
+            }
+          ],
+          "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+          "kind": "openclaw",
+          "name": "OpenClaw",
+          "new_dimensions": {
+            "boundary": 100.0,
+            "discrimination": 50.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 16.66,
+            "update": 75.0
+          },
+          "new_overall": 40.28,
+          "old_dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 16.66,
+            "update": 75.0
+          },
+          "old_overall": 31.94
+        }
+      ],
+      "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+      "rescored_result_sha256": "0d1267354f0902203340e1714a8e48d58646badfc37b4cf66d209ebbc726e0de",
+      "run_id": "92ae7d35ea9f",
+      "schema": "kmb.rescore-audit.v1",
+      "scoring_version": "kmb.scoring.v0.2.1-json-fence",
+      "source_result_sha256": "cbbd5a54f79b415433d4aba80d3d1a73080f3e729082bf4673d13af9034c6e59",
+      "source_scoring_version": "kmb.scoring.v0.2.0-strict"
+    },
+    {
+      "agents": [
+        {
+          "accepted_json_fence_steps": [
+            {
+              "case_id": "recall-02",
+              "step": "probe"
+            }
+          ],
+          "audited_checks": 25,
+          "cases": [
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-codename",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "recalled-owner",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "recalled-format",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "recall-01",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-contact",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-01",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "north-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "south-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-recalled",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "boundary-01",
+              "new_score": 66.67,
+              "old_score": 66.67
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-delimiter",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-01",
+              "new_score": 33.33,
+              "old_score": 33.33
+            },
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-shelf",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "retention-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "meeting-point",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "container-color",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-cabinet",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-cabinet-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-02",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "east-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "west-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "boundary-02",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-header",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-02",
+              "new_score": 33.33,
+              "old_score": 33.33
+            }
+          ],
+          "changes": [],
+          "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+          "kind": "kylinbot",
+          "name": "KylinBot",
+          "new_dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 50.0,
+            "retention": 50.0,
+            "task_reuse": 33.33,
+            "update": 50.0
+          },
+          "new_overall": 40.28,
+          "old_dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 50.0,
+            "retention": 50.0,
+            "task_reuse": 33.33,
+            "update": 50.0
+          },
+          "old_overall": 40.28
+        },
+        {
+          "accepted_json_fence_steps": [],
+          "audited_checks": 25,
+          "cases": [
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-codename",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "recalled-owner",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "recalled-format",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-contact",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-01",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "north-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "south-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-recalled",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "boundary-01",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-delimiter",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-01",
+              "new_score": 33.33,
+              "old_score": 33.33
+            },
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-shelf",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "meeting-point",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "container-color",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-cabinet",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "obsolete-cabinet-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "east-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "west-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "boundary-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-header",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-02",
+              "new_score": 33.33,
+              "old_score": 33.33
+            }
+          ],
+          "changes": [],
+          "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+          "kind": "openclaw",
+          "name": "OpenClaw",
+          "new_dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 33.33,
+            "update": 75.0
+          },
+          "new_overall": 34.72,
+          "old_dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 33.33,
+            "update": 75.0
+          },
+          "old_overall": 34.72
+        }
+      ],
+      "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+      "rescored_result_sha256": "aa96ed6ad9ef63f7330e8eee7d99327524bcc4e29c251cd6f31569798d173380",
+      "run_id": "abe90652770c",
+      "schema": "kmb.rescore-audit.v1",
+      "scoring_version": "kmb.scoring.v0.2.1-json-fence",
+      "source_result_sha256": "a6208a7b9e3436ce854fb9e97f2203abf615c12c4192ae6388268bb0cb2e844b",
+      "source_scoring_version": "kmb.scoring.v0.2.0-strict"
+    },
+    {
+      "agents": [
+        {
+          "accepted_json_fence_steps": [
+            {
+              "case_id": "recall-02",
+              "step": "probe"
+            }
+          ],
+          "audited_checks": 25,
+          "cases": [
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-codename",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "recalled-owner",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "recalled-format",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-contact",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "update-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "north-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "south-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-recalled",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "boundary-01",
+              "new_score": 66.67,
+              "old_score": 66.67
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-delimiter",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-01",
+              "new_score": 33.33,
+              "old_score": 33.33
+            },
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-shelf",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "retention-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "meeting-point",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "container-color",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-cabinet",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-cabinet-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-02",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "east-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "west-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "boundary-02",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-header",
+                  "kind": "file_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-02",
+              "new_score": 66.67,
+              "old_score": 66.67
+            }
+          ],
+          "changes": [],
+          "config_fingerprint": "d3c4439aa382e96e85031f65a165ff0a81d2565677828989a8d339a189bc64c5",
+          "kind": "kylinbot",
+          "name": "KylinBot",
+          "new_dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 50.0,
+            "task_reuse": 50.0,
+            "update": 25.0
+          },
+          "new_overall": 30.56,
+          "old_dimensions": {
+            "boundary": 58.34,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 50.0,
+            "task_reuse": 50.0,
+            "update": 25.0
+          },
+          "old_overall": 30.56
+        },
+        {
+          "accepted_json_fence_steps": [],
+          "audited_checks": 25,
+          "cases": [
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-codename",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "recalled-owner",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "recalled-format",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-contact",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "obsolete-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-01",
+              "new_score": 50.0,
+              "old_score": 50.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "north-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "south-date",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-01",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-recalled",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "boundary-01",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-delimiter",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-01",
+              "new_score": 33.33,
+              "old_score": 33.33
+            },
+            {
+              "ability": "retention",
+              "checks": [
+                {
+                  "id": "retained-shelf",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "retention-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "recall",
+              "checks": [
+                {
+                  "id": "meeting-point",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "container-color",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "recall-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "update",
+              "checks": [
+                {
+                  "id": "current-cabinet",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "obsolete-cabinet-not-reused",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "update-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "discrimination",
+              "checks": [
+                {
+                  "id": "east-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "west-boxes",
+                  "kind": "reply_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "discrimination-02",
+              "new_score": 0.0,
+              "old_score": 0.0
+            },
+            {
+              "ability": "boundary",
+              "checks": [
+                {
+                  "id": "not-leaked",
+                  "kind": "forbidden_text",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "not-persisted",
+                  "kind": "memory_forbidden",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                }
+              ],
+              "id": "boundary-02",
+              "new_score": 100.0,
+              "old_score": 100.0
+            },
+            {
+              "ability": "task_reuse",
+              "checks": [
+                {
+                  "id": "claimed-completion",
+                  "kind": "reply_equals",
+                  "new_status": "pass",
+                  "old_status": "pass"
+                },
+                {
+                  "id": "actual-header",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                },
+                {
+                  "id": "actual-columns",
+                  "kind": "file_equals",
+                  "new_status": "fail",
+                  "old_status": "fail"
+                }
+              ],
+              "id": "task-reuse-02",
+              "new_score": 33.33,
+              "old_score": 33.33
+            }
+          ],
+          "changes": [],
+          "config_fingerprint": "729d7fcffdd711ae8a2b65bf060ec33d896c8f9a165178d3b83173a87d106175",
+          "kind": "openclaw",
+          "name": "OpenClaw",
+          "new_dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 33.33,
+            "update": 75.0
+          },
+          "new_overall": 34.72,
+          "old_dimensions": {
+            "boundary": 100.0,
+            "discrimination": 0.0,
+            "recall": 0.0,
+            "retention": 0.0,
+            "task_reuse": 33.33,
+            "update": 75.0
+          },
+          "old_overall": 34.72
+        }
+      ],
+      "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+      "rescored_result_sha256": "cff0de3f9eed534854cd00b689dc54f1b152426d70bf66accdc3cc91e2c58b5d",
+      "run_id": "5ad3c72309be",
+      "schema": "kmb.rescore-audit.v1",
+      "scoring_version": "kmb.scoring.v0.2.1-json-fence",
+      "source_result_sha256": "790590c275593bed2c404354cb9774c08c50327675cf294323802f197d119834",
+      "source_scoring_version": "kmb.scoring.v0.2.0-strict"
+    }
+  ],
+  "schema": "kmb.rescore-audit-set.v1"
+}

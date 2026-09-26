@@ -6,6 +6,7 @@ import statistics
 from pathlib import Path
 
 from .model import ABILITIES, fingerprint, read_json, validate_dataset
+from .scoring import LEGACY_SCORING_VERSION, SCORING_VERSION
 
 
 def stats(values):
@@ -21,11 +22,19 @@ def summarize(dataset, inputs):
     expected_steps = [(case["id"], step["id"]) for case in cases for step in case["steps"]]
     dataset_hash = fingerprint(dataset)
     baseline = None
+    baseline_scoring_version = None
     results = []
     seen_run_ids = set()
     for source, result in inputs:
         if result.get("schema") != "kmb.result.v1" or result.get("dataset_fingerprint") != dataset_hash:
             raise ValueError(source + ": result schema or dataset fingerprint differs")
+        scoring_version = result.get("scoring_version", LEGACY_SCORING_VERSION)
+        if scoring_version not in (LEGACY_SCORING_VERSION, SCORING_VERSION):
+            raise ValueError(source + ": unknown scoring version")
+        if baseline_scoring_version is None:
+            baseline_scoring_version = scoring_version
+        elif scoring_version != baseline_scoring_version:
+            raise ValueError(source + ": scoring version differs")
         run_id = result.get("run_id")
         if not isinstance(run_id, str) or run_id in seen_run_ids:
             raise ValueError(source + ": missing or repeated run ID")
@@ -58,7 +67,8 @@ def summarize(dataset, inputs):
                     raise ValueError(source + ": duplicate or unknown completed step")
         results.append(result)
 
-    output = {"schema": "kmb.repeat-summary.v1", "dataset_fingerprint": dataset_hash,
+    output = {"schema": "kmb.repeat-summary.v1", "scoring_version": baseline_scoring_version,
+              "dataset_fingerprint": dataset_hash,
               "evidence_class": results[0]["evidence_class"], "run_count": len(results),
               "run_ids": [result["run_id"] for result in results], "agents": []}
     for index, (name, kind, evidence_class, config_hash) in enumerate(baseline):
