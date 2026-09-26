@@ -4,9 +4,11 @@ import argparse
 import json
 import os
 import resource
+import sqlite3
 import sys
 import time
 import uuid
+from contextlib import closing
 from pathlib import Path
 
 from .adapters import make_agent
@@ -15,14 +17,7 @@ from .report import radar_svg, text_report
 from .scoring import score_run
 
 
-def observe_files(workspace, case, config):
-    names = {check["file"] for check in case["checks"] if "file" in check}
-    files = {}
-    for name in sorted(names):
-        path = workspace / safe_relative(name)
-        if path.is_file() and path.resolve().is_relative_to(workspace.resolve()):
-            files[name] = {"source": "filesystem:" + name, "content": path.read_text(encoding="utf-8"),
-                           "sha256": fingerprint(path.read_text(encoding="utf-8"))}
+def observe_memory_files(workspace, config):
     memory = {}
     memory_root_env = config.get("memory_root_env")
     memory_root = Path(os.environ[memory_root_env]).expanduser() if memory_root_env and os.environ.get(memory_root_env) else workspace
@@ -32,6 +27,52 @@ def observe_files(workspace, case, config):
             if path.is_file() and path.resolve().is_relative_to(memory_root.resolve()):
                 name = str(path.relative_to(memory_root))
                 memory[name] = {"source": "filesystem:" + name, "content": path.read_text(encoding="utf-8")}
+    return memory
+
+
+def observe_sqlite_memory(config):
+    env_name = config.get("memory_sqlite_db_env")
+    db_name = os.environ.get(env_name) if env_name else None
+    if not db_name:
+        return None
+    db_uri = Path(db_name).expanduser().resolve().as_uri() + "?mode=ro"
+    columns_needed = {"id", "key", "content", "category", "embedding", "created_at", "updated_at",
+                      "session_id", "namespace", "importance", "superseded_by"}
+    try:
+        with closing(sqlite3.connect(db_uri, uri=True, timeout=2)) as connection:
+            connection.execute("PRAGMA query_only = ON")
+            columns = {row[1] for row in connection.execute('PRAGMA table_info("memories")')}
+            missing = columns_needed - columns
+            if missing:
+                raise ValueError("SQLite memories table missing required columns: " + ", ".join(sorted(missing)))
+            records = {}
+            query = ('SELECT "id", "key", "content", "category", "created_at", "updated_at", '
+                     '"session_id", "namespace", "importance", "superseded_by" FROM "memories"')
+            for row in connection.execute(query):
+                memory_id, key, content, category, created_at, updated_at, session_id, namespace, importance, superseded_by = row
+                if not isinstance(content, str):
+                    raise ValueError("SQLite memories.content is not text for id " + str(memory_id))
+                records["sqlite:" + str(memory_id)] = {
+                    "source": "sqlite:memories:" + str(memory_id), "id": memory_id, "key": key,
+                    "content": content, "category": category, "created_at": created_at,
+                    "updated_at": updated_at, "session_id": session_id, "namespace": namespace,
+                    "importance": importance, "superseded_by": superseded_by,
+                }
+            return records
+    except sqlite3.Error as exc:
+        raise RuntimeError("SQLite memory read failed: " + type(exc).__name__ + ": " + str(exc)) from exc
+
+
+def observe_files(workspace, case, config):
+    names = {check["file"] for check in case["checks"] if "file" in check}
+    files = {}
+    for name in sorted(names):
+        path = workspace / safe_relative(name)
+        if path.is_file() and path.resolve().is_relative_to(workspace.resolve()):
+            content = path.read_text(encoding="utf-8")
+            files[name] = {"source": "filesystem:" + name, "content": content,
+                           "sha256": fingerprint(content)}
+    memory = observe_memory_files(workspace, config)
     return files, memory
 
 
@@ -40,6 +81,14 @@ def run_case(agent, case, root, config, remaining):
     workspace.mkdir(parents=True)
     turns = []
     errors = []
+    try:
+        sqlite_before = observe_sqlite_memory(config)
+        files_before = observe_memory_files(workspace, config) if sqlite_before is not None else None
+    except (OSError, ValueError, RuntimeError) as exc:
+        message = "Memory baseline failed: " + str(exc)
+        return {"workspace": str(workspace), "turns": turns, "files": {}, "memory": {},
+                "errors": [{"step": "memory_baseline", "type": type(exc).__name__, "message": message}],
+                "memory_error": message}
     for step in case["steps"]:
         seconds_left = remaining()
         if seconds_left <= 0:
@@ -57,6 +106,20 @@ def run_case(agent, case, root, config, remaining):
             errors.append({"step": step["id"], "type": type(exc).__name__, "message": str(exc)})
             break
     files, memory = observe_files(workspace, case, config)
+    if sqlite_before is not None:
+        try:
+            sqlite_after = observe_sqlite_memory(config)
+            if sqlite_after is None:
+                raise ValueError("SQLite memory database environment variable became unset during the case")
+            memory = {name: record for name, record in memory.items()
+                      if name not in files_before or files_before[name]["content"] != record["content"]}
+            memory.update({name: record for name, record in sqlite_after.items()
+                           if name not in sqlite_before or sqlite_before[name]["content"] != record["content"]})
+        except (OSError, ValueError, RuntimeError) as exc:
+            message = "Memory observation failed: " + str(exc)
+            errors.append({"step": "memory_after", "type": type(exc).__name__, "message": message})
+            return {"workspace": str(workspace), "turns": turns, "files": files, "memory": {},
+                    "errors": errors, "memory_error": message}
     return {"workspace": str(workspace), "turns": turns, "files": files,
             "memory": memory, "errors": errors}
 

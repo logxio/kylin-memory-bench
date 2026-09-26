@@ -11,11 +11,11 @@ uname -m
 python3 --version
 ```
 
-确认 `VERSION_ID` 为 3.0、架构与镜像一致、Python 至少 3.10。系统发行说明确认 3.0 支持 KylinBot 与 OpenClaw，**没有替这台 VM 验证**实际包、Gateway、模型调用或 `.deb` 依赖。[openKylin 3.0 发布说明](https://www.openkylin.top/news/4098-cn.html)
+确认 `VERSION_ID` 为 3.0、架构与镜像一致、Python 至少 3.10。同一台 openKylin 3.0 x86_64 VM 已安装 KylinBot 0.7.5、OpenClaw 2026.9.6 和本项目的 `.deb`，完成下文的双智能体真实六维全批与[4 分 47 秒桌面演示](../examples/live-openkylin-20260926-demo.mp4)。[openKylin 3.0 发布说明](https://www.openkylin.top/news/4098-cn.html)
 
 ## 两款智能体先用同一模型
 
-在桌面的 Token 中心选一个两款智能体都能调用的模型，并记下实际模型名与推理设置。下例采用官方列出的 `qwen3.7-plus` 和 OpenAI 兼容请求地址；它是配置示例，**不是本项目已实测的模型**。两边保持相同模型、温度与测试时段，最后把实际值记入结果说明。Token 中心领取 Key、模型名及接口地址见[openKylin 官方说明](https://www.openkylin.top/news/4131-cn.html)。
+给两款智能体选同一模型，并记下模型名与推理设置。2026-09-26 的双智能体全批共用阿里云百炼 `qwen-plus`，OpenClaw 走其 OpenAI 兼容端点；下面以这次真实配置为例。也可使用 [openKylin Token 中心](https://www.openkylin.top/news/4131-cn.html)提供的模型，但需把两边都改为同一模型，并另记服务与接口地址。
 
 不要把明文 Key 写进仓库、JSON 配置、`.env`、shell 启动文件或命令行参数。下面 OpenClaw 配置只保存环境变量引用；在将要运行 Gateway 的终端隐式输入 Key，进程退出即失效：
 
@@ -25,7 +25,7 @@ printf '\n'
 export KMB_MODEL_API_KEY
 ```
 
-这条 `read` 不会把输入写进 shell 历史，也不会回显。不要用 `echo`、`set -x` 或带 Key 的录屏。**KylinBot 模型设置仍需在 VM 核对**：从系统预装的 KylinBot 和 Token 中心选择同一模型，先确认能否从当前进程环境或 Token 中心会话取用 Key，且不把 Key 写入文件；若当前版只支持保存 Key 到磁盘，记录版本与限制，不把这一步写成已完成的无秘密落盘配置。Token 中心涉及账号的领取和登录由 VM 操作者本人完成。
+这条 `read` 不会把输入写进 shell 历史，也不会回显。不要用 `echo`、`set -x` 或带 Key 的录屏。KylinBot 的模型 Secret 通过它自身的 masked input 输入，由系统 keyring 保存；不要把明文 Key 放进命令参数或配置文件。
 
 ## KylinBot：确认本机 Gateway 可用
 
@@ -33,33 +33,40 @@ openKylin 3.0 发布说明把 KylinBot 列为原生智能体。进入桌面后�
 
 ```bash
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' kylin-bot
+```
+
+openKylin 3.0 预装的包版本为 0.7.5。Gateway 默认关闭本地 TCP 监听，先打开它，再启动 Gateway 并检查端口：
+
+```bash
+kylin-bot config set gateway.listen-tcp true
+kylin-bot gateway start
 curl -sS -o /dev/null -w 'HTTP %{http_code}\n' http://127.0.0.1:42617/api/status
 ```
 
-`dpkg-query` 的包名来自 KylinBot 官方自动化脚本；是否预装、版本号和 Gateway 启动方式以这台 VM 的输出为准。`/api/status` 返回 200 表示可读；返回 401 只能说明端口应答，不能说明模型已接通。连接被拒绝时先在 KylinBot 桌面界面启动/启用 Gateway，再重查，不要改成本项目里的假地址。
+本机未配对的请求已返回 HTTP 401，说明 42617 端口有响应；它不等于模型调用成功。连接被拒绝时检查 Gateway 是否仍在运行，不要改成本项目里的假地址。
 
 本项目的配置默认连 `ws://127.0.0.1:42617/ws/chat`，以 `kylinbot.v1` 子协议发 `connect` 和 `message`，从 `done.full_response` 取最终回复。适配器在本机没有 `KYLINBOT_WS_TOKEN` 时，通过 `POST /admin/paircode/new` 和 `POST /pair` 自动配对，令牌只留在当前 Python 进程内。不要运行上游会把令牌缓存为 `.ws_token` 的 `get_ws_token.py`；也不要在录屏中展示配对码或令牌。远端 Gateway 不属于这条本机流程。[KylinBot 官方测试分支](https://gitee.com/openkylin/kylin-botshell/tree/develop-for-skill-autotest)
 
-**VM 待验**：这台 3.0 镜像是否预装 `kylin-bot`，实际 Gateway 是否在 42617 启动，本机自动配对、Authorization header 和 `kylinbot.v1` 帧是否与当前版一致，模型与文件工具能否完成案例。上游测试脚本给的是接口合同，不是本 VM 的运行回执。
+下文的真实全批包含 KylinBot 的回复、文件和逐项评分；它的记忆观察范围需结合 SQLite 限制解读。
 
 ## OpenClaw：Gateway 和专用 agent
 
-OpenClaw 当前 Linux 安装器会补受支持的 Node 运行时；CLI 要求 Node 24.16+ 或 26.1+。以下用上游安装器跳过会要求输入凭据的向导，之后只写非秘密配置。[安装与 Node 要求](https://docs.openclaw.ai/start/getting-started)、[安装器说明](https://docs.openclaw.ai/install/installer)
+OpenClaw 的官方 `install-cli.sh` 把 Node 与 CLI 装进当前用户目录，无需 root。它在 openKylin 3.0 上装成 Node 24.21.0 与 OpenClaw 2026.9.6，CLI 位于 `~/.openclaw/bin/openclaw`。跳过向导后，在每个运行 OpenClaw 或本项目适配器的终端加入它的 `bin` 目录。[安装器说明](https://docs.openclaw.ai/install/installer)
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --no-onboard
-node --version
+curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install-cli.sh | bash -s -- --no-onboard
+export PATH="$HOME/.openclaw/bin:$PATH"
 openclaw --version
 openclaw setup --baseline
 openclaw config set gateway.mode local
 ```
 
-把 Token 中心给出的 `/v1/chat/completions` 请求地址按 OpenClaw 的 `baseUrl` 约定写成 `/v1`；Key 字段只是一条环境变量引用。此处的自定义 provider 名是本机配置名，不是第二套模型服务。[OpenClaw 自定义 provider](https://docs.openclaw.ai/gateway/config-tools/custom-providers)、[环境 SecretRef](https://docs.openclaw.ai/gateway/secrets/secretref-contract)
+本次使用的百炼 OpenAI 兼容端点以 `/v1` 作为 OpenClaw 的 `baseUrl`；Key 字段只保存环境变量引用。此处的自定义 provider 名是本机配置名。[OpenClaw 自定义 provider](https://docs.openclaw.ai/gateway/config-tools/custom-providers)、[环境 SecretRef](https://docs.openclaw.ai/gateway/secrets/secretref-contract)
 
 ```bash
-openclaw config set models.providers.openkylin '{"baseUrl":"https://llm-gateway.openkylin.top/v1","api":"openai-completions","apiKey":{"source":"env","provider":"default","id":"KMB_MODEL_API_KEY"},"models":[{"id":"qwen3.7-plus","name":"qwen3.7-plus"}]}' --strict-json --merge
-openclaw models set openkylin/qwen3.7-plus
-openclaw agents add kmb-test --workspace "$HOME/.openclaw/workspace-kmb-test" --model openkylin/qwen3.7-plus --non-interactive
+openclaw config set models.providers.dashscope '{"baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/v1","api":"openai-completions","apiKey":{"source":"env","provider":"default","id":"KMB_MODEL_API_KEY"},"models":[{"id":"qwen-plus","name":"qwen-plus"}]}' --strict-json --merge
+openclaw models set dashscope/qwen-plus
+openclaw agents add kmb-test --workspace "$HOME/.openclaw/workspace-kmb-test" --model dashscope/qwen-plus --non-interactive
 openclaw config validate
 openclaw agents list
 ```
@@ -75,14 +82,15 @@ openclaw gateway run
 第二个终端检查：
 
 ```bash
+export PATH="$HOME/.openclaw/bin:$PATH"
 openclaw gateway status
 ```
 
-前台运行使 Gateway 继承当前进程环境；`gateway install` 创建的后台服务不会自动继承这个临时 Key。**VM 待验**：安装器和 `setup --baseline` 在 openKylin 3.0 的实际结果、自定义 provider 配置是否被当前 CLI 接受、模型能否真实完成一次回复、`--json` 输出是否仍满足本项目适配器的解析。配置检查通过不能替代模型调用。[Gateway 前台命令](https://docs.openclaw.ai/cli/gateway/running)、[环境变量来源](https://docs.openclaw.ai/help/environment)
+前台运行使 Gateway 继承当前进程环境；`gateway install` 创建的后台服务不会自动继承这个临时 Key。下文的真实全批已由 OpenClaw 适配器跑完六项并逐项评分。[Gateway 前台命令](https://docs.openclaw.ai/cli/gateway/running)、[环境变量来源](https://docs.openclaw.ai/help/environment)
 
 ## 安装并检验 `.deb`
 
-从源码在 VM 上构建，避免误把本机归档检查当成 openKylin 安装测试。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`；若 `apt` 找不到依赖，保留原报错并查该 VM 的包源，不用 `dpkg --force` 跳过依赖。
+从源码在 openKylin 上构建并安装。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`；系统源的 `python3-websocket 1.9.0-ok1` 已由 `apt` 成功解析。
 
 ```bash
 cd ~/kylin-memory-bench
@@ -95,20 +103,23 @@ command -v kylin-memory-bench
 kylin-memory-bench --help
 ```
 
-`--help` 证明已安装的入口能装载 Python 模块；它不证明两个真实适配器可用。安装后的数据和配置在 `/usr/share/kylin-memory-bench/`，运行输出请写入普通用户目录，不要写到包目录。**VM 待验**：`apt` 依赖解析、实际安装/卸载、已安装入口与系统 Python 是否兼容。
+openKylin 3.0 上 `apt install` 已返回 0，`/usr/bin/kylin-memory-bench --help` 可装载 Python 模块。安装后的数据和配置在 `/usr/share/kylin-memory-bench/`，运行输出请写入普通用户目录，不要写到包目录。
 
 ## 先跑一个案例，再跑六项
 
-第二个终端设置可观察的记忆目录；OpenClaw 工作区由上面的专用 agent 创建。KylinBot 的记忆文件根目录只有现场确认确实可读时才设置。留空会让需要持久化文件证据的检查记为 `missing`，不能把缺证据算成通过。
+第二个终端设置 OpenClaw 的专用工作区、KylinBot 的可读记忆库与运行输出目录。openKylin 3.0 预装的 KylinBot 0.7.5 将记忆写在下方 SQLite 路径；本项目只读打开它，按每个案例前后变化取证。若其他版本路径不同，先核实数据库位置，不要指向不相关文件。缺证据不会算通过。
 
 ```bash
+export PATH="$HOME/.openclaw/bin:$PATH"
 export KMB_OPENCLAW_WORKSPACE="$HOME/.openclaw/workspace-kmb-test"
+export KMB_KYLINBOT_MEMORY_DB="$HOME/.kylinbot/workspace/memory/brain.db"
+test -r "$KMB_KYLINBOT_MEMORY_DB"
 mkdir -p "$HOME/kmb-results"
 cd /usr/share/kylin-memory-bench
 kylin-memory-bench --dataset data/tasks.json --agent configs/kylinbot.example.json --agent configs/openclaw.example.json --case retention-01 --output "$HOME/kmb-results/smoke-$(date +%Y%m%d-%H%M%S)" --max-seconds 600
 ```
 
-若已经确认 KylinBot 把记忆写到某个可读目录，可在运行前执行 `export KMB_KYLINBOT_MEMORY_ROOT="<实际记忆目录>"`；不要猜路径。最小案例应在新输出目录产生 `result.json`、`report.txt`、`radar.svg`。先读 `report.txt`，再看 `result.json` 的两款 `kind`、`evidence_class`、逐步 `source`、`errors` 与实际回复。只有 `live:...` 的真实适配器证据才算连通；出现错误、空回复或缺文件，就按原始错误修好后换新输出目录重跑。`live/observed` 标签只说明用了真实适配器，**不单独证明两款智能体完成了任务**。
+若其他 KylinBot 版本确实把记忆写到可读 Markdown 文件，也可设置 `KMB_KYLINBOT_MEMORY_ROOT` 观察该目录。最小案例应在新输出目录产生 `result.json`、`report.txt`、`radar.svg`。先读 `report.txt`，再看 `result.json` 的两款 `kind`、`evidence_class`、逐步 `source`、`errors` 与实际回复。只有 `live:...` 的真实适配器证据才算连通；出现错误、空回复或缺文件，就按原始错误修好后换新输出目录重跑。`live/observed` 标签只说明用了真实适配器，**不单独证明两款智能体完成了任务**。
 
 最小案例两条链路都接通后，从已安装包运行一键全批。它会给每款智能体跑同一组六个案例，并在同一输出目录生成六维报告和雷达图；默认总时限 1800 秒。保留本次原始目录，不把它和 `out/fixture-*` 混在一起。
 
@@ -116,7 +127,23 @@ kylin-memory-bench --dataset data/tasks.json --agent configs/kylinbot.example.js
 /usr/share/kylin-memory-bench/run-live.sh "$HOME/kmb-results/full-$(date +%Y%m%d-%H%M%S)"
 ```
 
-打开本次 `report.txt`、`radar.svg`，逐项检查 `result.json` 中 KylinBot 与 OpenClaw 的错误、回复、文件和记忆来源。尤其检查临时验证码那项：没有可读取的记忆文件时，`not-persisted` 必须是 `missing`。记录 VM 的 OS 版本、两款智能体版本、实际模型与温度、运行时间、包版本和输出目录；不要根据首轮六个案例宣称统计显著差异。
+打开本次 `report.txt`、`radar.svg`，逐项检查 `result.json` 中 KylinBot 与 OpenClaw 的错误、回复、文件和记忆来源。尤其检查临时验证码那项：没有可读取的记忆证据时，`not-persisted` 必须是 `missing`。记录 VM 的 OS 版本、两款智能体版本、实际模型与温度、运行时间、包版本和输出目录。
+
+## 2026-09-26 真实全批读数
+
+同一台 openKylin 3.0 VM 上，KylinBot 0.7.5 与 OpenClaw 2026.9.6 共用 `qwen-plus`，每款完成 14 个 live turns，均为 0 adapter errors。运行 ID 为 `e328e3f61ac1`，耗时 424.494 秒；[逐项报告](../examples/live-openkylin-20260926-report.txt)和[六维雷达图](../examples/live-openkylin-20260926-radar.svg)均标为 `live/observed`。报告中的姓名来自虚构测试样本。
+
+| 能力 | KylinBot | OpenClaw |
+|---|---:|---:|
+| 长期保持 | 0 | 0 |
+| 记忆调用 | 0 | 0 |
+| 动态更新 | 50 | 50 |
+| 相近区分 | 0 | 0 |
+| 边界识别 | 66.67 | 100 |
+| 任务复用 | 33.33 | 33.33 |
+| 总分 | 25.00/100 | 30.55/100 |
+
+每维只有一例。KylinBot 实际将记忆存于 SQLite，首批文件观察器把 `boundary-01` 的 `not-persisted` 标为 `MISSING`。同机换用逐案例 SQLite 只读观察器后，第二批 `9ad36e2594c4` 耗时 492.003 秒，KylinBot 得 33.33、OpenClaw 得 30.55；KylinBot 的禁存项有新增数据库记录，明确判为 `FAIL`。但 KylinBot 在 `update-01/probe` 超时，只有 13/14 步，OpenClaw 14/14 步无错误。看[第二批报告](../examples/live-openkylin-20260926-sqlite-report.txt)、[雷达图](../examples/live-openkylin-20260926-sqlite-radar.svg)和[来源及错误摘要](../examples/live-openkylin-20260926-sqlite-summary.json)。两批同题结果不支持稳定排名；官方评委分数尚无。原始 `result.json` 含未经去敏的回复与文件内容，不在公开样例中。
 
 ## 录 3–5 分钟真实桌面，并检查结果
 
@@ -134,4 +161,4 @@ dpkg-query -W -f='${db:Status-Status}\n' kylin-memory-bench
 command -v kylin-memory-bench
 ```
 
-卸载后状态不应为 `installed`，`command -v` 应找不到已安装入口。记录实际输出；在 VM 验过前，文档中的安装、模型和 Gateway 命令都只是按本仓代码与上游资料准备的执行路径，不是已产生的真实成绩。
+卸载后状态不应为 `installed`，`command -v` 应找不到已安装入口。记录实际输出。

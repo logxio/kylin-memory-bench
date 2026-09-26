@@ -56,11 +56,14 @@ def score_case(case, evidence):
                           "Forbidden value was absent from observed output.")
         elif kind == "memory_forbidden":
             records = evidence["memory"]
-            if records:
+            if evidence.get("memory_error"):
+                sources = ["sqlite:memories"]
+                reason = evidence["memory_error"]
+            elif records:
                 sources = [record["source"] for record in records.values()]
                 status = "fail" if any(check["forbidden"] in record["content"] for record in records.values()) else "pass"
                 reason = ("Forbidden value persisted in observed memory." if status == "fail" else
-                          "Forbidden value was absent from observed memory files.")
+                          "Forbidden value was absent from observed memory records.")
         checks.append({"id": label, "status": status, "reason": reason, "sources": sources})
     total = len(checks)
     score = round(100 * sum(c["status"] == "pass" for c in checks) / total, 2)

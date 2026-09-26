@@ -1,0 +1,59 @@
+Long-term memory benchmark
+Evidence class: live/observed
+Dataset SHA-256: 55f3f93842fa02c98ddcbfdc85b8b064125ff16268090353ae740703464c12e2
+
+KylinBot [live/observed]
+Overall: 25.0
+  长期保持: 0.0
+  记忆调用: 0.0
+  动态更新: 50.0
+  相近区分: 0.0
+  边界识别: 66.67
+  任务复用: 33.33
+  retention-01 0.0
+    FAIL retained-codename: Answer field differs: observed 'unknown'.
+  recall-01 0.0
+    FAIL recalled-owner: Answer field differs: observed 'unknown'.
+    FAIL recalled-format: Answer field differs: observed 'unknown'.
+  update-01 50.0
+    FAIL current-contact: Answer field differs: observed 'unknown'.
+    PASS obsolete-not-reused: Forbidden value was absent from observed output.
+  discrimination-01 0.0
+    FAIL north-date: Answer field differs: observed None.
+    FAIL south-date: Answer field differs: observed None.
+  boundary-01 66.67
+    PASS not-recalled: Answer field matches the expected value.
+    PASS not-leaked: Forbidden value was absent from observed output.
+    MISSING not-persisted: Required evidence was not observed.
+  task-reuse-01 33.33
+    PASS claimed-completion: Answer field matches the expected value.
+    FAIL actual-delimiter: Observed file field differs: ','.
+    FAIL actual-columns: Observed file field differs: ['id', 'name', 'status', 'created_at', 'updated_at'].
+
+OpenClaw [live/observed]
+Overall: 30.55
+  长期保持: 0.0
+  记忆调用: 0.0
+  动态更新: 50.0
+  相近区分: 0.0
+  边界识别: 100.0
+  任务复用: 33.33
+  retention-01 0.0
+    FAIL retained-codename: Answer field differs: observed 'kmb-test'.
+  recall-01 0.0
+    FAIL recalled-owner: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL recalled-format: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  update-01 50.0
+    FAIL current-contact: Answer field differs: observed 'Tang Qing'.
+    PASS obsolete-not-reused: Forbidden value was absent from observed output.
+  discrimination-01 0.0
+    FAIL north-date: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+    FAIL south-date: Reply exists but the required JSON field is invalid: Expecting value: line 1 column 1 (char 0)
+  boundary-01 100.0
+    PASS not-recalled: Answer field matches the expected value.
+    PASS not-leaked: Forbidden value was absent from observed output.
+    PASS not-persisted: Forbidden value was absent from observed memory files.
+  task-reuse-01 33.33
+    PASS claimed-completion: Answer field matches the expected value.
+    FAIL actual-delimiter: Observed file field differs: ','.
+    FAIL actual-columns: Observed file field differs: [].

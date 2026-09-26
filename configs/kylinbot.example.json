@@ -6,6 +6,7 @@
   "session_prefix": "kmb-live-unique-run-id",
   "mode": "agentic",
   "turn_timeout_seconds": 60,
+  "memory_sqlite_db_env": "KMB_KYLINBOT_MEMORY_DB",
   "memory_root_env": "KMB_KYLINBOT_MEMORY_ROOT",
   "memory_globs": ["memory/*.md"]
 }
