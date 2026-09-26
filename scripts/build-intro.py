@@ -81,8 +81,8 @@ def first_page(c):
     label(c, "运行链", LEFT, y, 13, colors.HexColor("#111111"))
     y = para(c, "任务 JSON → 两款智能体适配器 → 原始回复 / 帧 / 文件 → 确定性检查项 → 六维分数、逐项原因和 SVG 雷达图。缺证据不得分；口头称已写文件，仍须核对文件内容。", LEFT, y - 16, RIGHT - LEFT)
     y -= 25
-    label(c, "本机读数", LEFT, y, 13, colors.HexColor("#111111"))
-    y = para(c, "两个<b>虚构替身</b>走完整 CLI：参考替身六维 100，故意出错的替身总分 19.45。更新旧值、禁存验证码和错误分隔符均被扣分。这只验证流水线，<b>不是 KylinBot 或 OpenClaw 的成绩</b>。", LEFT, y - 16, RIGHT - LEFT)
+    label(c, "openKylin 3.0 真实运行", LEFT, y, 13, colors.HexColor("#111111"))
+    y = para(c, "<b>.deb 已在系统安装</b>，KylinBot 0.7.5 与 OpenClaw 2026.9.6 均完成真实模型对话。首批六维全跑：KylinBot <b>25.00/100</b>、OpenClaw <b>30.55/100</b>，双方各 14 步、无适配错误。<b>4 分 47 秒</b>真实桌面视频展示安装环境、运行与报告；分数是智能体评测结果，非大赛评委分。", LEFT, y - 16, RIGHT - LEFT)
     footer(c, 1)
     c.showPage()
 
@@ -90,7 +90,7 @@ def first_page(c):
 def second_page(c):
     label(c, "HOW IT IS SCORED", LEFT, HEIGHT - 53, 9)
     label(c, "从证据到可解释分数", LEFT, HEIGHT - 91, 19, colors.HexColor("#111111"))
-    y = para(c, "四类检查：回复 JSON 字段、产物 JSON 字段、禁用值是否出现在回复，以及禁用值是否出现在可观察的记忆文件。每项报告 pass / fail / missing 与来源。六维各自归一，再取均值。", LEFT, HEIGHT - 110, RIGHT - LEFT)
+    y = para(c, "四类检查：回复 JSON 字段、产物 JSON 字段、禁用值是否出现在回复，以及禁用值是否进入可观察的记忆文件或 SQLite 记录。每项报告 pass / fail / missing 与来源。六维各自归一，再取均值。", LEFT, HEIGHT - 110, RIGHT - LEFT)
     y -= 26
     label(c, "任务书评分项", LEFT, y, 12, colors.HexColor("#111111"))
     y -= 24
@@ -111,12 +111,12 @@ def second_page(c):
     rule(c, y + 10)
     y -= 26
     label(c, "真实运行入口", LEFT, y, 12, colors.HexColor("#111111"))
-    y = para(c, "KylinBot 通过 Gateway 的 kylinbot.v1 WebSocket 对话；OpenClaw 通过带固定 session key 的 agent CLI。run-live.sh 从同一数据集批量运行两个配置，产出完整结果和雷达图。deb 构建脚本随仓提供。", LEFT, y - 17, RIGHT - LEFT)
+    y = para(c, "KylinBot 通过 Gateway 的 kylinbot.v1 WebSocket 对话；OpenClaw 通过固定 session key 的 agent CLI。run-live.sh 用同一任务集跑双智能体；公开仓提供 .deb 构建脚本、两批报告、雷达图与桌面视频。", LEFT, y - 17, RIGHT - LEFT)
     y -= 23
     label(c, "当前边界与下一发", LEFT, y, 12, colors.HexColor("#111111"))
-    y = para(c, "公开代码与替身样例已具备。仍须在 openKylin 云桌面安装两款真实智能体、核实记忆目录和包依赖、跑完整批次，并录 3–5 分钟真实桌面演示。六维目前各一条任务，后续扩充多样本与独立重复运行。", LEFT, y - 17, RIGHT - LEFT)
+    y = para(c, "第二批加入 SQLite 只读观察，KylinBot / OpenClaw 为 33.33 / 30.55；KylinBot 有一步超时，只完成 13/14 步。两批顺序翻转，六维每维仅一例，不能据此判定稳定排名。下一发扩样本并量超时率与分数波动。", LEFT, y - 17, RIGHT - LEFT)
     y -= 18
-    para(c, "代码、任务、评分器与方案：<link href='https://github.com/logxio/kylin-memory-bench'>github.com/logxio/kylin-memory-bench</link>", LEFT, y, RIGHT - LEFT, 9, 14)
+    para(c, "代码、两批报告、雷达图与视频：<link href='https://github.com/logxio/kylin-memory-bench'>github.com/logxio/kylin-memory-bench</link>", LEFT, y, RIGHT - LEFT, 9, 14)
     footer(c, 2)
     c.showPage()
 
