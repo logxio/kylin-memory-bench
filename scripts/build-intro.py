@@ -51,8 +51,8 @@ def footer(c, number):
 
 def first_page(c, summary):
     label(c, "OPENKYLIN / 2026", LEFT, HEIGHT - 53, 9)
-    label(c, "kylin-memory-bench", LEFT, HEIGHT - 95, 24, colors.HexColor("#111111"))
-    y = para(c, "让长期记忆的判断落到可复查的回复、记忆记录与实际文件。", LEFT,
+    label(c, "记忆状态取证评测", LEFT, HEIGHT - 95, 24, colors.HexColor("#111111"))
+    y = para(c, "把跨会话回复、可观察记忆和实际文件逐项核对：智能体没说出口的禁存值，也可能已经进入记忆。缺证据不得分。", LEFT,
              HEIGHT - 112, RIGHT - LEFT, 12, 20)
     rule(c, y - 22)
     y -= 48
@@ -104,7 +104,7 @@ def first_page(c, summary):
         y -= 25
     rule(c, y)
     y = para(c, f"三批总分均值 / 样本标准差：<b>KylinBot {bot['overall']['mean']:.2f} / {bot['overall']['sample_stddev']:.2f}</b>，完成 {bot['completed_steps']}/84 步、{bot['timeout_error_count']} 次 TimeoutError；<b>OpenClaw {claw['overall']['mean']:.2f} / {claw['overall']['sample_stddev']:.2f}</b>，完成 {claw['completed_steps']}/84 步、{claw['timeout_error_count']} 次 TimeoutError。均为智能体分数，非评委分。", LEFT, y - 15, RIGHT - LEFT, 9.2, 14)
-    y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260927-v022-demo.mp4'>本轮 openKylin 桌面视频</link>展示安装版本、三批结果、雷达图与独立现场小案例；旧 4 分 47 秒视频只对应历史六例。", LEFT, y - 10, RIGHT - LEFT, 9, 14)
+    y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260927-v022-demo-v3.mp4'>本轮 4 分 06 秒演示</link>先说明记忆状态取证评测与公开禁存案例，再接 openKylin 桌面安装版本、三批结果、雷达图与独立现场小案例；开头卡片不是新跑批。", LEFT, y - 10, RIGHT - LEFT, 9, 14)
     if y < 62:
         raise ValueError(f"First page overlaps footer: y={y:.1f}")
     footer(c, 1)
@@ -153,7 +153,7 @@ def main():
         raise ValueError("reviewer brief requires three live runs of KylinBot and OpenClaw")
     output.parent.mkdir(parents=True, exist_ok=True)
     c = canvas.Canvas(str(output), pagesize=A4, pageCompression=1)
-    c.setTitle("kylin-memory-bench 项目介绍")
+    c.setTitle("记忆状态取证评测｜kylin-memory-bench 项目介绍")
     c.setAuthor("Yan Su")
     c.setCreator("kylin-memory-bench")
     first_page(c, summary)
