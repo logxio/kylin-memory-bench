@@ -28,13 +28,19 @@ v0.2.1 的 `reply_equals` 接受完整纯 JSON，或整段回复仅有一个带 
 
 ## 复现与交付
 
-本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误、12 例变体、重复汇总和两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；v0.2.0 的发行包已在 openKylin 3.0 上经 `apt install` 安装，依赖和已安装入口通过检查。v0.2.1 包目前只经 Ubuntu CI 构建检验，尚未在 openKylin 安装，操作与结果见[实跑指南](live-openkylin.md)。
+本机先运行 `./run-fixture.sh`，可用 `--case` 在 CLI 内缩到一个案例。`python3 -m unittest discover -s tests` 检查旧值、禁存、缺证据、口头完成但文件错误、12 例变体、重复汇总和两款适配器的调用合同。真实环境在完成 KylinBot、OpenClaw 配置后运行 `./run-live.sh`。`./packaging/build-deb.sh` 可生成 `.deb`；v0.2.0、v0.2.1 与 v0.2.2 包都已在 openKylin 3.0 上经 `apt install` 安装，依赖和已安装入口通过检查。已安装包运行替身时，把输出目录显式指定到普通用户可写路径；操作与结果见[实跑指南](live-openkylin.md)。
 
 ## 重复运行统计
 
 一批是同一份完整数据集、同一套智能体配置各跑一次的 `result.json`。每次运行用独立目录保留原始回复、文件和错误。批前恢复两款智能体经验证的相同干净记忆与会话状态；换运行 ID 只隔离短会话，不清除长期记忆。若无法验证隔离，保留各批观察值，但不要把它们的标准差解释成独立重复的稳定性。
 
 用 `python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/repeat-summary.json out/full-1/result.json out/full-2/result.json ...` 生成独立 JSON。命令拒绝不同 `dataset_fingerprint`、智能体集合/顺序、`config_fingerprint`、评分器版本、证据类别、重复 run ID 或只跑单案例的输入，也不会覆盖已有摘要。它按每款智能体逐批取原有六维分与总分，报告算术均值和样本标准差（`n=1` 时标准差为 `null`）；这不是置信区间或显著性检验。每个案例步骤的完成率是成功留下 turn 的批数除以输入批数；错误后跳过的步骤记未完成，`TimeoutError` 按原始错误类型计数。若步骤有错误但仍有部分文件证据，评分依旧由原评分器决定。摘要保留 run ID、样本数和未完成数，可回查原始 `result.json`，不包含原始回复。
+
+v0.2.2 示例配置把单回合总时限设为 130 秒。现场 KylinBot 的 `qwen-plus` 提供方配置允许 120 秒，另留 10 秒给连接与收尾；OpenClaw CLI 接收 125 秒，外层进程仍在 130 秒截止。旧版两款都用 60 秒，首批在不同步骤共出现 5 次客户端超时；KylinBot 3 次耗时约 64–73 秒，OpenClaw 2 次恰在 60 秒终止，另有 58 秒成功回合。新包第二批 OpenClaw 有 77.217 秒和 92.121 秒的成功回合，直接证明旧 60 秒门槛会截断这类正常完成的调用。v0.2.2 的 KylinBot 适配器按从配对开始的剩余总时长设置每次 WebSocket 等待，并在接受 `done` 前检查总截止；OpenClaw 给 CLI 留 5 秒报告错误。每步成功与失败的实耗时仍写入原始结果。客户端截止可以解释这些 `TimeoutError` 的判定机制，但旧失败请求的上游实际完成时刻无完整日志，不能把它们断言为已成功的模型回复。
+
+本轮真机复跑的隔离保留 OpenClaw 专用工作区根目录和 `USER.md`、`DREAMS.md` 启动文件，清除其记忆文件、专用 agent 数据库与会话状态；KylinBot 记忆和会话 SQLite 也清零并检查完整性。三批分别从同一个基线归档恢复，公开来源文件附每批恢复收据的哈希与清零状态。OpenClaw 全局状态库仍可保留网关运行记录；这不是跨机器或完全重装的独立性证明。第一次预检误删启动文件，导致 OpenClaw 12 例首步全部报 `WORKSPACE_VANISHED`；该失败单独公开，不纳入修正后同条件三批的标准差。
+
+[v0.2.2 三批真机摘要](../examples/live-openkylin-20260927-v022-repeat-summary.json)记录两款各 84/84 步、零超时，逐维和总分列均值与样本标准差；[逐项来源与原始哈希](../examples/live-openkylin-20260927-v022-provenance.json)保留批次、重置收据、判定与逐回合实耗时，[隔离预检失败](../examples/live-openkylin-20260927-v022-preflight-failure.json)单列。[桌面演示](../examples/live-openkylin-20260927-v022-demo.mp4)显示安装版本、三批结果、雷达图与另一次现场小案例。三批只来自同一 VM 和每维两例，OpenClaw 温度未显式固定；分数是智能体基准分，不是评委分。
 
 [两批历史六例真实报告与雷达图](../README.md)记录了 v0.1.0 数据的首轮比较，桌面实录见[公开视频](../examples/live-openkylin-20260926-demo.mp4)。每维一例、第二批有一次超时，分数不能解释为稳定排名；它们与当前 12 例的 dataset 指纹不同，不能混算。替身输出只用于评分流水线验证。
 

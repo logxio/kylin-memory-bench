@@ -4,7 +4,7 @@
   "executable": "openclaw",
   "agent_id": "kmb-test",
   "session_prefix": "kmb-live-unique-run-id",
-  "turn_timeout_seconds": 60,
+  "turn_timeout_seconds": 130,
   "memory_root_env": "KMB_OPENCLAW_WORKSPACE",
   "memory_globs": ["MEMORY.md", "USER.md", "memory/*.md"]
 }

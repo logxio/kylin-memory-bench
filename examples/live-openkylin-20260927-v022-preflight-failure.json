@@ -1,0 +1,106 @@
+{
+  "agents": [
+    {
+      "completed_steps": 28,
+      "config_fingerprint": "cec62be58aed3a1d8c659410de5374b437b6309da797456b4f3906688f304329",
+      "error_count": 0,
+      "errors": [],
+      "expected_steps": 28,
+      "kind": "kylinbot",
+      "name": "KylinBot",
+      "overall": 36.11
+    },
+    {
+      "completed_steps": 0,
+      "config_fingerprint": "d89b48a7f071f22e080e6daec73efd8dd7123f79b4840cc1142df02147288528",
+      "error_count": 12,
+      "errors": [
+        {
+          "case": "boundary-01",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "ephemeral",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "boundary-02",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "ephemeral",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "discrimination-01",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "discrimination-02",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "recall-01",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "recall-02",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "retention-01",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "retention-02",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "task-reuse-01",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "task-reuse-02",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "teach",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "update-01",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "old",
+          "type": "RuntimeError"
+        },
+        {
+          "case": "update-02",
+          "gateway_code": "WORKSPACE_VANISHED",
+          "step": "old",
+          "type": "RuntimeError"
+        }
+      ],
+      "expected_steps": 28,
+      "kind": "openclaw",
+      "name": "OpenClaw",
+      "overall": 0.0
+    }
+  ],
+  "cause": "The OpenClaw gateway rejected its dedicated workspace with WORKSPACE_VANISHED after a directory-level baseline reset removed required bootstrap files.",
+  "classification": "setup failure; excluded from the three comparable runs",
+  "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+  "package_version": "0.2.2",
+  "raw_result_sha256": "190c9199114f5e8abbcf24c98cd1044a3e0c2041e5b0848f8cbe23f7a408b1f3",
+  "resolution": "The corrected reset keeps the workspace root and baseline USER.md and DREAMS.md while clearing memory and session state. A new dual-agent smoke passed before the three-run series.",
+  "run_id": "f3591f92a117",
+  "schema": "kmb.public-preflight-failure.v1",
+  "scoring_version": "kmb.scoring.v0.2.1-json-fence"
+}

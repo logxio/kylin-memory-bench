@@ -48,11 +48,14 @@ class OpenClawAgent(Agent):
         message_file = workspace / ("prompt-" + step["id"] + ".txt")
         message_file.write_text(prompt, encoding="utf-8")
         key = "kmb:" + self.config.get("session_prefix", "run") + ":" + case["id"] + ":" + step["session"]
+        # Leave time for the CLI to report its own timeout before the outer
+        # process deadline. The outer limit still covers startup and cleanup.
+        cli_timeout = max(1, int(deadline) - 5)
         args = [command, "agent", "--agent", self.config.get("agent_id", "main"),
                 "--session-key", key, "--message-file", str(message_file), "--json",
-                "--timeout", str(max(1, int(deadline)))]
+                "--timeout", str(cli_timeout)]
         completed = subprocess.run(args, text=True, capture_output=True, timeout=deadline, check=False)
-        raw = {"argv": args[:-2] + ["--timeout", str(max(1, int(deadline)))],
+        raw = {"argv": args,
                "exit_code": completed.returncode, "stdout": completed.stdout, "stderr": completed.stderr}
         if completed.returncode != 0:
             raise RuntimeError("OpenClaw turn failed: " + json.dumps(raw, ensure_ascii=False))
@@ -104,35 +107,46 @@ class KylinBotAgent(Agent):
         parsed = urlparse(url)
         if parsed.scheme not in ("ws", "wss") or not parsed.netloc:
             raise ValueError("KylinBot url must be ws:// or wss:// with a host")
+        started = time.monotonic()
+
+        def remaining(phase):
+            left = deadline - (time.monotonic() - started)
+            if left <= 0:
+                raise TimeoutError("KylinBot " + phase + " timed out")
+            return left
+
         token = os.environ.get(self.config.get("token_env", "KYLINBOT_WS_TOKEN")) or getattr(self, "_token", None)
         if not token:
-            token = self._pair_local_gateway(url, deadline)
+            token = self._pair_local_gateway(url, remaining("pairing"))
             self._token = token
         session_id = ":".join((self.config.get("session_prefix", "kmb"), case["id"], step["session"]))
         frames = []
-        ws = websocket.create_connection(url, timeout=deadline,
+        ws = websocket.create_connection(url, timeout=remaining("connecting"),
                                          header=["Authorization: Bearer " + token.removeprefix("Bearer ")],
                                          subprotocols=["kylinbot.v1"])
-        started = time.monotonic()
         try:
             connect = {"type": "connect", "session_id": session_id, "capabilities": ["chat"],
                        "mode": self.config.get("mode", "agentic"), "token_saving": False}
+            ws.settimeout(remaining("connecting"))
             ws.send(json.dumps(connect, ensure_ascii=False))
             while True:
+                ws.settimeout(remaining("connecting"))
                 frame = json.loads(ws.recv())
+                remaining("connecting")
                 frames.append(frame)
                 if frame.get("type") == "connected":
                     break
                 if frame.get("type") == "error":
                     raise RuntimeError("KylinBot connect error: " + str(frame.get("message")))
-                if time.monotonic() - started >= deadline:
-                    raise TimeoutError("KylinBot connect timed out")
+            ws.settimeout(remaining("sending"))
             ws.send(json.dumps({"type": "message", "content": prompt,
                                 "mode": self.config.get("mode", "agentic"), "token_saving": False},
                                ensure_ascii=False))
             chunks = []
             while True:
+                ws.settimeout(remaining("turn"))
                 frame = json.loads(ws.recv())
+                remaining("turn")
                 frames.append(frame)
                 kind = frame.get("type")
                 if kind == "chunk":
@@ -147,8 +161,6 @@ class KylinBotAgent(Agent):
                     raise RuntimeError("KylinBot message error: " + str(frame.get("message")))
                 elif kind == "approval_request":
                     raise RuntimeError("KylinBot requested interactive approval; record the request and configure a safe test workspace")
-                if time.monotonic() - started >= deadline:
-                    raise TimeoutError("KylinBot turn timed out")
         finally:
             ws.close()
 

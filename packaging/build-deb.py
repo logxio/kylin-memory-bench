@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 NAME = f"kylin-memory-bench_{VERSION}_all.deb"
 CONTROL = f"""Package: kylin-memory-bench
 Version: {VERSION}
@@ -60,9 +60,10 @@ def ar_member(name, data):
 
 
 def main():
-    selections = ["kylin_memory_bench", "data", "configs", "docs", "examples",
-                  "run-fixture.sh", "run-live.sh", "requirements.txt", "README.md",
-                  "CONTRIBUTING.md", "LICENSE"]
+    # Reports, video, and reviewer documents evolve after a measurement. Keep
+    # the installable runtime independent of those public evidence artifacts.
+    selections = ["kylin_memory_bench", "data", "configs", "run-fixture.sh",
+                  "run-live.sh", "requirements.txt", "LICENSE"]
     files = [("usr/bin/kylin-memory-bench", LAUNCHER, 0o755)]
     for name in selections:
         source = ROOT / name

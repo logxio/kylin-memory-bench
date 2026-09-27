@@ -13,7 +13,7 @@ python3 --version
 ./run-fixture.sh
 ```
 
-确认 `VERSION_ID` 为 3.0、架构与镜像一致、Python 至少 3.10。替身输出标为 `synthetic/fixture`，只检验运行流水线。同一台 openKylin 3.0 x86_64 VM 已安装 KylinBot 0.7.5、OpenClaw 2026.9.6 和本项目的 `.deb`，完成下文的双智能体真实六维全批与[4 分 47 秒桌面演示](../examples/live-openkylin-20260926-demo.mp4)。[openKylin 3.0 发布说明](https://www.openkylin.top/news/4098-cn.html)
+确认 `VERSION_ID` 为 3.0、架构与镜像一致、Python 至少 3.10。替身输出标为 `synthetic/fixture`，只检验运行流水线。同一台 openKylin 3.0 x86_64 VM 已安装 KylinBot 0.7.5、OpenClaw 2026.9.6 和本项目的 `.deb`，完成下文的双智能体真实六维全批与[本轮桌面演示](../examples/live-openkylin-20260927-v022-demo.mp4)；[4 分 47 秒旧视频](../examples/live-openkylin-20260926-demo.mp4)只对应历史六例。[openKylin 3.0 发布说明](https://www.openkylin.top/news/4098-cn.html)
 
 ## 两款智能体先用同一模型
 
@@ -92,19 +92,19 @@ openclaw gateway status
 
 ## 安装并检验 `.deb`
 
-从 [v0.2.1 Release](https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.1) 下载当前 12 例发行包。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`。v0.2.1 已在 Ubuntu 干净 CI 中构建检验，尚未在 openKylin 3.0 安装；下方是第三方需要现场执行的验收。历史 v0.2.0 包曾在 openKylin 3.0 经 `apt install` 安装，系统源解析了依赖，已安装入口与替身命令通过检查。想从当前 checkout 自行打包时，先执行 `./packaging/build-deb.sh`，再把下方包路径改成 `dist/kylin-memory-bench_0.2.1_all.deb`。
+从 [v0.2.2 Release](https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.2) 下载当前 12 例发行包。包声明依赖 `python3 (>= 3.10)` 和 `python3-websocket`，安装 CLI、任务数据、配置和运行脚本；公开报告、PDF 与视频留在仓库 `examples/` 和 `docs/`，不打进安装包。v0.2.2 已在 openKylin 3.0 经 `apt install` 安装，已安装入口与指定用户目录的替身命令通过检查。历史 v0.2.0、v0.2.1 包也有现场安装记录。想从当前 checkout 自行打包时，先执行 `./packaging/build-deb.sh`，再把下方包路径改成 `dist/kylin-memory-bench_0.2.2_all.deb`。
 
 ```bash
-curl -fL -o kylin-memory-bench_0.2.1_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.1/kylin-memory-bench_0.2.1_all.deb
-dpkg-deb --info kylin-memory-bench_0.2.1_all.deb
-dpkg-deb --contents kylin-memory-bench_0.2.1_all.deb
-sudo apt install ./kylin-memory-bench_0.2.1_all.deb
+curl -fL -o kylin-memory-bench_0.2.2_all.deb https://github.com/logxio/kylin-memory-bench/releases/download/v0.2.2/kylin-memory-bench_0.2.2_all.deb
+dpkg-deb --info kylin-memory-bench_0.2.2_all.deb
+dpkg-deb --contents kylin-memory-bench_0.2.2_all.deb
+sudo apt install ./kylin-memory-bench_0.2.2_all.deb
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' kylin-memory-bench
 command -v kylin-memory-bench
 kylin-memory-bench --help
 ```
 
-v0.2.0 在 openKylin 3.0 上 `apt install` 返回 0，`/usr/bin/kylin-memory-bench --help` 可装载 Python 模块，并跑通 12 例替身。v0.2.1 没有这项现场安装记录。安装后的数据和配置在 `/usr/share/kylin-memory-bench/`，运行输出请写入普通用户目录，不要写到包目录。
+v0.2.2 的包 SHA-256 为 `72dcb72b32efbc8d620b4a81a3716b8154637619099eeba4920fc185458e234e`；现场核验下载文件后再安装。安装后的数据和配置在 `/usr/share/kylin-memory-bench/`，运行输出请写入普通用户目录，不要写到包目录。例如 `./run-fixture.sh "$HOME/kmb-results/fixture-check"` 可验证已安装的替身流水线。
 
 ## 先跑一个案例，再跑 12 例
 
@@ -122,7 +122,7 @@ kylin-memory-bench --dataset data/tasks.json --agent configs/kylinbot.example.js
 
 若其他 KylinBot 版本确实把记忆写到可读 Markdown 文件，也可设置 `KMB_KYLINBOT_MEMORY_ROOT` 观察该目录。最小案例应在新输出目录产生 `result.json`、`report.txt`、`radar.svg`。先读 `report.txt`，再看 `result.json` 的两款 `kind`、`evidence_class`、逐步 `source`、`errors` 与实际回复。只有 `live:...` 的真实适配器证据才算连通；出现错误、空回复或缺文件，就按原始错误修好后换新输出目录重跑。`live/observed` 标签只说明用了真实适配器，**不单独证明两款智能体完成了任务**。
 
-最小案例两条链路都接通后，从已安装包运行一键全批。当前包会给每款智能体跑同一组 12 个案例、28 个步骤，并在同一输出目录生成六维报告和雷达图；默认总时限 1800 秒。保留本次原始目录，不把它和 `out/fixture-*` 混在一起。
+最小案例两条链路都接通后，从已安装包运行一键全批。当前包会给每款智能体跑同一组 12 个案例、28 个步骤，并在同一输出目录生成六维报告和雷达图；默认总时限 1800 秒。示例配置的逐回合总时限为 130 秒，成功或错误均保留实耗时；原因见[评测方法](method.md#重复运行统计)。保留本次原始目录，不把它和 `out/fixture-*` 混在一起。
 
 ```bash
 /usr/share/kylin-memory-bench/run-live.sh "$HOME/kmb-results/full-$(date +%Y%m%d-%H%M%S)"
@@ -131,6 +131,28 @@ kylin-memory-bench --dataset data/tasks.json --agent configs/kylinbot.example.js
 打开本次 `report.txt`、`radar.svg`，逐项检查 `result.json` 中 KylinBot 与 OpenClaw 的错误、回复、文件和记忆来源。尤其检查临时验证码那项：没有可读取的记忆证据时，`not-persisted` 必须是 `missing`。记录 VM 的 OS 版本、两款智能体版本、实际模型与温度、运行时间、包版本和输出目录。
 
 要重复运行，先让两款智能体回到同一个可核验的干净状态，包括长期记忆、专用工作区和会话记录；单靠新输出目录或运行 ID 不够。保留每次的原始 `result.json`，用[重复摘要命令](method.md#重复运行统计)计算逐维均值、样本标准差、步骤完成率与超时。无法验证状态一致时，应把重复批次注明为可能受前批记忆影响，不能当作独立波动。
+
+## 2026-09-27 v0.2.2 十二例真机复跑
+
+同一台 openKylin 3.0 x86_64 VM，Python 3.12.2、KylinBot 0.7.5、OpenClaw 2026.9.6、安装包 v0.2.2，两款共用 `qwen-plus`。KylinBot 温度为 0.0，OpenClaw 温度未显式固定。每批前停止网关，从同一基线恢复两款专用记忆、会话和工作区并核验清零；保留 OpenClaw 的工作区根目录及 `USER.md`、`DREAMS.md` 启动文件。三批使用数据指纹 `55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71`，KylinBot 配置指纹 `cec62be58aed3a1d8c659410de5374b437b6309da797456b4f3906688f304329`，OpenClaw `d89b48a7f071f22e080e6daec73efd8dd7123f79b4840cc1142df02147288528`，评分器 `kmb.scoring.v0.2.1-json-fence`。包版本变更的是超时控制，评分规则仍是 v0.2.1 口径。
+
+| 批次与 run ID | KylinBot 总分、完成、超时 | OpenClaw 总分、完成、超时 | 全批耗时 |
+|---|---:|---:|---:|
+| 1 · `b72c1361f53e` | 40.28；28/28；0 | 34.72；28/28；0 | 910.375 秒 |
+| 2 · `0c2f2492a6fb` | 36.11；28/28；0 | 34.72；28/28；0 | 1096.795 秒 |
+| 3 · `9365dedf1939` | 31.95；28/28；0 | 47.22；28/28；0 | 1234.037 秒 |
+
+| 能力 | KylinBot 均值 / 样本标准差 | OpenClaw 均值 / 样本标准差 |
+|---|---:|---:|
+| 长期保持 | 50.00 / 0.00 | 0.00 / 0.00 |
+| 记忆调用 | 33.33 / 28.87 | 0.00 / 0.00 |
+| 动态更新 | 41.67 / 14.43 | 83.33 / 14.43 |
+| 相近区分 | 0.00 / 0.00 | 16.67 / 28.87 |
+| 边界识别 | 58.34 / 0.00 | 100.00 / 0.00 |
+| 任务复用 | 33.33 / 0.00 | 33.33 / 0.00 |
+| 总分 | 36.11 / 4.17 | 38.89 / 7.22 |
+
+两款共完成 168/168 步，均为零 `TimeoutError`。第二批 OpenClaw 有 77.217 秒和 92.121 秒的成功回合，第三批 KylinBot 最长成功回合 101.938 秒，说明旧 60 秒客户端截止会截断这类正常完成的调用；旧超时请求的上游最终状态没有保存，不能倒推其本来必会成功。查看[独立重复摘要与逐步完成率](../examples/live-openkylin-20260927-v022-repeat-summary.json)、[每批去敏报告与雷达图](../examples/live-openkylin-20260927-v022-full-1-report.txt)、[第二批](../examples/live-openkylin-20260927-v022-full-2-report.txt)、[第三批](../examples/live-openkylin-20260927-v022-full-3-report.txt)、[均值雷达图](../examples/live-openkylin-20260927-v022-mean-radar.svg)和[逐项判定、原始 SHA-256、每批隔离收据](../examples/live-openkylin-20260927-v022-provenance.json)。原始回复和可观察记忆私下留存。初次隔离预检曾令 OpenClaw 工作区失效，12 例首步全部报错；[失败记录](../examples/live-openkylin-20260927-v022-preflight-failure.json)单列，不并入这三批。OpenClaw 的全局状态库仍保留运行记录，不能把此流程解释为三次全新系统安装。同机、每维两例、三批的样本不支持稳定领先或显著性结论。
 
 ## 2026-09-26 v0.2.0 十二例真实运行与 v0.2.1 离线重评分
 
