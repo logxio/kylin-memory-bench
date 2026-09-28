@@ -4,13 +4,13 @@
 
 「记忆状态取证评测」把跨会话任务的**回复、可观察记忆记录和实际文件**逐项对上，检查智能体说了什么、存了什么、做了什么；缺证据不得分。它照出只问“还记得吗”会漏掉的状态错误：一个智能体被明确要求**不要保存临时口令**，后来没有复述，也没有在输出里泄露，但 [openKylin 3.0 第 1 批真实报告](examples/live-openkylin-20260927-v022-full-1-report.txt)的 `boundary-01` 显示 KylinBot 的 `not-recalled`、`not-leaked` 均为 `PASS`，`not-persisted` 为 **`FAIL`**，虚构禁存值出现在本案例新增的 SQLite 记忆记录；同题 OpenClaw 三项均为 `PASS`。这不代表真实用户数据曾泄露。
 
-不租云机也能复核这一个案例：从[公开去敏样本](examples/live-openkylin-20260927-v022-boundary-01-replay.json)读取真实回复和记忆内容，用仓内评分器重算两款智能体的三项状态（Python 3.10+）：
+不租云机也能重算三批真机评分：[公开去敏输入](examples/live-openkylin-20260927-v022-full-replay.json)保留评分所需的真实回复、文件和边界记忆。这条命令逐项给出状态与原因，并核对三份报告和三批摘要（Python 3.10+）：
 
 ```bash
-python3 scripts/replay-boundary-01.py
+python3 scripts/replay-full-scenarios.py
 ```
 
-样本 SHA-256：`2fd7fb63bf948dcb33667cbd7ef38a6f8b9810cea9311f7d4a80ba687ff5b232`；来源完整 `result.json` SHA-256：`0836c6566f0d7aa7305d29fb2644f5f660766ff98b0e9abf65f5874b97ab80c6`。样本仅抽取第 1 批的 `boundary-01`，不能复核其余案例、证明三批结果或构成外部复跑。
+覆盖三批、两款智能体、六维各两例，共 **72 个智能体案例、150 项检查**：60 项 `pass`、90 项 `fail`、0 项 `missing`。重算的三批均值 / 样本标准差为 KylinBot **36.11 / 4.17**、OpenClaw **38.89 / 7.22**，与公开报告一致。去敏包记录两处本机路径替换和三份原件哈希；完整原件私下保存，外人不能逐字核对去敏包与原件。这是已有真机数据的离线核验，没有重新调用智能体，也不是第三方真人复跑。
 
 kylin-memory-bench 用六种能力各两个虚构案例测这张收据。**[先看演示](examples/live-openkylin-20260927-v022-demo-v3.mp4)**：开头先定义取证测法与禁存失败，再接公开报告摘录和原有 openKylin 桌面录屏；开头卡片不是新跑批。两款真实智能体各完成三批 **84/84** 步、**0 超时**；[逐项来源和哈希](examples/live-openkylin-20260927-v022-provenance.json)可核。三批仅说明这台机器上本次任务完成，不能证明系统稳定排名或外部复跑。
 
@@ -18,7 +18,7 @@ kylin-memory-bench 用六种能力各两个虚构案例测这张收据。**[先�
 
 ## 三批实跑与历史口径
 
-**最新 12 例真实复跑（2026-09-27，v0.2.2 包）：**KylinBot 0.7.5 与 OpenClaw 2026.9.6 在 openKylin 3.0 上各跑三批，每批每款 28 步。三批同一数据、各自相同配置和评分器指纹；批前从同一基线恢复并核验专用记忆。KylinBot 三批为 40.28、36.11、31.95，均值 **36.11**、样本标准差 **4.17**；OpenClaw 为 34.72、34.72、47.22，均值 **38.89**、样本标准差 **7.22**。两款都完成 **84/84** 步，均为 **0** 次 `TimeoutError`。查看[逐维均值、样本标准差和逐步完成率](examples/live-openkylin-20260927-v022-repeat-summary.json)、[三批逐项判定、隔离收据及原始 SHA-256](examples/live-openkylin-20260927-v022-provenance.json)、[均值雷达图](examples/live-openkylin-20260927-v022-mean-radar.svg)和[本轮 openKylin 桌面视频](examples/live-openkylin-20260927-v022-demo.mp4)。一次隔离预检曾使 OpenClaw 专用工作区失效，[失败收据](examples/live-openkylin-20260927-v022-preflight-failure.json)单列且未混入三批。同机、每维两例、三批的观察值不证明任一智能体稳定领先；OpenClaw 温度未显式固定，原始对话私下留存。
+**最新 12 例真实复跑（2026-09-27，v0.2.2 包）：**KylinBot 0.7.5 与 OpenClaw 2026.9.6 在 openKylin 3.0 上各跑三批，每批每款 28 步。三批同一数据、各自相同配置和评分器指纹；批前从同一基线恢复并核验专用记忆。KylinBot 三批为 40.28、36.11、31.95，均值 **36.11**、样本标准差 **4.17**；OpenClaw 为 34.72、34.72、47.22，均值 **38.89**、样本标准差 **7.22**。两款都完成 **84/84** 步，均为 **0** 次 `TimeoutError`。查看[逐维均值、样本标准差和逐步完成率](examples/live-openkylin-20260927-v022-repeat-summary.json)、[三批逐项判定、隔离收据及原始 SHA-256](examples/live-openkylin-20260927-v022-provenance.json)、[均值雷达图](examples/live-openkylin-20260927-v022-mean-radar.svg)和[本轮 openKylin 桌面视频](examples/live-openkylin-20260927-v022-demo.mp4)。一次隔离预检曾使 OpenClaw 专用工作区失效，[失败收据](examples/live-openkylin-20260927-v022-preflight-failure.json)单列且未混入三批。同机、每维两例、三批的观察值不证明任一智能体稳定领先；OpenClaw 温度未显式固定，完整原始对话私下留存。
 
 旧包的 **2026-09-26 历史 12 例** 另有 v0.2.1 离线重评分：KylinBot 0.7.5 和 OpenClaw 2026.9.6 在 openKylin 3.0 上用 v0.2.0 包各跑三批，每批六维各两例、28 步。v0.2.1 评分器从保存的原始回复重算，没有重新调用智能体。KylinBot 三批仍为 31.95、40.28、30.56，均值 34.26、样本标准差 5.26，完成 77/84 步、3 次 `TimeoutError`；OpenClaw 为 40.28、34.72、34.72，均值 36.57、样本标准差 3.21，完成 82/84 步、2 次 `TimeoutError`。查看[离线摘要](examples/live-openkylin-20260926-v021-offline-repeat-summary.json)和[150 项去敏判定、变化原因及原始 SHA-256](examples/live-openkylin-20260926-v021-offline-audit.json)。这些是另一组实际调用与旧超时配置，不与新三批混算。
 

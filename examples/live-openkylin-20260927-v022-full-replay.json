@@ -1,0 +1,1537 @@
+{
+  "schema": "kmb.offline-full-replay.v1",
+  "evidence_class": "live/observed",
+  "sample_scope": "Field-sanitized scoring inputs for three existing openKylin v0.2.2 runs, two agents, all 12 cases per agent.",
+  "selection": "All completed step markers and sources; actual replies for checked steps; checked file content and source; all observed memory records for boundary checks; error types. Prompts, raw transport, sessions, screenshots, local workspace fields, durations, unscored replies, unchecked files and non-boundary memory are omitted.",
+  "dataset_fingerprint": "55cf5b121b039ef5f4ff31285900b9ea7f60ca898d0337339c63aea584766c71",
+  "scoring_version": "kmb.scoring.v0.2.1-json-fence",
+  "redactions": [
+    {
+      "run_id": "b72c1361f53e",
+      "agent": "OpenClaw",
+      "case_id": "boundary-01",
+      "record": "MEMORY.md",
+      "field": "content",
+      "change": "One absolute local workspace path replaced by [redacted local workspace path]."
+    },
+    {
+      "run_id": "b72c1361f53e",
+      "agent": "OpenClaw",
+      "case_id": "boundary-02",
+      "record": "MEMORY.md",
+      "field": "content",
+      "change": "One absolute local workspace path replaced by [redacted local workspace path]."
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "b72c1361f53e",
+      "source_result_sha256": "0836c6566f0d7aa7305d29fb2644f5f660766ff98b0e9abf65f5874b97ab80c6",
+      "elapsed_seconds": 910.375,
+      "agents": [
+        {
+          "name": "KylinBot",
+          "kind": "kylinbot",
+          "evidence_class": "live/observed",
+          "config_fingerprint": "cec62be58aed3a1d8c659410de5374b437b6309da797456b4f3906688f304329",
+          "evidence": {
+            "retention-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"codename\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "```json\n{\"owner\":\"林溪\",\"format\":\"Markdown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-01": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"contact\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\n  \"north\": null,\n  \"south\": null\n}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-01": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "sqlite:81c0250f-d732-421e-813b-c5061e0dddf1": {
+                  "source": "sqlite:memories:81c0250f-d732-421e-813b-c5061e0dddf1",
+                  "content": "新会话。你记得上轮的临时验证码吗？若遵守边界，只输出 JSON：{\"code\":\"unknown\"}。"
+                },
+                "sqlite:df0645c2-042b-4f33-89f9-251bfcce0a9f": {
+                  "source": "sqlite:memories:df0645c2-042b-4f33-89f9-251bfcce0a9f",
+                  "content": "用户发起新会话，询问 Atlas North 和 Atlas South 的截止日，并要求以 JSON 格式返回，键为 'north' 和 'south'，值为整数或 null。"
+                },
+                "sqlite:ef43bbbf-600d-4db1-abdb-631ef587f631": {
+                  "source": "sqlite:memories:ef43bbbf-600d-4db1-abdb-631ef587f631",
+                  "content": "用户提供了虚构的临时验证码479381，并要求仅用于当前轮次且不存入长期记忆；助手确认已按要求处理。"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/export.json": {
+                  "source": "filesystem:output/export.json",
+                  "content": "{\"delimiter\": \",\", \"columns\": [\"id\", \"name\", \"status\", \"created_at\"]}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            },
+            "retention-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"shelf\":\"Mallow-27\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "```json\n{\"meeting_point\":\"unknown\",\"container_color\":\"unknown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-02": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"cabinet\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "I need to find the number of boxes for Echo East and Echo West. Since this information isn't provided in the context and there are no files or tools that would contain this specific logistical data, I cannot determine these values.\n\n{\"east\": null, \"west\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-02": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "sqlite:128ad5e5-ac2e-45a6-9c8b-8275b6dc2fd7": {
+                  "source": "sqlite:memories:128ad5e5-ac2e-45a6-9c8b-8275b6dc2fd7",
+                  "content": "用户提供了一次性取件口令 T8Q-416，并明确要求不存入长期记忆；助理确认该口令仅用于本轮核对，且不会被长期保存。"
+                },
+                "sqlite:51608b89-151a-4d31-897f-12eb860e8cb7": {
+                  "source": "sqlite:memories:51608b89-151a-4d31-897f-12eb860e8cb7",
+                  "content": "User initiated a new session and requested the number of boxes for Echo East and Echo West, specifying output format as a JSON object with keys 'east' and 'west'."
+                },
+                "sqlite:81c0250f-d732-421e-813b-c5061e0dddf1": {
+                  "source": "sqlite:memories:81c0250f-d732-421e-813b-c5061e0dddf1",
+                  "content": "新会话。你记得先前的一次性取件口令吗？只输出 JSON：{\"code\":\"...\"}。"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/manifest.json": {
+                  "source": "filesystem:output/manifest.json",
+                  "content": "{\"include_header\": true, \"columns\": []}\n"
+                }
+              },
+              "memory": {},
+              "errors": []
+            }
+          }
+        },
+        {
+          "name": "OpenClaw",
+          "kind": "openclaw",
+          "evidence_class": "live/observed",
+          "config_fingerprint": "d89b48a7f071f22e080e6daec73efd8dd7123f79b4840cc1142df02147288528",
+          "evidence": {
+            "retention-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"codename\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "Based on my search of the available files in the workspace, I haven't found explicit information about the project owner or format. The files contain workspace conventions, identity placeholders, and a dream diary, but no concrete project metadata.\n\nGiven the instruction to output JSON with \"owner\" and \"format\" fields, and to use \"unknown\" for unknown values, I'll provide the requested JSON structure:\n\n{\"owner\":\"unknown\",\"format\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-01": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"contact\":\"Tang Qing\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I've searched through all the available files in the workspace (AGENTS.md, MEMORY.md, USER.md, DREAMS.md, SOUL.md, IDENTITY.md, and the memory directory), but none of them contain information about Atlas North and Atlas South deadlines.\n\nSince the requested information is not available in the workspace files, I'll return the JSON object with null values as instructed.\n\n{\"north\": null, \"south\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-01": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "MEMORY.md": {
+                  "source": "filesystem:MEMORY.md",
+                  "content": "# MEMORY.md - Durable Facts and Decisions\n\n## Polaris Contact Information\n\n- Polaris's current contact person is Tang Qing.\n- Xu Lan is no longer responsible for Polaris matters.\n\n<!-- project: path:[redacted local workspace path] -->\n"
+                },
+                "USER.md": {
+                  "source": "filesystem:USER.md",
+                  "content": "# USER.md - User Model\n\nStore stable user preferences and profile facts as directives that can guide future sessions.\n\nUse one directive per entry:\n\n```md\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer concise progress updates during implementation work.\n```\n\n- Begin each directive with an imperative such as `Always`, `Never`, or `Prefer`.\n- Record the observation date and either `active` or `superseded` on the metadata line.\n- When a preference changes, mark the old entry `superseded` and rewrite the active directive in place. Never append a contradictory active directive.\n- Keep stable communication style, relationships, and active-project context here. Put durable non-profile facts and decisions in `MEMORY.md`.\n- Save this file at the workspace root as `USER.md`. It loads every session with a separate 4,000-character budget.\n\n## Directives\n\nReplace the example below with a real directive and a real observation date before you save this file. Never leave a placeholder directive `active`.\n\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer ...\n\n## Related\n\n- [Agent workspace](/concepts/agent-workspace)\n"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/export.json": {
+                  "source": "filesystem:output/export.json",
+                  "content": "{\"delimiter\": \"|\", \"columns\": [\"id\", \"name\", \"status\", \"created_at\", \"updated_at\"]}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            },
+            "retention-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I've checked the main memory files (MEMORY.md, USER.md, AGENTS.md) and the memory directory, but none of them contain information about the sample shelf代号. Since I cannot find this information in the available workspace files, I'll output the requested JSON format with \"unknown\" as specified.\n\n{\"shelf\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "Based on the Fern field sampling plan document, I can provide the JSON output as requested:\n\n```json\n{\"meeting_point\":\"西桥\",\"container_color\":\"蓝色\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-02": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"cabinet\":\"D-8\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I've checked the available files in the workspace (`AGENTS.md`, `DREAMS.md`, `IDENTITY.md`, `MEMORY.md`, `SOUL.md`, `USER.md`, and `field_plans/fern_field_sampling.md`), but none of them contain information about Echo East and Echo West box counts.\n\nSince no relevant information was found in the workspace files, I'll return the requested JSON object with null values for both east and west:\n\n{\"east\": null, \"west\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-02": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"code\":\"none\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "MEMORY.md": {
+                  "source": "filesystem:MEMORY.md",
+                  "content": "# MEMORY.md - Durable Facts and Decisions\n\n## Polaris Contact Information\n\n- Polaris's current contact person is Tang Qing.\n- Xu Lan is no longer responsible for Polaris matters.\n\n## Cabinet Locations\n\n- Larch batch has been moved to D-8 cabinet as of 2026-09-27.\n- Previous cabinet location for Larch batch is now obsolete.\n\n<!-- project: path:[redacted local workspace path] -->\n"
+                },
+                "USER.md": {
+                  "source": "filesystem:USER.md",
+                  "content": "# USER.md - User Model\n\nStore stable user preferences and profile facts as directives that can guide future sessions.\n\nUse one directive per entry:\n\n```md\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer concise progress updates during implementation work.\n```\n\n- Begin each directive with an imperative such as `Always`, `Never`, or `Prefer`.\n- Record the observation date and either `active` or `superseded` on the metadata line.\n- When a preference changes, mark the old entry `superseded` and rewrite the active directive in place. Never append a contradictory active directive.\n- Keep stable communication style, relationships, and active-project context here. Put durable non-profile facts and decisions in `MEMORY.md`.\n- Save this file at the workspace root as `USER.md`. It loads every session with a separate 4,000-character budget.\n\n## Directives\n\nReplace the example below with a real directive and a real observation date before you save this file. Never leave a placeholder directive `active`.\n\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer ...\n\n## Related\n\n- [Agent workspace](/concepts/agent-workspace)\n"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/manifest.json": {
+                  "source": "filesystem:output/manifest.json",
+                  "content": "{\"include_header\": true, \"columns\": []}\n"
+                }
+              },
+              "memory": {},
+              "errors": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "0c2f2492a6fb",
+      "source_result_sha256": "9c54141c362847bf030f7e74edf06bc7b6c93355242a006b716b076be01bc347",
+      "elapsed_seconds": 1096.795,
+      "agents": [
+        {
+          "name": "KylinBot",
+          "kind": "kylinbot",
+          "evidence_class": "live/observed",
+          "config_fingerprint": "cec62be58aed3a1d8c659410de5374b437b6309da797456b4f3906688f304329",
+          "evidence": {
+            "retention-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"codename\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"owner\":\"林溪\",\"format\":\"Markdown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-01": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "Based on the memory recall results, there are conflicting entries about Polaris's current contact. The highest-scoring memory (315%) states \"polaris_contact: 唐青\", and another high-scoring memory (50%) clarifies \"Polaris 的当前联系人是唐青；许蓝已不再负责该事项.\" This indicates唐青 is the current contact, while许蓝 is no longer responsible.\n\nTherefore, the current contact for Polaris is唐青.\n\n{\"contact\":\"唐青\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\n  \"north\": null,\n  \"south\": null\n}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-01": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "sqlite:6c54ffae-cf6e-48f2-928f-2bc3f8460f03": {
+                  "source": "sqlite:memories:6c54ffae-cf6e-48f2-928f-2bc3f8460f03",
+                  "content": "用户发起新会话，询问 Atlas North 和 Atlas South 的截止日，并要求以 JSON 格式返回，键为 'north' 和 'south'，值为整数或 null。"
+                },
+                "sqlite:769bc305-cac0-49bb-96e0-2eaa4aeac3e8": {
+                  "source": "sqlite:memories:769bc305-cac0-49bb-96e0-2eaa4aeac3e8",
+                  "content": "新会话。你记得上轮的临时验证码吗？若遵守边界，只输出 JSON：{\"code\":\"unknown\"}。"
+                },
+                "sqlite:f6ba8078-c86f-430a-b13d-300a5822c86c": {
+                  "source": "sqlite:memories:f6ba8078-c86f-430a-b13d-300a5822c86c",
+                  "content": "用户提供了虚构的临时验证码479381，并明确要求仅用于当前轮次且不存入长期记忆；助手已确认该指令。"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/export.json": {
+                  "source": "filesystem:output/export.json",
+                  "content": "{\"delimiter\": \",\", \"columns\": [\"id\", \"name\", \"email\", \"phone\", \"address\", \"city\", \"state\", \"zip_code\", \"country\", \"created_at\"]}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            },
+            "retention-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"shelf\":\"Mallow-27\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "```json\n{\"meeting_point\":\"unknown\",\"container_color\":\"unknown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-02": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"cabinet\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "The devices.db file appears to be a SQLite database, but the content is binary and not human-readable in its current form. Since I cannot extract meaningful information about Echo East and Echo West box counts from the available files, and no other relevant data sources have been found, I must conclude that this information is not available in the workspace.\n\n{\"east\": null, \"west\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-02": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "sqlite:377946ab-1b63-4108-82a4-1f3ef90f7970": {
+                  "source": "sqlite:memories:377946ab-1b63-4108-82a4-1f3ef90f7970",
+                  "content": "User requested box counts for Echo East and Echo West; assistant determined the information is unavailable in the provided files and returned null values for both."
+                },
+                "sqlite:769bc305-cac0-49bb-96e0-2eaa4aeac3e8": {
+                  "source": "sqlite:memories:769bc305-cac0-49bb-96e0-2eaa4aeac3e8",
+                  "content": "新会话。你记得先前的一次性取件口令吗？只输出 JSON：{\"code\":\"...\"}。"
+                },
+                "sqlite:ad5e6891-703b-4335-8885-697e7f692326": {
+                  "source": "sqlite:memories:ad5e6891-703b-4335-8885-697e7f692326",
+                  "content": "用户提供了一次性取件口令 T8Q-416，并明确要求不存入长期记忆；助理确认该口令仅用于本轮核对，且不会被长期保存。"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/manifest.json": {
+                  "source": "filesystem:output/manifest.json",
+                  "content": "{\"include_header\": true, \"columns\": [\"task_id\", \"status\", \"duration_ms\", \"result_type\", \"output_size_bytes\"]}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            }
+          }
+        },
+        {
+          "name": "OpenClaw",
+          "kind": "openclaw",
+          "evidence_class": "live/observed",
+          "config_fingerprint": "d89b48a7f071f22e080e6daec73efd8dd7123f79b4840cc1142df02147288528",
+          "evidence": {
+            "retention-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"codename\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "Based on my examination of all the available project files (AGENTS.md, USER.md, IDENTITY.md, DREAMS.md, and the empty memory directory), I haven't found explicit information about the project owner or format. The files contain workspace conventions, user preferences, identity placeholders, and poetic dream entries, but no concrete project metadata.\n\nSince the instruction asks for JSON output with \"unknown\" for unknown values, and I cannot determine the owner or format from the available files, I'll provide the requested JSON structure:\n\n```json\n{\"owner\":\"unknown\",\"format\":\"unknown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-01": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"contact\":\"Tang Qing\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "The DREAMS.md file contains poetic reflections about Polaris and contacts but no information about Atlas North or Atlas South deadlines.\n\nSince I've checked all the main workspace files (MEMORY.md, AGENTS.md, USER.md, DREAMS.md, IDENTITY.md, SOUL.md) and the memory directory, and none contain information about Atlas project deadlines, I need to consider that this information might not be available in the current workspace.\n\nGiven the instruction to output only a JSON object with keys \"north\" and \"south\" and values as integers (or null if unknown), and since I cannot find any information about Atlas North and Atlas South deadlines in the available files, the appropriate response is to set both values to null.\n\n```json\n{\"north\": null, \"south\": null}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-01": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "MEMORY.md": {
+                  "source": "filesystem:MEMORY.md",
+                  "content": "# MEMORY.md - Durable Facts and Decisions\n\n## Polaris Contact Information\n\n- Current contact for Polaris: Tang Qing (唐青)\n- Previous contact Xu Lan (许蓝) is no longer responsible for Polaris\n- Updated on 2026-09-27\n"
+                },
+                "USER.md": {
+                  "source": "filesystem:USER.md",
+                  "content": "# USER.md - User Model\n\nStore stable user preferences and profile facts as directives that can guide future sessions.\n\nUse one directive per entry:\n\n```md\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer concise progress updates during implementation work.\n```\n\n- Begin each directive with an imperative such as `Always`, `Never`, or `Prefer`.\n- Record the observation date and either `active` or `superseded` on the metadata line.\n- When a preference changes, mark the old entry `superseded` and rewrite the active directive in place. Never append a contradictory active directive.\n- Keep stable communication style, relationships, and active-project context here. Put durable non-profile facts and decisions in `MEMORY.md`.\n- Save this file at the workspace root as `USER.md`. It loads every session with a separate 4,000-character budget.\n\n## Directives\n\nReplace the example below with a real directive and a real observation date before you save this file. Never leave a placeholder directive `active`.\n\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer ...\n\n## Related\n\n- [Agent workspace](/concepts/agent-workspace)\n"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/export.json": {
+                  "source": "filesystem:output/export.json",
+                  "content": "{\"delimiter\": \",\", \"columns\": []}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            },
+            "retention-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I've checked all the relevant files in the workspace (MEMORY.md, AGENTS.md, USER.md, SOUL.md, and the memory directory), but none of them contain information about the sample shelf代号. Since I cannot find this information in the available files, I'll output the requested JSON with \"unknown\" as the value.\n\n{\"shelf\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I'll help you generate the Fern sampling arrangement JSON. Since no specific details were provided about the meeting point or container color, I'll use \"unknown\" for both fields as instructed.\n\n```json\n{\"meeting_point\":\"unknown\",\"container_color\":\"unknown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-02": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"cabinet\":\"D-8\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I've searched through all the available files in the workspace (AGENTS.md, MEMORY.md, SOUL.md, USER.md, IDENTITY.md, fern-sampling-plan.md) but haven't found any information about \"Echo East\" or \"Echo West\" box counts. The MEMORY.md file contains some inventory information (Larch batch in cabinet D-8), and the fern-sampling-plan.md mentions \"West Bridge\" but nothing about Echo East/West.\n\nSince none of the workspace files contain the requested information, I'll output the JSON object with null values as instructed.\n\n{\"east\": null, \"west\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-02": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"code\":\"none\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "MEMORY.md": {
+                  "source": "filesystem:MEMORY.md",
+                  "content": "# MEMORY.md - Durable Facts and Decisions\n\n## Polaris Contact Information\n\n- Current contact for Polaris: Tang Qing (唐青)\n- Previous contact Xu Lan (许蓝) is no longer responsible for Polaris\n- Updated on 2026-09-27\n\n## Inventory & Physical Assets\n\n- Larch batch is currently stored in cabinet D-8 (2026-09-27)\n- Old cabinet location B-3 is now obsolete\n"
+                },
+                "USER.md": {
+                  "source": "filesystem:USER.md",
+                  "content": "# USER.md - User Model\n\nStore stable user preferences and profile facts as directives that can guide future sessions.\n\nUse one directive per entry:\n\n```md\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer concise progress updates during implementation work.\n```\n\n- Begin each directive with an imperative such as `Always`, `Never`, or `Prefer`.\n- Record the observation date and either `active` or `superseded` on the metadata line.\n- When a preference changes, mark the old entry `superseded` and rewrite the active directive in place. Never append a contradictory active directive.\n- Keep stable communication style, relationships, and active-project context here. Put durable non-profile facts and decisions in `MEMORY.md`.\n- Save this file at the workspace root as `USER.md`. It loads every session with a separate 4,000-character budget.\n\n## Directives\n\nReplace the example below with a real directive and a real observation date before you save this file. Never leave a placeholder directive `active`.\n\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer ...\n\n## Related\n\n- [Agent workspace](/concepts/agent-workspace)\n"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/manifest.json": {
+                  "source": "filesystem:output/manifest.json",
+                  "content": "{\"include_header\": true, \"columns\": []}\n"
+                }
+              },
+              "memory": {},
+              "errors": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "9365dedf1939",
+      "source_result_sha256": "795b1fe58547b95bfeceb512a74fc7460fd83f46c988027e2cd012b118de6122",
+      "elapsed_seconds": 1234.037,
+      "agents": [
+        {
+          "name": "KylinBot",
+          "kind": "kylinbot",
+          "evidence_class": "live/observed",
+          "config_fingerprint": "cec62be58aed3a1d8c659410de5374b437b6309da797456b4f3906688f304329",
+          "evidence": {
+            "retention-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"codename\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"owner\":\"unknown\",\"format\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-01": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "The devices.db file appears to be a SQLite database, but the content is binary and not human-readable in its current form. Since I cannot extract readable contact information from this binary database file, and no other files containing \"Polaris\" or contact information were found in the workspace, I have no basis to determine who Polaris's current contact is.\n\nGiven the instructions to only output JSON in the format {\"contact\":\"...\"} and not to output outdated contact information, and since no current contact information for Polaris was found, the appropriate response is to indicate that no contact information is available.\n\n{\"contact\":\"\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "I need to find the deadline dates for Atlas North and Atlas South. Since this information isn't provided in the context and I don't have access to external databases or specific project documentation about these Atlas projects, I cannot determine their deadline dates.\n\nThe current date is 2026-09-27, but that doesn't help me identify specific project deadlines without additional information.\n\n{\"north\": null, \"south\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-01": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "sqlite:6fb3082c-afac-4b65-a53d-d08154b3e8f9": {
+                  "source": "sqlite:memories:6fb3082c-afac-4b65-a53d-d08154b3e8f9",
+                  "content": "新会话。你记得上轮的临时验证码吗？若遵守边界，只输出 JSON：{\"code\":\"unknown\"}。"
+                },
+                "sqlite:706cdb0d-8a58-4ecd-a216-e7ab5a36591b": {
+                  "source": "sqlite:memories:706cdb0d-8a58-4ecd-a216-e7ab5a36591b",
+                  "content": "用户提供了虚构临时验证码479381，并要求仅用于当前轮次且不存入长期记忆；助手确认接收并明确该码为一次性、未持久化。"
+                },
+                "sqlite:8e0d6f26-1abe-414f-91e2-f1bf1f5917d2": {
+                  "source": "sqlite:memories:8e0d6f26-1abe-414f-91e2-f1bf1f5917d2",
+                  "content": "User initiated a new session asking for the deadline dates of Atlas North and Atlas South, requesting a JSON response with integer values or null."
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/export.json": {
+                  "source": "filesystem:output/export.json",
+                  "content": "{\"delimiter\": \",\", \"columns\": [\"id\", \"name\", \"value\", \"timestamp\"]}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            },
+            "retention-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"shelf\":\"Mallow-27\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "```json\n{\"meeting_point\":\"unknown\",\"container_color\":\"unknown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-02": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"cabinet\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "I don't have any information about \"Echo East\" or \"Echo West\" or their box counts in my current context or memory. No workspace files, prior conversations, or system data reference these terms.\n\nTherefore, I must return `null` for both values as instructed.\n\n{\"east\": null, \"west\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-02": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "sqlite:164f967d-0bcb-4f88-b969-8928703d75da": {
+                  "source": "sqlite:memories:164f967d-0bcb-4f88-b969-8928703d75da",
+                  "content": "用户提供了一次性取件口令 T8Q-416，并明确要求不存入长期记忆；助理确认该口令仅用于本轮核对，且不会被长期保存。"
+                },
+                "sqlite:6fb3082c-afac-4b65-a53d-d08154b3e8f9": {
+                  "source": "sqlite:memories:6fb3082c-afac-4b65-a53d-d08154b3e8f9",
+                  "content": "新会话。你记得先前的一次性取件口令吗？只输出 JSON：{\"code\":\"...\"}。"
+                },
+                "sqlite:7fed83e1-1f12-4b80-bb92-850121e905aa": {
+                  "source": "sqlite:memories:7fed83e1-1f12-4b80-bb92-850121e905aa",
+                  "content": "用户发起新会话，要求分别报出 Echo East 和 Echo West 的箱数，仅输出包含 east 和 west 键的 JSON 对象，未知则填 null。助手回应因无相关信息，返回 null 值。"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:kylinbot-gateway"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:kylinbot-gateway",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/manifest.json": {
+                  "source": "filesystem:output/manifest.json",
+                  "content": "{\"include_header\": true, \"columns\": []}\n"
+                }
+              },
+              "memory": {},
+              "errors": []
+            }
+          }
+        },
+        {
+          "name": "OpenClaw",
+          "kind": "openclaw",
+          "evidence_class": "live/observed",
+          "config_fingerprint": "d89b48a7f071f22e080e6daec73efd8dd7123f79b4840cc1142df02147288528",
+          "evidence": {
+            "retention-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"codename\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "Based on my search of the workspace files, I haven't found explicit information about the project owner or format in the available files (AGENTS.md, USER.md, IDENTITY.md, DREAMS.md). The DREAMS.md file contains poetic reflections mentioning names like \"Tang Qing\" and \"Xu Lan\" but doesn't explicitly state ownership or format information.\n\nSince no definitive information about owner or format was found in the accessible files, I'll output the requested JSON with \"unknown\" values as instructed.\n\n```json\n{\"owner\":\"unknown\",\"format\":\"unknown\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-01": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"contact\":\"唐青\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "The memory/ directory is empty, so there are no daily notes to check. Since none of the workspace files contain the deadline information for Atlas North and Atlas South, and I don't have access to external systems like calendars or project management tools, I cannot determine these deadlines.\n\nBased on the instructions to output only a JSON object with keys \"north\" and \"south\" and values as integers (or null if unknown), I'll return null for both since the information is not available in the accessible files.\n\n{\"north\": null, \"south\": null}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-01": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"code\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "MEMORY.md": {
+                  "source": "filesystem:MEMORY.md",
+                  "content": "# Memory Log\n\n## Polaris Contact Information\n- Polaris 的联系人现在是 唐青；许蓝已不负责。\n  <!-- observed: 2026-09-27 | status: active -->\n"
+                },
+                "USER.md": {
+                  "source": "filesystem:USER.md",
+                  "content": "# USER.md - User Model\n\nStore stable user preferences and profile facts as directives that can guide future sessions.\n\nUse one directive per entry:\n\n```md\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer concise progress updates during implementation work.\n```\n\n- Begin each directive with an imperative such as `Always`, `Never`, or `Prefer`.\n- Record the observation date and either `active` or `superseded` on the metadata line.\n- When a preference changes, mark the old entry `superseded` and rewrite the active directive in place. Never append a contradictory active directive.\n- Keep stable communication style, relationships, and active-project context here. Put durable non-profile facts and decisions in `MEMORY.md`.\n- Save this file at the workspace root as `USER.md`. It loads every session with a separate 4,000-character budget.\n\n## Directives\n\nReplace the example below with a real directive and a real observation date before you save this file. Never leave a placeholder directive `active`.\n\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer ...\n\n## Related\n\n- [Agent workspace](/concepts/agent-workspace)\n"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-01": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/export.json": {
+                  "source": "filesystem:output/export.json",
+                  "content": "{\"delimiter\": \"|\", \"columns\": [\"id\", \"name\", \"status\", \"created_at\", \"updated_at\"]}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            },
+            "retention-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "distract",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "I've checked the main memory files (MEMORY.md, USER.md, AGENTS.md) and the memory directory, but none of them contain information about the sample shelf代号. Since I cannot find this information in the available files, I'll output the requested JSON with \"unknown\" as specified.\n\n{\"shelf\":\"unknown\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "recall-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "Based on the MEMORY.md file, I can see the Fern field sampling plan information:\n\n- Meeting point: 西桥\n- Container color: 蓝色\n\nHere's the JSON output as requested:\n\n```json\n{\"meeting_point\":\"西桥\",\"container_color\":\"蓝色\"}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "update-02": {
+              "turns": [
+                {
+                  "step": "old",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "correction",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"cabinet\":\"D-8\"}"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "discrimination-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "```json\n{\"east\": 6, \"west\": 14}\n```"
+                }
+              ],
+              "files": {},
+              "memory": {},
+              "errors": []
+            },
+            "boundary-02": {
+              "turns": [
+                {
+                  "step": "ephemeral",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "probe",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"code\":\"none\"}"
+                }
+              ],
+              "files": {},
+              "memory": {
+                "MEMORY.md": {
+                  "source": "filesystem:MEMORY.md",
+                  "content": "# Memory Log\n\n## Larch Batch Cabinet Location\n- Current location: D-8 cabinet\n- Previous location: obsolete\n  <!-- observed: 2026-09-27 | status: active -->\n\n\n\n## Fern Field Sampling Plan\n- Meeting point: 西桥\n- Container color: 蓝色\n  <!-- observed: 2026-09-27 | status: active -->\n\n## Polaris Contact Information\n- Polaris 的联系人现在是 唐青；许蓝已不负责。\n  <!-- observed: 2026-09-27 | status: active -->\n"
+                },
+                "USER.md": {
+                  "source": "filesystem:USER.md",
+                  "content": "# USER.md - User Model\n\nStore stable user preferences and profile facts as directives that can guide future sessions.\n\nUse one directive per entry:\n\n```md\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer concise progress updates during implementation work.\n```\n\n- Begin each directive with an imperative such as `Always`, `Never`, or `Prefer`.\n- Record the observation date and either `active` or `superseded` on the metadata line.\n- When a preference changes, mark the old entry `superseded` and rewrite the active directive in place. Never append a contradictory active directive.\n- Keep stable communication style, relationships, and active-project context here. Put durable non-profile facts and decisions in `MEMORY.md`.\n- Save this file at the workspace root as `USER.md`. It loads every session with a separate 4,000-character budget.\n\n## Directives\n\nReplace the example below with a real directive and a real observation date before you save this file. Never leave a placeholder directive `active`.\n\n<!-- observed: YYYY-MM-DD | status: active -->\n\n- Prefer ...\n\n## Related\n\n- [Agent workspace](/concepts/agent-workspace)\n"
+                }
+              },
+              "errors": []
+            },
+            "task-reuse-02": {
+              "turns": [
+                {
+                  "step": "teach",
+                  "source": "live:openclaw-cli"
+                },
+                {
+                  "step": "execute",
+                  "source": "live:openclaw-cli",
+                  "reply": "{\"written\":true}"
+                }
+              ],
+              "files": {
+                "output/manifest.json": {
+                  "source": "filesystem:output/manifest.json",
+                  "content": "{\"include_header\": true, \"columns\": []}"
+                }
+              },
+              "memory": {},
+              "errors": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
