@@ -136,8 +136,12 @@ def second_page(c):
     y -= 20
     label(c, "重复口径与边界", LEFT, y, 12, colors.HexColor("#111111"))
     y = para(c, "n=3 批；每批每维 2 例，两个智能体各 28 步。只汇总同一数据、各智能体相同配置指纹及相同评分器版本的完整运行；逐维和总分报告均值、样本标准差，逐步统计完成率与 TimeoutError。历史六例、旧 v0.2.0 批次和替身结果不混算。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
-    y = para(c, "v0.2.2 保持 v0.2.1 的 JSON 围栏评分口径，改进客户端超时控制。三批前均恢复并核验干净记忆状态；一次隔离预检失败单独保留，不纳入三批。仍仅同一台 VM、每维两例，OpenClaw 温度未显式固定；不能认定稳定排名或统计显著性。原始证据私下保留。", LEFT, y - 9, RIGHT - LEFT, 9.5, 15)
+    y = para(c, "v0.2.2 保持 v0.2.1 的 JSON 围栏评分口径，改进客户端超时控制。三批前均恢复并核验干净记忆状态；一次隔离预检失败单独保留，不纳入三批。仍仅同一台 VM、每维两例，OpenClaw 温度未显式固定；不能认定稳定排名或统计显著性。完整原始证据私下保留。", LEFT, y - 9, RIGHT - LEFT, 9.5, 15)
     y -= 19
+    label(c, "自己重算禁存案例", LEFT, y, 12, colors.HexColor("#111111"))
+    y = para(c, "从<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260927-v022-boundary-01-replay.json'>公开去敏样本</link>读取第 1 批两款智能体的真实回复与记忆，用仓内评分器重算 boundary-01 三项状态；仅覆盖这一例。", LEFT, y - 17, RIGHT - LEFT, 9.5, 15)
+    label(c, "python3 scripts/replay-boundary-01.py  (Python 3.10+)", LEFT, y - 18, 9, colors.HexColor("#111111"))
+    y -= 43
     label(c, "版本与参与", LEFT, y, 12, colors.HexColor("#111111"))
     y = para(c, "<link href='https://github.com/logxio/kylin-memory-bench/releases/tag/v0.2.2'>v0.2.2 Release 与 .deb</link>、<link href='https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml'>Ubuntu CI</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260927-v022-repeat-summary.json'>三批摘要</link>与<link href='https://github.com/logxio/kylin-memory-bench/blob/main/examples/live-openkylin-20260927-v022-provenance.json'>逐项判定及原始哈希</link>、<link href='https://github.com/logxio/kylin-memory-bench/blob/main/CONTRIBUTING.md'>贡献指南</link>和 <link href='https://github.com/logxio/kylin-memory-bench/issues/new/choose'>Issue 入口</link>。历史 v0.2.1 离线重算另有固定报告，不写成新版真机重跑。", LEFT, y - 17, RIGHT - LEFT, 9.2, 15)
     if y < 62:

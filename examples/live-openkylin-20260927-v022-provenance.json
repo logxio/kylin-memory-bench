@@ -14,7 +14,7 @@
     "python": "3.12.2"
   },
   "evidence_class": "live/observed",
-  "raw_evidence_note": "Raw results, including prompts, replies, frames, files, and observed memory, are retained privately. Public results contain only allowlisted scores, check judgments, evidence-source labels, timings, errors, and raw SHA-256 values.",
+  "raw_evidence_note": "Complete raw results, including prompts, replies, frames, files, and observed memory, are retained privately. This provenance file contains allowlisted scores, check judgments, evidence-source labels, timings, errors, and raw SHA-256 values. A field-sanitized excerpt of the first run's boundary-01 replies and memory is published separately for offline rescoring.",
   "runs": [
     {
       "agents": [
