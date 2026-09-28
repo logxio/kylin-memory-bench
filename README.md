@@ -101,6 +101,6 @@ python3 -m kylin_memory_bench.summarize --dataset data/tasks.json --output out/r
 
 ## 构建与贡献
 
-当前版本为 v0.2.2。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.2.2_all.deb`；发行包只安装运行代码、数据、配置和脚本，报告、PDF 与视频从公开仓库单独下载。v0.2.0、v0.2.1、v0.2.2 包均已在 openKylin 3.0 上通过 `apt install` 和已安装 CLI 检查。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml) 在 Ubuntu 的干净 checkout 中运行单元测试、替身与打包；真实 openKylin 运行证据见上方各批报告。
+当前版本为 v0.2.2。`./packaging/build-deb.sh` 使用 Python 标准库生成 `dist/kylin-memory-bench_0.2.2_all.deb`；发行包只安装运行代码、数据、配置和脚本，报告、PDF 与视频从公开仓库单独下载。v0.2.0、v0.2.1、v0.2.2 包均已在 openKylin 3.0 上通过 `apt install` 和已安装 CLI 检查。介绍 PDF 可用 `python3 scripts/build-intro.py docs/intro.pdf` 重新生成，需另装 `reportlab`。测试命令：`python3 -m unittest discover -s tests`。[公共 CI 的运行记录](https://github.com/logxio/kylin-memory-bench/actions/workflows/ci.yml)展示每次运行的时间、提交 SHA、状态和日志；它每天定时运行，也可手动触发，在 Ubuntu 干净 checkout 中执行单元测试、公开 `boundary-01` 复核、替身流水线和打包。自动运行只证明公开评分与打包仍可复现，不是 KylinBot/OpenClaw 的新跑批或第三方真人使用；真实 openKylin 运行证据见上方各批报告。
 
 接下来的重点是调查仍为零分或波动较大的维度、验证不同版本的记忆文件与 SQLite 读取，并接收外部 openKylin 复跑的去敏证据。新三批仍只是同机、同模型的小样本，不能推断跨环境稳定性或显著差异。源代码按 [MIT](LICENSE) 发布；用 [Issue 模板](https://github.com/logxio/kylin-memory-bench/issues/new/choose)提交可复现问题或案例，用 [贡献指南](CONTRIBUTING.md)准备 PR。
